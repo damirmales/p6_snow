@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Figure {{ numeroFigure }}{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="jumbotron mt-4">
+
+            <h1 class="display-3 text-center">Figure {{ numeroFigure }}</h1>
+
+        </div>
+        <!-- Portfolio Gallery pictures -->
+        <div class="row">
+            {% for i in 1 .. 4 %}
+                <div class="col-md-3">
+                    <div class="content">
+                        <img src="https://i.picsum.photos/id/{{ i }}00/400/300.jpg" alt="Mountains" style="width:80%">
+                        <h4>Figure {{ i }}</h4>
+                        <p>Lorem ipsum dolor..</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Portfolio Gallery videos -->
+
+
+        <div class="row">
+            {% for i in 1..4 %}
+                <div class="col">
+                    <label for="Video">Video </label>
+                    <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+                        <iframe class="embed-responsive-item"
+                                src="https://www.youtube.com/embed/v64KOxKVLVg"></iframe>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- dates and group-->
+        <p>Date de création - date de mise à jour - groupe : </p>
+        <!-- Comments zone -->
+
+        //////////// Description ///////////
+        <div class="description">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non
+                quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit
+                optio amet ab temporibus asperiores quasi
+                cupiditate. Voluptatum ducimus voluptates voluptas?</p>
+        </div>
+
+
+        <!-- Comments zone -->
+
+        //////////// Comments zone ///////////
+
+
+    </div>
+
+{% endblock %}
