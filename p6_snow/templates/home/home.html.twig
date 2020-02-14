@@ -5,36 +5,36 @@
 {% block body %}
 
 
-<div class="container">
+    <div class="container">
 
-    <div class="jumbotron mt-4">
+        <div class="jumbotron mt-4">
 
-        <h1 class="display-3 text-center">Snow tricks on the web</h1>
+            <h1 class="display-3 text-center">Snow tricks on the web</h1>
 
 
-    </div>
+        </div>
 
-    <div class="row">
+        <div class="row">
 
-        {% for i in 1..6 %}
-            <div class="col-md-2">
-            <div class="card border-primary mb-3 flex-fill" style="max-width: 12rem;">
-                <!-- <div class="card-header"><i class='fas fa-pen'></i>
-                    <i class='fas fa-trash-alt'></i>
+            {% for i in 1..6 %}
+                <div class="col-md-2">
+                    <div class="card border-primary mb-3 flex-fill" style="max-width: 12rem;">
+                        <!-- <div class="card-header"><i class='fas fa-pen'></i>
+                            <i class='fas fa-trash-alt'></i>
 
-                </div>    -->
-                <img class="card-img-top" src="http://placehold.it/350x250" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title">figure title</h4>
+                        </div>    -->
+                        <img class="card-img-top" src="http://placehold.it/350x250" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title">figure title</h4>
 
-                    <a href="" class="card-link">Figure
-                        link</a>
+                            <a href="" class="card-link">Figure
+                                link</a>
+                        </div>
+
+                    </div>
                 </div>
+            {% endfor %}
 
-            </div>
-            </div>
-        {% endfor %}
-
-    </div>
+        </div>
 </div>
 {% endblock %}
