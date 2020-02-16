@@ -5,7 +5,7 @@
 {% block body %}
 
 
-    <div class="container">
+    <div class="container ">
 
         <div class="jumbotron mt-4">
 
@@ -14,10 +14,10 @@
 
         </div>
 
-        <div class="row">
+        <div class="row ">
 
             {% for i in 1..6 %}
-                <div class="col-md-2">
+                <div class="col-mdgit -2 text-center">
                     <div class="card border-primary mb-3 flex-fill" style="max-width: 12rem;">
                         <!-- <div class="card-header"><i class='fas fa-pen'></i>
                             <i class='fas fa-trash-alt'></i>
@@ -27,7 +27,7 @@
                         <div class="card-body">
                             <h4 class="card-title">figure title</h4>
 
-                            <a href="" class="card-link">Figure
+                            <a href="{{ path('figure') }}" class="card-link">Figure
                                 link</a>
                         </div>
 
@@ -36,5 +36,5 @@
             {% endfor %}
 
         </div>
-</div>
+    </div>
 {% endblock %}
