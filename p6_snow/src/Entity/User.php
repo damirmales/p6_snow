@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -62,7 +63,9 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
      */
     private $password;
 
-
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Confirmation de mot de passe non correcte")
+     */
     private $repeatPassword;
 
     public function getId(): ?int
