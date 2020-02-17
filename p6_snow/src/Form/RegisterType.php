@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,8 +34,8 @@ class RegisterType extends AbstractType
               ->add('status')
               ->add('token') */
             ->add('username', TextType::class, $this->getConfiguration("Pseudo", "Votre pseudo"))
-            ->add('password', TextType::class, $this->getConfiguration("Mot de passe", "Votre mot de passe"))
-            ->add('repeatPassword', TextType::class, $this->getConfiguration("Répéter mot de passe", "Répéter mot de passe"));
+            ->add('password', PasswordType::class, $this->getConfiguration("Mot de passe", "Votre mot de passe"))
+            ->add('repeatPassword', PasswordType::class, $this->getConfiguration("Répéter mot de passe", "Répéter mot de passe"));
 
     }
 

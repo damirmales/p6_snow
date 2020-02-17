@@ -8,7 +8,7 @@ use phpDocumentor\Reflection\Types\Boolean;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements \Symfony\Component\Security\Core\User\UserInterface
 {
     /**
      * @ORM\Id()
@@ -62,9 +62,7 @@ class User
      */
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+
     private $repeatPassword;
 
     public function getId(): ?int
@@ -132,12 +130,12 @@ class User
         return $this;
     }
 
-    public function getStatus(): ?Boolean
+    public function getStatus(): ?bool
     {
         return $this->status;
     }
 
-    public function setStatus(Boolean $status): self
+    public function setStatus(bool $status): self
     {
         $this->status = $status;
 
@@ -193,4 +191,27 @@ class User
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 }
