@@ -3,9 +3,16 @@
 {% block title %}User RegisterController!{% endblock %}
 
 {% block body %}
+    <div class="container mt-4">
 
+        {{ form_start(form) }}
 
+        {{ form_widget(form) }}
 
+        <button type="submit" class="btn btn-primary">Confirm</button>
+        {{ form_end(form) }}
+
+    </div>
 {% endblock %}
 
 {% block footer %}

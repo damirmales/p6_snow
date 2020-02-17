@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -42,7 +43,7 @@ class User
     private $role;
 
     /**
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="boolean", length=4)
      */
     private $status;
 
@@ -60,6 +61,11 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $repeatPassword;
 
     public function getId(): ?int
     {
@@ -126,12 +132,12 @@ class User
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?Boolean
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(Boolean $status): self
     {
         $this->status = $status;
 
@@ -173,4 +179,18 @@ class User
 
         return $this;
     }
+
+
+    public function getRepeatPassword(): ?string
+    {
+        return $this->repeatPassword;
+    }
+
+    public function setRepeatPassword(string $repeatPassword): self
+    {
+        $this->repeatPassword = $repeatPassword;
+
+        return $this;
+    }
+
 }
