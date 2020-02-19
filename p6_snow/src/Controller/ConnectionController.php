@@ -8,16 +8,20 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ConnectionController extends AbstractController
 {
+
     /**
      * @Route("/login", name="connection_user")
+     * @param AuthenticationUtils $utils
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function login(AuthenticationUtils $utils)
     {
         $error = $utils->getLastAuthenticationError();
-        dump($error);
+        $username = $utils->getLastUsername();
 
         return $this->render('connection/login.html.twig', [
-
+            'errorMessage' => $error !== null,
+            'username' => $username,
         ]);
     }
 
@@ -25,9 +29,8 @@ class ConnectionController extends AbstractController
     /**
      * @Route("/logout", name="deconnection_user")
      */
-    public function logout()
+    public function logout() // gérée dans security.yaml
     {
-
 
     }
 }

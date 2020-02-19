@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("username", message="Ce pseudo existe déjà")
+ * @UniqueEntity("email", message="Cet email existe déjà")
  */
 class User implements \Symfony\Component\Security\Core\User\UserInterface
 {
@@ -20,16 +23,19 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email( message = "L'email n'est pas valide.")
      */
     private $email;
 
@@ -60,11 +66,13 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
      */
     private $password;
 
     /**
      * @Assert\EqualTo(propertyPath="password", message="Confirmation de mot de passe non correcte")
+     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
      */
     private $repeatPassword;
 
@@ -121,14 +129,17 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getRole(): array
     {
-        return $this->role;
+        return [$this->role];
     }
 
     public function setRole(string $role): self
     {
-        $this->role = $role;
+        if ($role === null) {
+            $this->role = ["ROLE_USER"];
+
+        } else $this->role = $role;
 
         return $this;
     }
@@ -197,10 +208,9 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
     /**
      * @inheritDoc
      */
-    public function getRoles()
+    public function getRoles() // herite de Userinterface
     {
-        // TODO: Implement getRoles() method.
-        return ['ROLE_USER'];
+        return [$this->role];
     }
 
     /**

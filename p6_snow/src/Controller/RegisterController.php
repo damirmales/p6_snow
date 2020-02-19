@@ -29,7 +29,7 @@ class RegisterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $newUser->setRole('member');
+            $newUser->setRole('ROLE_USER');
             $newUser->setStatus(false);
             $newUser->setToken('a3753573543a');
 
