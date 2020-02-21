@@ -61,6 +61,7 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
      */
     private $username;
 
@@ -90,7 +91,7 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
     {
         $this->firstname = $firstname;
 
-        return $this;
+        return $this; // permet l'enchaînement d'autres méthodes setXyz
     }
 
     public function getLastname(): ?string

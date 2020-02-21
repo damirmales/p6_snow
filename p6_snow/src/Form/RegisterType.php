@@ -13,17 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RegisterType extends AbstractType
 {
-    private function getConfiguration($label, $attribut)
-    {
-        return ['label' => $label,
-            'attr' => ['placeholder' => $attribut]
-        ];
-
-    }
-
-
-    public
-    function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('firstname', TextType::class, $this->getConfiguration("Prénom", "Votre prénom"))
@@ -39,8 +29,15 @@ class RegisterType extends AbstractType
 
     }
 
-    public
-    function configureOptions(OptionsResolver $resolver)
+    private function getConfiguration($label, $attribut)
+    {
+        return ['label' => $label,
+            'attr' => ['placeholder' => $attribut]
+        ];
+
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => User::class,

@@ -33,6 +33,8 @@ class RegisterController extends AbstractController
             $newUser->setStatus(false);
             $newUser->setToken('a3753573543a');
 
+            $this->addFlash('success', 'Enregistrement effectué');
+            
             $pswd = $encoder->encodePassword($newUser, $newUser->getPassword());
             $newUser->setPassword($pswd);
             $manager->persist($newUser);
@@ -45,4 +47,6 @@ class RegisterController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+
 }
