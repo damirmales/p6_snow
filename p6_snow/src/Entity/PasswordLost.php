@@ -3,9 +3,14 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 
 class PasswordLost
 {
+    /**
+     * @return mixed
+     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
+     */
     private $username;
 
     /**

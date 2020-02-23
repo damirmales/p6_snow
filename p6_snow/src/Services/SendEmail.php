@@ -22,17 +22,15 @@ class SendEmail extends AbstractController
     {
 
         $this->mailer = $mailer;
-
-
     }
 
-    public function sendEmail()
+    public function sendEmail($userEmail)
     {
 
 
         $message = (new Swift_Message('Mot de passe perdu'))
             ->setFrom('send@example.com')
-            ->setTo('recipient@example.com')
+            ->setTo($userEmail)
             ->setBody(
                 $this->renderView(
                 // templates/emails/registration.html.twig

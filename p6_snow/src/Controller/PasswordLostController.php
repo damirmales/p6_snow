@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\PasswordLost;
 use App\Entity\User;
 use App\Form\PasswordLostType;
 use App\Form\RegisterType;
+use App\Repository\PasswordLostRepository;
+use App\Repository\UserRepository;
 use App\Services\SendEmail;
 use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,20 +23,46 @@ class PasswordLostController extends AbstractController
      */
     public function lostPassword(Request $request, SendEmail $sendEmail, \Swift_Mailer $mailer)
     {
-
-        $newUser = new User();
+        $test = null;
+        $newUser = new PasswordLost(); //create an entity which is not registered in the database
 
         $form = $this->createForm(PasswordLostType::class, $newUser);
 
         $form->handleRequest($request);
-
+        $userData = $form->get('username');
+        $username = $userData->getViewData();
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $sendEmail->sendEmail();
+            $user = $this->findUserEmail($username);
+            dump($user);
+            if ($user !== null) {
+                $sendEmail->sendEmail($user->getEmail());
+                $this->addFlash('success', 'Un email vous à été envoyé');
+            } else {
+                $this->addFlash('warning', 'Ce pseudo ne correspond pas à un utilisateur inscrit');
+            }
+
 
         }
         return $this->render('password/lost_password.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+
         ]);
+    }
+
+
+    /**
+     * @param $username
+     * @return mixed
+     */
+    public function findUserEmail($username)
+    {
+
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        //$findEmail = $repo->findByUsername($username);
+        $findEmail = $repo->findOneBy([
+            'username' => $username]);
+     
+        return $findEmail;
     }
 }
