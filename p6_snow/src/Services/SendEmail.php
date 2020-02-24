@@ -24,7 +24,7 @@ class SendEmail extends AbstractController
         $this->mailer = $mailer;
     }
 
-    public function sendEmail($userEmail, $token)
+    public function sendEmail($userEmail, $token, $userLastname)
     {
 
 
@@ -35,7 +35,8 @@ class SendEmail extends AbstractController
                 $this->renderView(
                 // templates/emails/registration.html.twig
                     'emails/password_email.html.twig',
-                    ['token' => $token]
+                    ['token' => $token,
+                        'lastName' => $userLastname]
                 ),
                 'text/html'
             );

@@ -24,7 +24,7 @@ class PasswordLostController extends AbstractController
      */
     public function lostPassword(Request $request, SendEmail $sendEmail, \Swift_Mailer $mailer)
     {
-        $test = null;
+
         $newUser = new PasswordLost(); //create an entity which is not registered in the database
 
         $form = $this->createForm(PasswordLostType::class, $newUser);
@@ -34,19 +34,21 @@ class PasswordLostController extends AbstractController
         //get user's data with user's username
         $userData = $form->get('username');
         $username = $userData->getViewData();
+        // $userLastName = $form->get('lastname');
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $this->findUserEmail($username);
+            $userLastname = $user->getLastname();
 
             if ($user !== null) {
 
                 $randomGenerator = new RandomGeneratedValues();
                 $randomGenerator->generateRandomString();
                 $randomValue = $randomGenerator->getRandomValue();
-          
-                $sendEmail->sendEmail($user->getEmail(), $randomValue);  //find user's email with given user's username
-                $this->addFlash('success', 'Un email vous à été envoyé');
+
+                $sendEmail->sendEmail($user->getEmail(), $randomValue, $userLastname);  //find user's email with given user's username
+                $this->addFlash('success', 'Un email vous a été envoyé');
             } else {
                 $this->addFlash('warning', 'Ce pseudo ne correspond pas à un utilisateur inscrit');
             }
@@ -69,7 +71,7 @@ class PasswordLostController extends AbstractController
 
         $repo = $this->getDoctrine()->getRepository(User::class);
         //$findEmail = $repo->findByUsername($username);
-        $findEmail = $repo->findOneByUsername([
+        $findEmail = $repo->findOneBy([
             'username' => $username]);
 
         return $findEmail;
