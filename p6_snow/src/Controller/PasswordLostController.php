@@ -8,6 +8,7 @@ use App\Form\PasswordLostType;
 use App\Form\RegisterType;
 use App\Repository\PasswordLostRepository;
 use App\Repository\UserRepository;
+use App\Services\RandomGeneratedValues;
 use App\Services\SendEmail;
 use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,14 +30,22 @@ class PasswordLostController extends AbstractController
         $form = $this->createForm(PasswordLostType::class, $newUser);
 
         $form->handleRequest($request);
+
+        //get user's data with user's username
         $userData = $form->get('username');
         $username = $userData->getViewData();
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $this->findUserEmail($username);
-            dump($user);
+
             if ($user !== null) {
-                $sendEmail->sendEmail($user->getEmail());
+
+                $randomGenerator = new RandomGeneratedValues();
+                $randomGenerator->generateRandomString();
+                $randomValue = $randomGenerator->getRandomValue();
+          
+                $sendEmail->sendEmail($user->getEmail(), $randomValue);  //find user's email with given user's username
                 $this->addFlash('success', 'Un email vous à été envoyé');
             } else {
                 $this->addFlash('warning', 'Ce pseudo ne correspond pas à un utilisateur inscrit');
@@ -60,9 +69,9 @@ class PasswordLostController extends AbstractController
 
         $repo = $this->getDoctrine()->getRepository(User::class);
         //$findEmail = $repo->findByUsername($username);
-        $findEmail = $repo->findOneBy([
+        $findEmail = $repo->findOneByUsername([
             'username' => $username]);
-     
+
         return $findEmail;
     }
 }
