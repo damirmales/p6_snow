@@ -52,7 +52,7 @@ class PasswordLostController extends AbstractController
             } else {
                 $this->addFlash('warning', 'Ce pseudo ne correspond pas à un utilisateur inscrit');
             }
-
+            return $this->redirectToRoute('reset_password');
 
         }
         return $this->render('password/lost_password.html.twig', [
