@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("username", message="Ce pseudo existe déjà")
  * @UniqueEntity("email", message="Cet email existe déjà")
  */
-class User implements \Symfony\Component\Security\Core\User\UserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
