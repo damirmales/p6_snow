@@ -40,7 +40,7 @@ class ResetPasswordController extends AbstractController
 
             $this->addFlash("success", "Votre mot de passe à bien été modifié");
 
-            return $this->redirectToRoute("home");
+            //return $this->redirectToRoute("home");
 
         }
 
