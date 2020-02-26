@@ -34,19 +34,19 @@ class PasswordLostController extends AbstractController
         //get user's data with user's username
         $userData = $form->get('username');
         $username = $userData->getViewData();
-        //$userLastName = $form->get('lastname');
+        $bodyEmailMessage = "Cliquez sur le lien pour accéder au formulaire de changement de mot de passe:";
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $this->findUserEmail($username);
-    
+
             if ($user !== null) {
                 $userLastname = $user->getLastname();
                 $randomGenerator = new RandomGeneratedValues();
                 $randomGenerator->generateRandomString();
                 $randomValue = $randomGenerator->getRandomValue();
 
-                $sendEmail->sendEmail($user->getEmail(), $randomValue, $userLastname);  //find user's email with given user's username
+                $sendEmail->sendEmail($user->getEmail(), $randomValue, $userLastname, $bodyEmailMessage);  //find user's email with given user's username
                 $this->addFlash('success', 'Un email vous a été envoyé');
             } else {
                 $this->addFlash('warning', 'Ce pseudo ne correspond pas à un utilisateur inscrit');

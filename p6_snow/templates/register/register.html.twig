@@ -9,6 +9,8 @@
 
         {{ form_widget(form) }}
 
+        <input type="hidden" name="_token" value="{{ csrf_token('token-email') }}">
+
         <button type="submit" class="btn btn-primary">Valider</button>
         {{ form_end(form) }}
 

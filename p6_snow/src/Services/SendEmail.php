@@ -24,7 +24,12 @@ class SendEmail extends AbstractController
         $this->mailer = $mailer;
     }
 
-    public function sendEmail($userEmail, $token, $userLastname)
+    /**
+     * @param $userEmail
+     * @param $token
+     * @param $userLastname
+     */
+    public function sendEmail($userEmail, $token, $userLastname, $bodyMessage)
     {
 
         $message = (new Swift_Message('Mot de passe perdu'))
@@ -32,11 +37,12 @@ class SendEmail extends AbstractController
             ->setTo($userEmail)
             ->setBody(
                 $this->renderView(
-                // templates/emails/registration.html.twig
+
                     'emails/password_email.html.twig',
                     ['token' => $token,
-                        'lastName' => $userLastname]
-                ),
+                        'lastName' => $userLastname,
+                        'message' => $bodyMessage
+                    ]),
                 'text/html'
             );
         //return $this->getMessage();

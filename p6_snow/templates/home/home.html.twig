@@ -15,8 +15,20 @@
         </div>
 
         <div class="row ">
-
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row ">
             {% for i in 1..6 %}
+
                 <div class="col-md-2 text-center">
 
                     <div class="card border-primary mb-3 flex-fill" style="max-width: 12rem;">

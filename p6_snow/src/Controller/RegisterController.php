@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegisterType;
 
+use App\Services\SendEmail;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +22,7 @@ class RegisterController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, SendEmail $sendEmail)
     {
         $newUser = new User();
 
@@ -29,12 +30,18 @@ class RegisterController extends AbstractController
 
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $token_for_email = $request->get('_token');
             $newUser->setRole('ROLE_USER');
             $newUser->setStatus(false);
-            $newUser->setToken('a3753573543a');
+            $newUser->setToken($token_for_email);
+
+            $bodyEmailMessage = "cliquez sur le lien pour valider votre inscription";
 
             $avatarFile = $form->get('avatar')->getData();
+
             if ($avatarFile) {
                 $avatarFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
@@ -61,10 +68,15 @@ class RegisterController extends AbstractController
 
             $pswd = $encoder->encodePassword($newUser, $newUser->getPassword());
             $newUser->setPassword($pswd);
+
+
+            $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage);
+
             $manager->persist($newUser);
+
             $manager->flush();
 
-            return $this->redirectToRoute('home');
+            //return $this->redirectToRoute('home');
 
         }
         return $this->render('register/register.html.twig', [
