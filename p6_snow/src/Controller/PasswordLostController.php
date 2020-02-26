@@ -34,15 +34,14 @@ class PasswordLostController extends AbstractController
         //get user's data with user's username
         $userData = $form->get('username');
         $username = $userData->getViewData();
-        // $userLastName = $form->get('lastname');
+        //$userLastName = $form->get('lastname');
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $this->findUserEmail($username);
-            $userLastname = $user->getLastname();
-
+    
             if ($user !== null) {
-
+                $userLastname = $user->getLastname();
                 $randomGenerator = new RandomGeneratedValues();
                 $randomGenerator->generateRandomString();
                 $randomValue = $randomGenerator->getRandomValue();
@@ -52,7 +51,7 @@ class PasswordLostController extends AbstractController
             } else {
                 $this->addFlash('warning', 'Ce pseudo ne correspond pas à un utilisateur inscrit');
             }
-            return $this->redirectToRoute('reset_password');
+            // return $this->redirectToRoute('reset_password');
 
         }
         return $this->render('password/lost_password.html.twig', [
@@ -70,9 +69,15 @@ class PasswordLostController extends AbstractController
     {
 
         $repo = $this->getDoctrine()->getRepository(User::class);
-        //$findEmail = $repo->findByUsername($username);
+
+        /* $findEmail = $repo->findByUsername([
+             'username' => $username
+         ]);
+         */
+
         $findEmail = $repo->findOneBy([
-            'username' => $username]);
+            'username' => $username
+        ]);
 
         return $findEmail;
     }
