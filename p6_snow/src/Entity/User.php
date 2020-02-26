@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -77,6 +79,16 @@ class User implements UserInterface
      * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
      */
     private $repeatPassword;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Figure", mappedBy="editor")
+     */
+    private $figures;
+
+    public function __construct()
+    {
+        $this->figures = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -230,4 +242,36 @@ class User implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+    /**
+     * @return Collection|Figure[]
+     */
+    public function getFigures(): Collection
+    {
+        return $this->figures;
+    }
+
+    public function addFigures(Figure $figures): self
+    {
+        if (!$this->figures->contains($figures)) {
+            $this->figures[] = $figures;
+            $figures->setEditor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFigures(Figure $figures): self
+    {
+        if ($this->figures->contains($figures)) {
+            $this->figures->removeElement($figures);
+            // set the owning side to null (unless alreadfigures changed)
+            if ($figures->getEditor() === $this) {
+                $figures->setEditor(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
