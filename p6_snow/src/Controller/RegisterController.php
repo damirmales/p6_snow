@@ -8,6 +8,7 @@ use App\Form\RegisterType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -33,8 +34,31 @@ class RegisterController extends AbstractController
             $newUser->setStatus(false);
             $newUser->setToken('a3753573543a');
 
+            $avatarFile = $form->get('avatar')->getData();
+            if ($avatarFile) {
+                $avatarFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                // $safeFilename = $transliterator->transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $avatarFilename);
+                $newFilename = $avatarFilename . '-' . uniqid() . '.' . $avatarFile->guessExtension();
+
+                // Move the file to the directory where avatars are stored
+                try {
+                    $avatarFile->move(
+                        $this->getParameter('avatars_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'picture' field property to store the jpeg file name
+                // instead of its contents
+                $newUser->setPicture($newFilename);
+            }
+
+
             $this->addFlash('success', 'Enregistrement effectué');
-            
+
             $pswd = $encoder->encodePassword($newUser, $newUser->getPassword());
             $newUser->setPassword($pswd);
             $manager->persist($newUser);
