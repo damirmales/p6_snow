@@ -25,9 +25,9 @@ class PasswordLostController extends AbstractController
     public function lostPassword(Request $request, SendEmail $sendEmail, \Swift_Mailer $mailer)
     {
 
-        $newUser = new PasswordLost(); //create an entity which is not registered in the database
+        $newPasswordEntity = new PasswordLost(); //create an entity which is not registered in the database
 
-        $form = $this->createForm(PasswordLostType::class, $newUser);
+        $form = $this->createForm(PasswordLostType::class, $newPasswordEntity);
 
         $form->handleRequest($request);
 
@@ -42,12 +42,18 @@ class PasswordLostController extends AbstractController
 
             if ($user !== null) {
                 $userLastname = $user->getLastname();
-                $randomGenerator = new RandomGeneratedValues();
-                $randomGenerator->generateRandomString();
-                $randomValue = $randomGenerator->getRandomValue();
+                /*   // generate a token
+                   $randomGenerator = new RandomGeneratedValues();
+                   $randomGenerator->generateRandomString();
+                   $token = $randomGenerator->getRandomValue();
+   */
+                // update token field in database
 
-                $sendEmail->sendEmail($user->getEmail(), $randomValue, $userLastname, $bodyEmailMessage);  //find user's email with given user's username
-                $this->addFlash('success', 'Un email vous a été envoyé');
+                $token = $user->getToken();
+                $pathToEmailPage = 'emails/password_email.html.twig';
+
+                $sendEmail->sendEmail($user->getEmail(), $token, $userLastname, $bodyEmailMessage, $pathToEmailPage);  //find user's email with given user's username
+                $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
             } else {
                 $this->addFlash('warning', 'Ce pseudo ne correspond pas à un utilisateur inscrit');
             }

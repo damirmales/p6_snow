@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\ResetPassword;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
-use Doctrine\Common\Persistence\ObjectManager;
+
 use Doctrine\ORM\EntityManagerInterface;
 use http\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +25,12 @@ class ResetPasswordController extends AbstractController
 
         $form = $this->createForm(ResetPasswordType::class, $resetPassword);
         $form->handleRequest($request);
-        $user = $this->getUser();
+
+        // on récupère le token du lien inclus dans l'email
+        $token = $request->get('user_token');
+        // à partir du token on récupère une instance de l'entité User pour la passer à la méthode d'encodage encodePassword
+        $user = $manager->getRepository(User::class)->findOneBy(array('token' => $token));
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             //on récupère le mot de passe inscrit dans le champ password du formulaire password/reset_password.html.twig

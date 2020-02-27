@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegisterType;
 
+use App\Repository\UserRepository;
 use App\Services\SendEmail;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,12 +35,13 @@ class RegisterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $token_for_email = $request->get('_token');
+
             $newUser->setRole('ROLE_USER');
             $newUser->setStatus(false);
             $newUser->setToken($token_for_email);
 
             $bodyEmailMessage = "cliquez sur le lien pour valider votre inscription";
-
+            $pathToEmailPage = 'emails/register_email.html.twig';
             $avatarFile = $form->get('avatar')->getData();
 
             if ($avatarFile) {
@@ -63,25 +65,52 @@ class RegisterController extends AbstractController
                 $newUser->setPicture($newFilename);
             }
 
-
-            $this->addFlash('success', 'Enregistrement effectué');
-
             $pswd = $encoder->encodePassword($newUser, $newUser->getPassword());
             $newUser->setPassword($pswd);
 
+            $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage, $pathToEmailPage);
 
-            $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage);
+            $this->addFlash('success', 'Un email vous a été envoyé');
 
             $manager->persist($newUser);
 
             $manager->flush();
 
-            //return $this->redirectToRoute('home');
+            // return $this->redirectToRoute('check_token');
 
         }
         return $this->render('register/register.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+
+    /**
+     * @Route("/home", name="check_token")
+     */
+    public function checkToken(Request $request, UserRepository $userRepo, EntityManagerInterface $manager) // check token from user's email
+    {
+        $token_from_email = $request->query->get('user_token');
+
+        $user = $manager->getRepository(User::class)->findOneBy(array('token' => $token_from_email));
+
+
+        if ($user != null) {
+
+            $user->setStatus(1);
+
+            // Don't use persist() to perform an update
+            $manager->flush();
+
+            $this->addFlash('success', "hourra vous êtes membre");
+
+
+        } else {
+
+            $this->addFlash('warning', "Désolé mais on ne se connait pas");
+
+        }
+        return $this->redirectToRoute('home');
     }
 
 
