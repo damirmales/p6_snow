@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User RegisterController!{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        <input type="hidden" name="_token" value="{{ csrf_token('token-email') }}">
+
+        <button type="submit" class="btn btn-primary">Valider</button>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

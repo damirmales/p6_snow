@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ConnectionController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="row ">
+            <div class="mt-4 py-4 bg-secondary">
+
+                {% for message in app.flashes('warning') %}
+                    <div class="alert alert-warning">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                <div class="col-md-12">
+                    <h1>SE CONNECTER</h1>
+                    {% if errorMessage %}
+                        <div class="alert alert-warning">Il y a une erreur dans le formulaire</div>
+                    {% endif %}
+                    <form id="loginForm" action="{{ path('connection_user') }}" class="mt-4" method="post">
+
+                        <div class="form-group">
+                            <label for="username">Pseudo</label>
+                            <input type="text" name="_username" id="username" class="form-control"
+                                   placeholder="Votre pseudo"
+                                   value="{{ username }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" name="_password" id="password" class="form-control"
+                                   placeholder="Votre mot de passe"
+                                   required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                        <p class="mt-4"><a id="forgetPassword" href="{{ path('lost_password') }}" class="text-body">Mot
+                                de passe oublié ?</a></p>
+                    </form>
+                </div>
+                <div class="col-md-3">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

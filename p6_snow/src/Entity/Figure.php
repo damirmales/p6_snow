@@ -51,6 +51,13 @@ class Figure
      */
     private $updateDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="figures")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $editor;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,4 +146,18 @@ class Figure
 
         return $this;
     }
+
+    public function getEditor(): ?User
+    {
+        return $this->editor;
+    }
+
+    public function setEditor(?User $editor): self
+    {
+        $this->editor = $editor;
+
+        return $this;
+    }
+
+
 }

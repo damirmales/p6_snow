@@ -1,0 +1,117 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\User;
+use App\Form\RegisterType;
+
+use App\Repository\UserRepository;
+use App\Services\SendEmail;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints\IsFalse;
+
+class RegisterController extends AbstractController
+{
+    /**
+     * @Route("/register", name="register_user")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, SendEmail $sendEmail)
+    {
+        $newUser = new User();
+
+        $form = $this->createForm(RegisterType::class, $newUser);
+
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $token_for_email = $request->get('_token');
+
+            $newUser->setRole('ROLE_USER');
+            $newUser->setStatus(false);
+            $newUser->setToken($token_for_email);
+
+            $bodyEmailMessage = "cliquez sur le lien pour valider votre inscription";
+            $pathToEmailPage = 'emails/register_email.html.twig';
+            $avatarFile = $form->get('avatar')->getData();
+
+            if ($avatarFile) {
+                $avatarFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                // $safeFilename = $transliterator->transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $avatarFilename);
+                $newFilename = $avatarFilename . '-' . uniqid() . '.' . $avatarFile->guessExtension();
+
+                // Move the file to the directory where avatars are stored
+                try {
+                    $avatarFile->move(
+                        $this->getParameter('avatars_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'picture' field property to store the jpeg file name
+                // instead of its contents
+                $newUser->setPicture($newFilename);
+            }
+
+            $pswd = $encoder->encodePassword($newUser, $newUser->getPassword());
+            $newUser->setPassword($pswd);
+
+            $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage, $pathToEmailPage);
+
+            $this->addFlash('success', 'Un email vous a été envoyé');
+
+            $manager->persist($newUser);
+
+            $manager->flush();
+
+            // return $this->redirectToRoute('check_token');
+
+        }
+        return $this->render('register/register.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/home", name="check_token")
+     */
+    public function checkToken(Request $request, UserRepository $userRepo, EntityManagerInterface $manager) // check token from user's email
+    {
+        $token_from_email = $request->query->get('user_token');
+
+        $user = $manager->getRepository(User::class)->findOneBy(array('token' => $token_from_email));
+
+
+        if ($user != null) {
+
+            $user->setStatus(1);
+
+            // Don't use persist() to perform an update
+            $manager->flush();
+
+            $this->addFlash('success', "hourra vous êtes membre");
+
+
+        } else {
+
+            $this->addFlash('warning', "Désolé mais on ne se connait pas");
+
+        }
+        return $this->redirectToRoute('home');
+    }
+
+
+}

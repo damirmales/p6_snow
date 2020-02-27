@@ -5,19 +5,32 @@
 {% block body %}
 
 
-    <div class="container">
+    <div class="container ">
 
         <div class="jumbotron mt-4">
 
-            <h1 class="display-3 text-center">Snow tricks on the web</h1>
+            <h1 class="display-3 text-center">Bienvenu sur Snow tricks</h1>
 
 
         </div>
 
-        <div class="row">
-
+        <div class="row ">
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row ">
             {% for i in 1..6 %}
-                <div class="col-md-2">
+
+                <div class="col-md-2 text-center">
+
                     <div class="card border-primary mb-3 flex-fill" style="max-width: 12rem;">
                         <!-- <div class="card-header"><i class='fas fa-pen'></i>
                             <i class='fas fa-trash-alt'></i>
@@ -25,10 +38,10 @@
                         </div>    -->
                         <img class="card-img-top" src="http://placehold.it/350x250" alt="Card image cap">
                         <div class="card-body">
-                            <h4 class="card-title">figure title</h4>
+                            <h4 class="card-title">Nom de la Figure</h4>
 
-                            <a href="" class="card-link">Figure
-                                link</a>
+                            <a href="{{ path('figure') }}" class="card-link">Lien vers la
+                                figure</a>
                         </div>
 
                     </div>
@@ -36,5 +49,5 @@
             {% endfor %}
 
         </div>
-</div>
+    </div>
 {% endblock %}
