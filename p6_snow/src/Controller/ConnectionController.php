@@ -14,6 +14,7 @@ class ConnectionController extends AbstractController
 {
 
     /**
+     * Inform about errors if any entered in the connection form fields
      * @Route("/login", name="connection_user")
      * @param AuthenticationUtils $utils
      * @return \Symfony\Component\HttpFoundation\Response

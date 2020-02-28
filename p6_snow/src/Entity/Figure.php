@@ -147,12 +147,12 @@ class Figure
         return $this;
     }
 
-    public function getEditor(): ?User
+    public function getEditor()
     {
         return $this->editor;
     }
 
-    public function setEditor(?User $editor): self
+    public function setEditor($editor)
     {
         $this->editor = $editor;
 
