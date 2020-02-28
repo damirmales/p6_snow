@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Figure;
-use App\Entity\User;
 use App\Form\CreateFigureType;
+use App\Repository\FigureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,9 +38,6 @@ class FigureController extends AbstractController
             $this->addFlash("success", "Création réussie");
 
             return $this->redirectToRoute('home');
-        } else {
-
-            $this->addFlash("warning", "Une erreur est survenue");
         }
 
         return $this->render('figure/new_figure.html.twig', [
@@ -49,12 +46,15 @@ class FigureController extends AbstractController
     }
 
     /**
-     * @Route("/figure", name="figure")
+     * @Route("/figure/{slug}", name="figure")
      */
-    public function show()
+    public function show($slug, FigureRepository $figRepo)
     {
+        $fig = $figRepo->findOneBySlug($slug);
+
         return $this->render('figure/figure.html.twig', [
-            'numeroFigure' => rand(1, 10)
+            'numeroFigure' => rand(1, 10),
+            'fig' => $fig
         ]);
     }
 
