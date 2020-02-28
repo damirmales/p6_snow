@@ -23,7 +23,7 @@ class FigureController extends AbstractController
 
         $formCreateFig = $this->createForm(CreateFigureType::class, $fig);
         $formCreateFig->handleRequest($request);
-        
+
         //TODO: test if user's status == 1
 
         if ($formCreateFig->isSubmitted() && $formCreateFig->isValid()) {
@@ -34,6 +34,13 @@ class FigureController extends AbstractController
 
             $entityManager->persist($fig);
             $entityManager->flush();
+
+            $this->addFlash("success", "Création réussie");
+
+            return $this->redirectToRoute('home');
+        } else {
+
+            $this->addFlash("warning", "Une erreur est survenue");
         }
 
         return $this->render('figure/new_figure.html.twig', [
