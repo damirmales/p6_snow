@@ -19,9 +19,6 @@ class FigureController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $entityManager)
     {
-        /* $user = $this->getUser();
-         $status = $user->getStatus();
-         dump($status);*/
 
         $fig = new Figure();
 

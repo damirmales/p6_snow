@@ -36,7 +36,7 @@ class RegisterController extends AbstractController
 
             $token_for_email = $request->get('_token');
 
-            $newUser->setRole('ROLE_USER');
+            $newUser->setRole('ROLE_WAIT');
             $newUser->setStatus(false);
             $newUser->setToken($token_for_email);
 
@@ -97,7 +97,8 @@ class RegisterController extends AbstractController
 
         if ($user != null) {
 
-            $user->setStatus(1);
+            //$user->setStatus(1);
+            $user->setRole('USER_USER');
 
             // Don't use persist() to perform an update
             $manager->flush();
