@@ -103,7 +103,6 @@ class User implements UserInterface
     public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
-
         return $this; // permet l'enchaînement d'autres méthodes setXyz
     }
 
@@ -115,7 +114,6 @@ class User implements UserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
-
         return $this;
     }
 
@@ -127,7 +125,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -139,7 +136,6 @@ class User implements UserInterface
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
-
         return $this;
     }
 
@@ -152,7 +148,6 @@ class User implements UserInterface
     {
         if ($role === null) {
             $this->role = ["ROLE_USER"];
-
         } else $this->role = $role;
 
         return $this;
@@ -166,7 +161,6 @@ class User implements UserInterface
     public function setStatus(bool $status): self
     {
         $this->status = $status;
-
         return $this;
     }
 
@@ -178,7 +172,6 @@ class User implements UserInterface
     public function setToken(string $token): self
     {
         $this->token = $token;
-
         return $this;
     }
 
@@ -190,7 +183,6 @@ class User implements UserInterface
     public function setUsername(string $username): self
     {
         $this->username = $username;
-
         return $this;
     }
 
@@ -202,7 +194,6 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -215,14 +206,13 @@ class User implements UserInterface
     public function setRepeatPassword(string $repeatPassword): self
     {
         $this->repeatPassword = $repeatPassword;
-
         return $this;
     }
 
     /**
      * @inheritDoc
      */
-    public function getRoles() // herite de Userinterface
+    public function getRoles() // hérite de Userinterface
     {
         return [$this->role];
     }
