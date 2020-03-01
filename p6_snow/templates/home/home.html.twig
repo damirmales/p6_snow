@@ -27,7 +27,7 @@
             {% endfor %}
         </div>
         <div class="row ">
-            {% for i in 1..6 %}
+            {% for fig in figs %}
 
                 <div class="col-md-2 text-center">
 
@@ -36,11 +36,11 @@
                             <i class='fas fa-trash-alt'></i>
 
                         </div>    -->
-                        <img class="card-img-top" src="http://placehold.it/350x250" alt="Card image cap">
+                        <img class="card-img-top" src="{{ fig.featureImage }}" alt="Card image cap">
                         <div class="card-body">
-                            <h4 class="card-title">Nom de la Figure</h4>
+                            <h4 class="card-title">{{ fig.title }}</h4>
 
-                            <a href="{{ path('figure') }}" class="card-link">Lien vers la
+                            <a href="{{ path('figure',{'slug':fig.slug}) }}" class="card-link">Lien vers la
                                 figure</a>
                         </div>
 

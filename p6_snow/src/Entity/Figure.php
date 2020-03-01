@@ -3,9 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FigureRepository")
+ * @UniqueEntity(
+ *     fields={"title"},
+ *     message="Ce titre est déjà utilisé."
+ * )
  */
 class Figure
 {
@@ -17,7 +23,7 @@ class Figure
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $title;
 
@@ -147,12 +153,12 @@ class Figure
         return $this;
     }
 
-    public function getEditor(): ?User
+    public function getEditor()
     {
         return $this->editor;
     }
 
-    public function setEditor(?User $editor): self
+    public function setEditor($editor)
     {
         $this->editor = $editor;
 

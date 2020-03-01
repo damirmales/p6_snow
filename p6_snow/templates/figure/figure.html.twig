@@ -6,22 +6,22 @@
 
     <div class="container">
 
-        <div class="jumbotron mt-4">
+        <div class=" mt-4"
+             style="background-image:url( {{ fig.featureImage }});background-size: cover;">
 
-            <h1 class="display-3 text-center">Figure {{ numeroFigure }}</h1>
+            <h1 class="display-3 text-center"> {{ fig.title }}</h1>
 
         </div>
         <!-- Portfolio Gallery pictures -->
         <div class="row">
-            {% for i in 1 .. 4 %}
-                <div class="col-md-3 text-center">
-                    <div class="content">
-                        <img src="https://i.picsum.photos/id/{{ i }}00/400/300.jpg" alt="Mountains" style="width:80%">
-                        <h4>Image {{ i }}</h4>
-                        <p>Lorem ipsum dolor</p>
-                    </div>
+
+            <div class="col-md-3 text-center">
+                <div class="content">
+                    <img src="{{ fig.featureImage }}" alt="Mountains" style="width:80%">
+                    <h4>{{ fig.title }}</h4>
+                    <p>Lorem ipsum dolor</p>
                 </div>
-            {% endfor %}
+            </div>
 
         </div>
 
@@ -29,6 +29,7 @@
 
 
         <div class="row">
+
             {% for i in 1..4 %}
                 <div class="col">
                     <label for="Video">Video </label>
@@ -39,25 +40,33 @@
                     <h4>Vidéo {{ i }}</h4>
                 </div>
             {% endfor %}
+
         </div>
         <!-- dates and group-->
-        <p>Date de création - date de mise à jour - groupe : </p>
-        <!-- Comments zone -->
+        <div class="row">
+            <div class="col">
+                <p>Date de création - date de mise à jour - groupe : </p>
 
-        //////////// Description ///////////
-        <div class="description">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non
-                quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit
-                optio amet ab temporibus asperiores quasi
-                cupiditate. Voluptatum ducimus voluptates voluptas?</p>
+            </div>
         </div>
-
-
+        <!-- description zone -->
+        <div class="row">
+            <div class="col">
+                //////////// Description ///////////
+                <div class="description">
+                    <p>{{ fig.description }}</p>
+                </div>
+            </div>
+        </div>
         <!-- Comments zone -->
 
         //////////// Comments zone ///////////
+        <div class="row">
+            <div class="col">
 
 
+            </div>
+        </div>
     </div>
 
 {% endblock %}
