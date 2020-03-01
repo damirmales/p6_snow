@@ -14,6 +14,34 @@ class FigureController extends AbstractController
 {
 
     /**
+     * @Route("/figure/{slug}/edit", name="edit_figure")
+     */
+    public function editFigure(Figure $figure, Request $request, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(CreateFigureType::class, $figure);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $entityManager->persist($figure);
+            $entityManager->flush();
+
+            $this->addFlash("success", "Modification réussie");
+
+            return $this->redirectToRoute('figure', [
+                'slug' => $figure->getSlug()
+            ]);
+        }
+
+        return $this->render('figure/edit.html.twig', [
+            'form' => $form->createView(),
+            'title' => $figure->getTitle()
+        ]);
+    }
+
+
+    /**
      * Add a new figure
      * @Route("/figure/new", name="new_figure")
      */
@@ -38,7 +66,7 @@ class FigureController extends AbstractController
 
             $this->addFlash("success", "Création réussie");
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('figure');
         }
 
         return $this->render('figure/new_figure.html.twig', [
@@ -46,16 +74,17 @@ class FigureController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/figure/{slug}", name="figure")
      */
-    public function show($slug, FigureRepository $figRepo)
+    public function show($slug, Figure $figure)
     {
-        $fig = $figRepo->findOneBySlug($slug);
+
 
         return $this->render('figure/figure.html.twig', [
             'numeroFigure' => rand(1, 10),
-            'fig' => $fig
+            'fig' => $figure
         ]);
     }
 
