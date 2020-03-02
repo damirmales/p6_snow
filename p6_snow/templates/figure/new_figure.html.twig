@@ -6,6 +6,19 @@
 
     <div class="container mt-4">
         <h1>Ajout d'une nouvelle figure</h1>
+        <div class="row ">
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
         {{ form_start(form) }}
         <div class="row">
             <div class="col">
@@ -13,7 +26,7 @@
                 <div>{{ form_row(form.slug,{"label":"Slug","attr":{ "placeholder":"Slug"}}) }}</div>
                 <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
                 <div>{{ form_row(form.figGroup,{"label":"Groupe de la figure","attr":{ "placeholder":"Groupe de la figure"}}) }}</div>
-                <div>{{ form_row(form.featureImage,{"label":"Image de présentation","attr":{ "placeholder":"Image de présentation"}}) }}</div>
+
             </div>
         </div>
         {{ form_widget(form) }}

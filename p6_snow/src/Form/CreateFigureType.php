@@ -16,17 +16,17 @@ class CreateFigureType extends AbstractType
         $builder
             ->add('title')
             ->add('slug')
-            ->add('featureImage')
+            //  ->add('featureImage')
             ->add('description')
             ->add('figGroup', ChoiceType::class, [
                 'choices' => [
-                    'Flip' => null,
-                    'Slide' => true,
-                    'Grab' => false,
-                    'Rotation' => false,
+                    'Flip' => 'Flip',
+                    'Slide' => 'Slide',
+                    'Grab' => 'Grab',
+                    'Rotation' => 'Rotation',
                 ]])
             ->add('image', FileType::class, [
-                'label' => 'Télécharger une image (jpeg file)',
+                'label' => 'Image de présentation (jpeg file)',
                 'attr' => ['placeholder' => 'Télécharger une image locale'],
                 'mapped' => false,
                 'required' => false])/*
