@@ -66,7 +66,7 @@ class FigureController extends AbstractController
 
             $this->addFlash("success", "Création réussie");
 
-            return $this->redirectToRoute('figure');
+            return $this->redirectToRoute('figure', ['slug' => $fig->getSlug()]);
         }
 
         return $this->render('figure/new_figure.html.twig', [
