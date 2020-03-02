@@ -31,7 +31,6 @@ class RegisterController extends AbstractController
 
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $token_for_email = $request->get('_token');
@@ -97,8 +96,8 @@ class RegisterController extends AbstractController
 
         if ($user != null) {
 
-            //$user->setStatus(1);
-            $user->setRole('USER_USER');
+            $user->setStatus(1);
+            $user->setRole('ROLE_USER');
 
             // Don't use persist() to perform an update
             $manager->flush();

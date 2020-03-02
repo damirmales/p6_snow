@@ -30,29 +30,29 @@
 
         <div class="row">
 
-            {% for i in 1..4 %}
-                <div class="col">
+
+            <!--    <div class="col">
                     <label for="Video">Video </label>
                     <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
                         <iframe class="embed-responsive-item"
                                 src="https://www.youtube.com/embed/v64KOxKVLVg"></iframe>
                     </div>
-                    <h4>Vidéo {{ i }}</h4>
+                    <h4>Vidéo</h4>
                 </div>
-            {% endfor %}
-
+            -->
         </div>
         <!-- dates and group-->
         <div class="row">
             <div class="col">
-                <p>Date de création - date de mise à jour - groupe : </p>
+                <p>Groupe : {{ fig.figGroup }}, Date de création : {{ fig.createDate|date('d-m-Y') }}, date de mise à
+                    jour: {{ fig.updateDate|date('d-m-Y') }}</p>
 
             </div>
         </div>
         <!-- description zone -->
         <div class="row">
             <div class="col">
-                //////////// Description ///////////
+                <h3> Description </h3>
                 <div class="description">
                     <p>{{ fig.description }}</p>
                 </div>
@@ -60,8 +60,8 @@
 
         </div>
         <!-- Comments zone -->
+        <h3> Commentaires </h3>
 
-        //////////// Comments zone ///////////
         <div class="row">
             <div class="col">
 

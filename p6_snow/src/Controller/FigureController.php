@@ -7,6 +7,7 @@ use App\Form\CreateFigureType;
 use App\Repository\FigureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,7 +23,7 @@ class FigureController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $figure->setUpdateDate(new \DateTime('now'));
 
             $entityManager->persist($figure);
             $entityManager->flush();
@@ -53,20 +54,43 @@ class FigureController extends AbstractController
         $formCreateFig = $this->createForm(CreateFigureType::class, $fig);
         $formCreateFig->handleRequest($request);
 
-        //TODO: test if user's status == 1
 
         if ($formCreateFig->isSubmitted() && $formCreateFig->isValid()) {
             $fig->setCreateDate(new \DateTime('now'));
             //  $fig->setSlug("tttttt");
 
             $fig->setEditor($this->getUser()); // available because user is connected
+            $imageFile = $formCreateFig->get('image')->getData();
+
+            if ($imageFile) {
+                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                // Move the file to the directory where avatars are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('avatars_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'picture' field property to store the jpeg file name
+                // instead of its contents
+                $fig->setFeatureImage($newFilename);
+            }
+
 
             $entityManager->persist($fig);
             $entityManager->flush();
 
             $this->addFlash("success", "Création réussie");
 
-            return $this->redirectToRoute('figure');
+            return $this->redirectToRoute('figure', [
+                'slug' => $fig->getSlug()
+            ]);
         }
 
         return $this->render('figure/new_figure.html.twig', [
