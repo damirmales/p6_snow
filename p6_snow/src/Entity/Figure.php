@@ -76,7 +76,7 @@ class Figure
     }
 
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
