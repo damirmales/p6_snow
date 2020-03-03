@@ -60,17 +60,17 @@ class FigureController extends AbstractController
             //  $fig->setSlug("tttttt");
 
             $fig->setEditor($this->getUser()); // available because user is connected
-            $imageFile = $formCreateFig->get('image')->getData();
+            $imageFile = $formCreateFig->get('image_base')->getData();
 
             if ($imageFile) {
                 $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
 
                 $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
-                // Move the file to the directory where avatars are stored
+                // Move the file to the directory where pictures of figures are stored
                 try {
                     $imageFile->move(
-                        $this->getParameter('avatars_directory'),
+                        $this->getParameter('figures_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
@@ -86,7 +86,7 @@ class FigureController extends AbstractController
             $entityManager->persist($fig);
             $entityManager->flush();
 
-            $this->addFlash("success", "Création réussie");
+            $this->addFlash("success", "Création de figure réussie");
 
             return $this->redirectToRoute('figure', [
                 'slug' => $fig->getSlug()

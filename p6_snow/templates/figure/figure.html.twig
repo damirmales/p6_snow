@@ -7,19 +7,20 @@
     <div class="container">
 
         <div class=" mt-4"
-             style="background-image:url( {{ fig.featureImage }});background-size: cover;">
+             style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
 
             <h1 class="display-3 text-center"> {{ fig.title }}</h1>
-
+            <a href="{{ path('edit_figure', {'slug': fig.slug}) }}">Modifier la figure</a>
         </div>
         <!-- Portfolio Gallery pictures -->
-        <div class="row">
-            <a href="{{ path('edit_figure', {'slug': fig.slug}) }}">Modifier la figure</a>
+        <div class="row mt-4">
+            <h3> Images </h3>
             <div class="col-md-3 text-center">
                 <div class="content">
-                    <img src="{{ fig.featureImage }}" alt="Mountains" style="width:80%">
-                    <h4>{{ fig.title }}</h4>
-                    <p>Lorem ipsum dolor</p>
+                    <img src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}" alt="image de présentation"
+                         style="width:80%">
+                    <h4>Photo figure {{ fig.title }}</h4>
+
                 </div>
             </div>
 
@@ -29,7 +30,7 @@
 
 
         <div class="row">
-
+            <h3> Vidéos </h3>
 
             <!--    <div class="col">
                     <label for="Video">Video </label>
@@ -44,6 +45,7 @@
         <!-- dates and group-->
         <div class="row">
             <div class="col">
+                <h3> Informations </h3>
                 <p>Groupe : {{ fig.figGroup }}, Date de création : {{ fig.createDate|date('d-m-Y') }}, date de mise à
                     jour: {{ fig.updateDate|date('d-m-Y') }}</p>
 

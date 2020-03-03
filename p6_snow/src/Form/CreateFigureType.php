@@ -25,7 +25,7 @@ class CreateFigureType extends AbstractType
                     'Grab' => 'Grab',
                     'Rotation' => 'Rotation',
                 ]])
-            ->add('image', FileType::class, [
+            ->add('image_base', FileType::class, [
                 'label' => 'Image de présentation (jpeg file)',
                 'attr' => ['placeholder' => 'Télécharger une image locale'],
                 'mapped' => false,
