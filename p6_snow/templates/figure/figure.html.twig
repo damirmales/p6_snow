@@ -10,7 +10,15 @@
              style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
 
             <h1 class="display-3 text-center"> {{ fig.title }}</h1>
-            <a href="{{ path('edit_figure', {'slug': fig.slug}) }}">Modifier la figure</a>
+            {% if app.user %}
+
+                <div class="card-header">
+                    <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
+                    <a href="{{ path('delete_figure', {'slug': fig.slug}) }}"> <i class='fas fa-trash-alt'></i></a>
+
+
+                </div>
+            {% endif %}
         </div>
         <!-- Portfolio Gallery pictures -->
         <div class="row mt-4">

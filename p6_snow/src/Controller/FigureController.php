@@ -7,16 +7,20 @@ use App\Entity\Media;
 use App\Form\CreateFigureType;
 use App\Repository\FigureRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class FigureController extends AbstractController
 {
 
     /**
      * @Route("/figure/{slug}/edit", name="edit_figure")
+     * @IsGranted("ROLE_USER")
+     *
      */
     public function editFigure(Figure $figure, Request $request, EntityManagerInterface $entityManager)
     {
@@ -60,11 +64,6 @@ class FigureController extends AbstractController
             $entityManager->persist($figure);
             $entityManager->flush();
 
-
-            //--------------------------------------------------------
-
-            $entityManager->persist($figure);
-            $entityManager->flush();
 
             $this->addFlash("success", "Modification réussie");
 
@@ -156,6 +155,17 @@ class FigureController extends AbstractController
             'numeroFigure' => rand(1, 10),
             'fig' => $figure
         ]);
+    }
+
+    /**
+     * @Route("/figure/{slug}/delete", name="delete_figure")
+     */
+    public function delete(Figure $figure, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($figure);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
     }
 
 
