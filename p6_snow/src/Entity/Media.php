@@ -117,7 +117,7 @@ class Media
         return $this->figure;
     }
 
-    public function setFigure(?Figure $figure): self
+    public function setFigure($figure)
     {
         $this->figure = $figure;
 

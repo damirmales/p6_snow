@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Figure;
+use App\Entity\Media;
 use App\Form\CreateFigureType;
 use App\Repository\FigureRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,6 +51,8 @@ class FigureController extends AbstractController
     {
 
         $fig = new Figure();
+        $media = new  Media();
+        $fig->addMedium($media);
 
         $formCreateFig = $this->createForm(CreateFigureType::class, $fig);
         $formCreateFig->handleRequest($request);
@@ -82,6 +85,11 @@ class FigureController extends AbstractController
                 $fig->setFeatureImage($newFilename);
             }
 
+            foreach ($fig->getMedia() as $media) {
+                $media->setCreateDate(new \DateTime('now'));
+                $media->setFigure($fig);
+                $entityManager->persist($media);
+            }
 
             $entityManager->persist($fig);
             $entityManager->flush();

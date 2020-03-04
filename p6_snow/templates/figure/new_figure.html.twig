@@ -2,6 +2,7 @@
 
 {% block title %}Ajout de figure snow tricks{% endblock %}
 
+{% form_theme form _self %}
 {% block body %}
 
     <div class="container mt-4">
@@ -30,9 +31,71 @@
             </div>
         </div>
         {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary">Soumettre</button>
-
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Soumettre</button>
+        </div>
         {{ form_end(form) }}
     </div>
-
 {% endblock %}
+{% block _create_figure_media_widget %}
+    <p>Ajoutez des photos</p>
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <div class="row">
+            <button type="button" id="add-photo" class="btn btn-info">Ajouter un média</button>
+        </div>
+    </div>
+{% endblock %}
+
+{# redefini les label des champs des sous-formulaires #}
+{% block _create_figure_media_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _create_figure_media_entry_widget %}
+    <div class="form-group" id="media_{{ id }}">
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.title, 'Titre du média') }}
+                {{ form_widget(form.title) }}
+                {{ form_label(form.url, 'Url du média') }}
+                {{ form_widget(form.url) }}
+                {{ form_label(form.type, 'Type du média') }}
+                {{ form_widget(form.type) }}
+                <button type="button" data-action="delete" data-target="#media_{{ id }}"
+                        class=" mt-3 btn btn-warning">
+                    Supprimer le média
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        $('#add-photo').click(function () {
+            const index = $('#create_figure_media div.form-group').length;
+            console.log(index);
+            const getPrototypEntry = $('#create_figure_media').data('prototype').replace(/__name__/g, index);
+            // add another MediaType form instance (code)
+            $('#create_figure_media').append(getPrototypEntry);
+            deleteMedia();
+        });
+
+        function deleteMedia() {
+
+            $('button[data-action = "delete"]').click(function () {
+                    const mediatarget = this.dataset.target;
+                    console.log(mediatarget);
+                    $(mediatarget).remove();
+                }
+            );
+        }
+
+        deleteMedia();
+
+    </script>
+{% endblock %}
+
+

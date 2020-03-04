@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Figure;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,7 +30,15 @@ class CreateFigureType extends AbstractType
                 'label' => 'Image de présentation (jpeg file)',
                 'attr' => ['placeholder' => 'Télécharger une image locale'],
                 'mapped' => false,
-                'required' => false])/*
+                'required' => false])
+
+            // on inclus le formulaire des medias
+            ->add('media', CollectionType::class,
+                [
+                    'entry_type' => MediaType::class,
+                    'allow_add' => true
+
+                ])/*
             ->add('CreateDate')
                ->add('updateDate')
             ->add('editor')
