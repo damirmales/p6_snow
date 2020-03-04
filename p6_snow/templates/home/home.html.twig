@@ -36,7 +36,8 @@
                             <i class='fas fa-trash-alt'></i>
 
                         </div>    -->
-                        <img class="card-img-top" src="{{ fig.featureImage }}" alt="Card image cap">
+                        <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
+                             alt="Card image cap">
                         <div class="card-body">
                             <h4 class="card-title">{{ fig.title }}</h4>
 
