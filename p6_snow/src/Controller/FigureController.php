@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Figure;
 use App\Entity\Media;
+use App\Form\CommentType;
 use App\Form\CreateFigureType;
-use App\Repository\FigureRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +30,7 @@ class FigureController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $figure->setUpdateDate(new \DateTime('now'));
+            $figure->setUpdateDate(new DateTime('now'));
             //-------------------------------------------------------
 
             $figure->setEditor($this->getUser()); // available because user is connected
@@ -55,7 +57,7 @@ class FigureController extends AbstractController
             }
             // let added media to persist before insert it to the database
             foreach ($figure->getMedia() as $medium) {
-                $medium->setCreateDate(new \DateTime('now'));
+                $medium->setCreateDate(new DateTime('now'));
 
                 $medium->setFigure($figure);
                 $entityManager->persist($medium);
@@ -95,7 +97,7 @@ class FigureController extends AbstractController
 
 
         if ($formCreateFig->isSubmitted() && $formCreateFig->isValid()) {
-            $fig->setCreateDate(new \DateTime('now'));
+            $fig->setCreateDate(new DateTime('now'));
 
 
             $fig->setEditor($this->getUser()); // available because user is connected
@@ -122,7 +124,7 @@ class FigureController extends AbstractController
             }
             // let added media to persist before insert it to the database
             foreach ($fig->getMedia() as $medium) {
-                $medium->setCreateDate(new \DateTime('now'));
+                $medium->setCreateDate(new DateTime('now'));
 
                 $medium->setFigure($fig);
                 $entityManager->persist($medium);
@@ -147,13 +149,24 @@ class FigureController extends AbstractController
     /**
      * @Route("/figure/{slug}", name="figure")
      */
-    public function show($slug, Figure $figure)
+    public function show(Request $request, Figure $figure, EntityManagerInterface $entityManager)
     {
+        $comment = new Comment();
 
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAuthor($this->getUser())
+                ->setFigure($figure)
+                ->setCreateDate(new \DateTime());
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
         return $this->render('figure/figure.html.twig', [
-            'numeroFigure' => rand(1, 10),
-            'fig' => $figure
+            'fig' => $figure,
+            'form' => $form->createView()
         ]);
     }
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Figure {{ numeroFigure }}{% endblock %}
+{% block title %}Figure {{ fig.title }}{% endblock %}
 
 {% block body %}
 
@@ -67,12 +67,46 @@
             </div>
 
         </div>
-        <!-- Comments zone -->
-        <h3> Commentaires </h3>
+        <!--**** Comments zone *****-->
+        <!-- Add a Comment -->
+
 
         <div class="row">
             <div class="col">
-                <p>un Commentaire</p>
+
+                <div class="">
+                    {% if app.user %}
+                        {{ form_start(form) }}
+
+                        <h3>{{ form_row(form.content,{'label':'Votre commentaire'}) }}</h3>
+
+                        <button type="submit" name="submit">Envoyer votre commentaire</button>
+                        {{ form_end(form) }}
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Comment already available-->
+
+
+        <div class="row mt-4">
+            <div class="col">
+                <h3> Derniers commentaires </h3>
+                {% if fig.comments|length > 0 %}
+                    <h4>Les commentaires reçus</h4>
+                    {% for comment in fig.comments %}
+                        <div class="b-light">
+                            <p>{{ comment.author.id }}</p>
+                            <p>{{ comment.content }}</p>
+                            <p>{{ comment.createDate|date('d-m-Y H:i:s') }}</p>
+                            <p>{{ comment.author.picture }}</p>
+
+                        </div>
+
+                    {% endfor %}
+                {% endif %}
 
             </div>
         </div>
