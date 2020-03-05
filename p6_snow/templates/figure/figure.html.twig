@@ -7,43 +7,51 @@
     <div class="container">
 
         <div class=" mt-4"
-             style="background-image:url( {{ fig.featureImage }});background-size: cover;">
+             style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
 
             <h1 class="display-3 text-center"> {{ fig.title }}</h1>
+            {% if app.user %}
 
+                <div class="card-header">
+                    <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
+                    <a href="{{ path('delete_figure', {'slug': fig.slug}) }}"> <i class='fas fa-trash-alt'></i></a>
+
+
+                </div>
+            {% endif %}
         </div>
         <!-- Portfolio Gallery pictures -->
+        <div class="row mt-4">
+
+            <div class="col">
+                <h3> Images </h3>
+                {% for media in fig.media %}
+
+                    <img src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}" alt="image de présentation"
+                         style="width:80%">
+                    <h4>Photo figure {{ fig.title }}</h4>
+
+                {% endfor %}
+            </div>
+        </div>
+        <!-- Portfolio Gallery videos -->
         <div class="row">
-            <a href="{{ path('edit_figure', {'slug': fig.slug}) }}">Modifier la figure</a>
-            <div class="col-md-3 text-center">
-                <div class="content">
-                    <img src="{{ fig.featureImage }}" alt="Mountains" style="width:80%">
-                    <h4>{{ fig.title }}</h4>
-                    <p>Lorem ipsum dolor</p>
+
+            <div class="col">
+                <h3> Vidéos </h3>
+                <label for="Video">Video </label>
+                <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+                    <iframe class="embed-responsive-item"
+                            src="https://www.youtube.com/embed/v64KOxKVLVg"></iframe>
                 </div>
+
             </div>
 
-        </div>
-
-        <!-- Portfolio Gallery videos -->
-
-
-        <div class="row">
-
-
-            <!--    <div class="col">
-                    <label for="Video">Video </label>
-                    <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
-                        <iframe class="embed-responsive-item"
-                                src="https://www.youtube.com/embed/v64KOxKVLVg"></iframe>
-                    </div>
-                    <h4>Vidéo</h4>
-                </div>
-            -->
         </div>
         <!-- dates and group-->
         <div class="row">
             <div class="col">
+                <h3> Informations </h3>
                 <p>Groupe : {{ fig.figGroup }}, Date de création : {{ fig.createDate|date('d-m-Y') }}, date de mise à
                     jour: {{ fig.updateDate|date('d-m-Y') }}</p>
 
@@ -64,7 +72,7 @@
 
         <div class="row">
             <div class="col">
-
+                <p>un Commentaire</p>
 
             </div>
         </div>

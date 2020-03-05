@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +15,12 @@ class MediaType extends AbstractType
         $builder
             ->add('title')
             ->add('url')
-            ->add('type')/*
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Photo' => 'Photo',
+                    'Vidéo' => 'Vidéo',
+
+                ]])/*
             ->add('createDate')
             ->add('updateDate')
             ->add('figure')
