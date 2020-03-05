@@ -22,33 +22,31 @@
         </div>
         <!-- Portfolio Gallery pictures -->
         <div class="row mt-4">
-            <h3> Images </h3>
-            <div class="col-md-3 text-center">
-                <div class="content">
+
+            <div class="col">
+                <h3> Images </h3>
+                {% for media in fig.media %}
+
                     <img src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}" alt="image de présentation"
                          style="width:80%">
                     <h4>Photo figure {{ fig.title }}</h4>
 
+                {% endfor %}
+            </div>
+        </div>
+        <!-- Portfolio Gallery videos -->
+        <div class="row">
+
+            <div class="col">
+                <h3> Vidéos </h3>
+                <label for="Video">Video </label>
+                <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+                    <iframe class="embed-responsive-item"
+                            src="https://www.youtube.com/embed/v64KOxKVLVg"></iframe>
                 </div>
+
             </div>
 
-        </div>
-
-        <!-- Portfolio Gallery videos -->
-
-
-        <div class="row">
-            <h3> Vidéos </h3>
-
-            <!--    <div class="col">
-                    <label for="Video">Video </label>
-                    <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
-                        <iframe class="embed-responsive-item"
-                                src="https://www.youtube.com/embed/v64KOxKVLVg"></iframe>
-                    </div>
-                    <h4>Vidéo</h4>
-                </div>
-            -->
         </div>
         <!-- dates and group-->
         <div class="row">
@@ -74,7 +72,7 @@
 
         <div class="row">
             <div class="col">
-
+                <p>un Commentaire</p>
 
             </div>
         </div>

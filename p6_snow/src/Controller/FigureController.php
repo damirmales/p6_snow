@@ -19,7 +19,7 @@ class FigureController extends AbstractController
 
     /**
      * @Route("/figure/{slug}/edit", name="edit_figure")
-     * @IsGranted("ROLE_USER")
+     * @IsGranted({"ROLE_USER", "ROLE_ADMIN"})
      *
      */
     public function editFigure(Figure $figure, Request $request, EntityManagerInterface $entityManager)
