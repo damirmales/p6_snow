@@ -29,6 +29,8 @@ class ConnectionController extends AbstractController
             'errorMessage' => $error !== null,
             'username' => $username,
         ]);
+
+
     }
 
 

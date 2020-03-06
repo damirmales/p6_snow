@@ -7,8 +7,10 @@ use App\Entity\Figure;
 use App\Entity\Media;
 use App\Form\CommentType;
 use App\Form\CreateFigureType;
+use App\Repository\CommentRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -95,7 +97,6 @@ class FigureController extends AbstractController
         $formCreateFig = $this->createForm(CreateFigureType::class, $fig);
         $formCreateFig->handleRequest($request);
 
-
         if ($formCreateFig->isSubmitted() && $formCreateFig->isValid()) {
             $fig->setCreateDate(new DateTime('now'));
 
@@ -147,11 +148,16 @@ class FigureController extends AbstractController
 
 
     /**
-     * @Route("/figure/{slug}", name="figure")
+     *
+     * @Route("/figure/{slug}/{page}", name="page_figure" )
+     *
      */
-    public function show(Request $request, Figure $figure, EntityManagerInterface $entityManager)
+    public function show($page = 1, Request $request, Figure $figure, EntityManagerInterface $entityManager, CommentRepository $commentRepository)
     {
+
         $comment = new Comment();
+        $numPage = $page;
+
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -159,15 +165,28 @@ class FigureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setAuthor($this->getUser())
                 ->setFigure($figure)
-                ->setCreateDate(new \DateTime());
+                ->setCreateDate(new DateTime());
 
             $entityManager->persist($comment);
             $entityManager->flush();
         }
-        return $this->render('figure/figure.html.twig', [
+//------------------------- pagination -----------------------------
+        $paginationLimit = 2;
+        $paginationOffset = $numPage * $paginationLimit - $paginationLimit;
+        $numberOfCommentPerpage = 2;
+        $totalComments = count($commentRepository->findAll());
+        $rangeOfComments = ceil($totalComments / $numberOfCommentPerpage);
+
+
+//------------------------- -----------------------------
+
+        return $this->render('figure/figure.html.twig', array(
+            'comments' => $commentRepository->findBy(array(), array(), $paginationLimit, $paginationOffset),
             'fig' => $figure,
-            'form' => $form->createView()
-        ]);
+            'form' => $form->createView(),
+            'pagesOfComments' => $rangeOfComments,
+            'numPage' => $numPage,
+        ));
     }
 
     /**
