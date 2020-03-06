@@ -174,14 +174,18 @@ class FigureController extends AbstractController
         $paginationLimit = 2;
         $paginationOffset = $numPage * $paginationLimit - $paginationLimit;
         $numberOfCommentPerpage = 2;
-        $totalComments = count($commentRepository->findAll());
+        $totalComments = count($commentRepository->findByFigure([
+            'figure' => $figure,
+
+        ]));
+
         $rangeOfComments = ceil($totalComments / $numberOfCommentPerpage);
 
 
 //------------------------- -----------------------------
 
         return $this->render('figure/figure.html.twig', array(
-            'comments' => $commentRepository->findBy(array(), array(), $paginationLimit, $paginationOffset),
+            'comments' => $commentRepository->findByFigure(['figure' => $figure], array(), $paginationLimit, $paginationOffset),
             'fig' => $figure,
             'form' => $form->createView(),
             'pagesOfComments' => $rangeOfComments,
