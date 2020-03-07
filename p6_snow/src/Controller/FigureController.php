@@ -136,7 +136,7 @@ class FigureController extends AbstractController
 
             $this->addFlash("success", "Création de figure réussie");
 
-            return $this->redirectToRoute('figure', [
+            return $this->redirectToRoute('home', [
                 'slug' => $fig->getSlug()
             ]);
         }
