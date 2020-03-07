@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home page snow tricks{% endblock %}
+{% block title %}Snow tricks{% endblock %}
 
 {% block body %}
 
@@ -32,16 +32,14 @@
                 <div class="col-md-2 text-center">
 
                     <div class="card border-primary mb-3 flex-fill" style="max-width: 12rem;">
-                        <!-- <div class="card-header"><i class='fas fa-pen'></i>
-                            <i class='fas fa-trash-alt'></i>
 
-                        </div>    -->
                         <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
-                             alt="Card image cap">
+                             alt="Figure image cap">
                         <div class="card-body">
                             <h4 class="card-title">{{ fig.title }}</h4>
 
-                            <a href="{{ path('figure',{'slug':fig.slug}) }}" class="card-link">Lien vers la
+                            <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link">Lien
+                                vers la
                                 figure</a>
                             <div class="card-header"><i class='fas fa-pen'></i>
                                 <i class='fas fa-trash-alt'></i>

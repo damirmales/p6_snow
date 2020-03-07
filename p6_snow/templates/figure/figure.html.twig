@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Figure {{ numeroFigure }}{% endblock %}
+{% block title %}Figure {{ fig.title }}{% endblock %}
 
 {% block body %}
 
@@ -26,12 +26,19 @@
             <div class="col">
                 <h3> Images </h3>
                 {% for media in fig.media %}
-
-                    <img src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}" alt="image de présentation"
-                         style="width:80%">
+                    {% if media.url %}
+                        <img src="{{ media.url }}" alt="image de présentation"
+                             style="width:150px">
+                        <div class="card-header"><i class='fas fa-pen'></i>
+                            <i class='fas fa-trash-alt'></i>
+                        </div>
+                    {% endif %}
                     <h4>Photo figure {{ fig.title }}</h4>
 
+
+
                 {% endfor %}
+
             </div>
         </div>
         <!-- Portfolio Gallery videos -->
@@ -44,7 +51,10 @@
                     <iframe class="embed-responsive-item"
                             src="https://www.youtube.com/embed/v64KOxKVLVg"></iframe>
                 </div>
+                <div class="card-header"><i class='fas fa-pen'></i>
+                    <i class='fas fa-trash-alt'></i>
 
+                </div>
             </div>
 
         </div>
@@ -67,15 +77,90 @@
             </div>
 
         </div>
-        <!-- Comments zone -->
-        <h3> Commentaires </h3>
+        <!--**** Comments zone *****-->
+        <!-- Add a Comment -->
+
 
         <div class="row">
             <div class="col">
-                <p>un Commentaire</p>
 
+                <div class="">
+                    {% if app.user %}
+                        {{ form_start(form) }}
+
+                        <h3>{{ form_row(form.content,{'label':'Votre commentaire'}) }}</h3>
+
+                        <button type="submit" name="submit">Envoyer votre commentaire</button>
+                        {{ form_end(form) }}
+                    {% endif %}
+                </div>
             </div>
+
         </div>
+
+        <!-- Comment already available-->
+
+        <div class="row mt-4">
+            <div class="col">
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Auteur</th>
+                        <th>Avatar</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if fig.comments|length > 0 %}
+                        <h3>Les commentaires reçus</h3>
+                        {% for comment in comments %}
+
+                            <tr>
+                                <td>{{ comment.author.username }}</td>
+                                <td><img src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
+                                         alt="{{ comment.figure.title }}">
+                                </td>
+                                <td>{{ comment.content }}</td>
+                                <td>{{ comment.createDate|date('d-m-Y H:i:s') }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Comments navigation block">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" {% if numPage > 1 %}
+
+                                   href="{{ path('page_figure',{'slug':fig.slug,'page':numPage-1}) }}"
+                                   {% endif %}aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous </span>
+                                </a>
+                            </li>
+                            {% if pagesOfComments > 0 %}
+                                {% for i in 1..pagesOfComments %}
+                                    <li class="page-item  {% if numPage == i %} active{% endif %} "><a
+                                                class="page-link"
+                                                href="{{ path('page_figure',{'slug':fig.slug,'page':i}) }}">{{ i }}</a>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+                            <li class="page-item ">
+                                <a class="page-link"{% if numPage < pagesOfComments %} href="{{ path('page_figure',{'slug':fig.slug,'page':numPage+1}) }}"
+                                        {% endif %} aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div><!-- row -->
     </div>
 
 {% endblock %}
