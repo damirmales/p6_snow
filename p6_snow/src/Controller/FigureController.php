@@ -185,7 +185,7 @@ class FigureController extends AbstractController
 //------------------------- -----------------------------
 
         return $this->render('figure/figure.html.twig', array(
-            'comments' => $commentRepository->findByFigure(['figure' => $figure], array(), $paginationLimit, $paginationOffset),
+            'comments' => $commentRepository->findByFigure(['figure' => $figure], array('createDate' => 'DESC'), $paginationLimit, $paginationOffset),
             'fig' => $figure,
             'form' => $form->createView(),
             'pagesOfComments' => $rangeOfComments,
