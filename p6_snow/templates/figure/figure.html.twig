@@ -5,7 +5,6 @@
 {% block body %}
 
     <div class="container">
-
         <div class="row mt-4"
              style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
 
@@ -30,11 +29,11 @@
             {% for media in medias %}
                 {% if media.url %}
                     <div class="col">
-                        <img src="{{ media.url }}" alt="image de présentation"
+                        <img src="{{ media.url }}" alt="image de figure snowboard"
                              style="width:150px">
                         <div class="card-header">
-                            <a href="#"><i class='fas fa-pen'></i></a>
-                            <a href="#"> <i class='fas fa-trash-alt'></i></a>
+                            <a href="{{ path('edit_media',{'id':media.id}) }}"><i class='fas fa-pen'></i></a>
+                            <a href="{{ path('delete_media',{'id':media.id}) }}"> <i class='fas fa-trash-alt'></i></a>
                         </div>
 
                         <h5>Photo figure {{ media.title }}</h5>
@@ -42,7 +41,7 @@
                 {% endif %}
             {% endfor %}
         </div>
-        <div class="row mt-4">
+        <div class=" row mt-4">
             <div class="col-md-6">
                 <!------------ pagination pictures of figure ---------------------->
                 <div class="d-flex justify-content-center">
@@ -100,7 +99,8 @@
         <div class="row mt-4">
             <div class="col">
                 <h3> Informations </h3>
-                <p>Groupe : {{ fig.figGroup }}, Date de création : {{ fig.createDate|date('d-m-Y') }}, date de mise à
+                <p>Groupe : {{ fig.figGroup }}, Date de création : {{ fig.createDate|date('d-m-Y') }}, date de mise
+                    à
                     jour: {{ fig.updateDate|date('d-m-Y') }}</p>
 
             </div>

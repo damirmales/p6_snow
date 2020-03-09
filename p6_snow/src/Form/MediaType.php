@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,7 +21,12 @@ class MediaType extends AbstractType
                     'Photo' => 'Photo',
                     'Vidéo' => 'Vidéo',
 
-                ]])/*
+                ]])
+            ->add('photo_figure', FileType::class, [
+                'label' => 'Média en rapport avec la figure (jpeg file)',
+                'attr' => ['placeholder' => 'Télécharger une photo locale'],
+                'mapped' => false,
+                'required' => false])/*
             ->add('createDate')
             ->add('updateDate')
             ->add('figure')
@@ -32,6 +38,7 @@ class MediaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Media::class,
+            'allow_add' => true
         ]);
     }
 }

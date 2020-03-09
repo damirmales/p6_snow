@@ -101,9 +101,10 @@ class FigureController extends AbstractController
         if ($formCreateFig->isSubmitted() && $formCreateFig->isValid()) {
             $fig->setCreateDate(new DateTime('now'));
 
-
             $fig->setEditor($this->getUser()); // available because user is connected
-            $imageFile = $formCreateFig->get('image_base')->getData();
+
+            //-------- Manage the field devoted to upload extra figure default picture ----------------
+            $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype
 
             if ($imageFile) {
                 $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -124,6 +125,30 @@ class FigureController extends AbstractController
                 // instead of its contents
                 $fig->setFeatureImage($newFilename);
             }
+
+            //-------- Manage the field devoted to upload extra figure pictures ----------------
+            $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype
+
+            if ($imageFile) {
+                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                // Move the file to the directory where pictures of figures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('figures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'picture' field property to store the jpeg file name
+                // instead of its contents
+                $fig->setFeatureImage($newFilename);
+            }
+
             // let added media to persist before insert it to the database
             foreach ($fig->getMedia() as $medium) {
                 $medium->setCreateDate(new DateTime('now'));
