@@ -58,7 +58,8 @@ class FigureFixtures extends Fixture
                 $img->setTitle("Media $j")
                     ->setType("photo")
                     ->setUrl("https://via.placeholder.com/150")
-                    ->setFigure($fig)
+                    ->setFigure($fig
+                    )
                     ->setCreateDate(DateTime::createFromFormat('j-M-Y', '15-Feb-2009'));
 
                 $entityManager->persist($img);

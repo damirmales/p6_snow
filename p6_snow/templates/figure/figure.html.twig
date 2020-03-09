@@ -16,7 +16,6 @@
                     <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
                     <a href="{{ path('delete_figure', {'slug': fig.slug}) }}"> <i class='fas fa-trash-alt'></i></a>
 
-
                 </div>
             {% endif %}
         </div>
@@ -33,8 +32,9 @@
                     <div class="col">
                         <img src="{{ media.url }}" alt="image de présentation"
                              style="width:150px">
-                        <div class="card-header"><i class='fas fa-pen'></i>
-                            <i class='fas fa-trash-alt'></i>
+                        <div class="card-header">
+                            <a href="#"><i class='fas fa-pen'></i></a>
+                            <a href="#"> <i class='fas fa-trash-alt'></i></a>
                         </div>
 
                         <h5>Photo figure {{ media.title }}</h5>
