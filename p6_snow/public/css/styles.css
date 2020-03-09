@@ -11,3 +11,12 @@ img {
 
     max-width: 200px;
 }
+
+.col {
+
+    background-color: beige;
+}
+
+.card-header {
+    width: 100px;
+}

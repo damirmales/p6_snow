@@ -8,6 +8,7 @@ use App\Entity\Media;
 use App\Form\CommentType;
 use App\Form\CreateFigureType;
 use App\Repository\CommentRepository;
+use App\Repository\MediaRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -152,7 +153,10 @@ class FigureController extends AbstractController
      * @Route("/figure/{slug}/{page}", name="page_figure" )
      *
      */
-    public function show($page = 1, Request $request, Figure $figure, EntityManagerInterface $entityManager, CommentRepository $commentRepository)
+    public function show($page = 1, Request $request, Figure $figure,
+                         EntityManagerInterface $entityManager,
+                         CommentRepository $commentRepository,
+                         MediaRepository $mediaRepository)
     {
 
         $comment = new Comment();
@@ -170,7 +174,18 @@ class FigureController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
         }
-//------------------------- pagination -----------------------------
+        //------------------------- Pagination Pictures gallery -----------------------------
+        $numPictPage = 1;
+        $paginationPictLimit = 2;
+        $paginationPictOffset = $numPictPage * $paginationPictLimit - $paginationPictLimit;
+        $numberOfPictPerpage = 2;
+        $totalPict = count($mediaRepository->findByFigure([
+            'figure' => $figure,
+        ]));
+        $rangeOfPictures = ceil($totalPict / $numberOfPictPerpage);
+
+
+//------------------------- pagination Comments-----------------------------
         $paginationLimit = 2;
         $paginationOffset = $numPage * $paginationLimit - $paginationLimit;
         $numberOfCommentPerpage = 2;
@@ -186,10 +201,16 @@ class FigureController extends AbstractController
 
         return $this->render('figure/figure.html.twig', array(
             'comments' => $commentRepository->findByFigure(['figure' => $figure], array('createDate' => 'DESC'), $paginationLimit, $paginationOffset),
+            'medias' => $mediaRepository->findByFigure(['figure' => $figure], array('createDate' => 'DESC'), $paginationLimit, $paginationPictOffset),
+
             'fig' => $figure,
             'form' => $form->createView(),
+
             'pagesOfComments' => $rangeOfComments,
             'numPage' => $numPage,
+
+            'pagesOfPictures' => $rangeOfPictures,
+            'numPictPage' => $numPictPage,
         ));
     }
 
