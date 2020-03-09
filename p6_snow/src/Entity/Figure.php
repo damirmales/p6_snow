@@ -60,7 +60,7 @@ class Figure
     private $updateDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="figures")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="figures", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $editor;

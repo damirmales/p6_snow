@@ -42,7 +42,7 @@ class Media
     private $updateDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Figure", inversedBy="media")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Figure", inversedBy="media", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $figure;
