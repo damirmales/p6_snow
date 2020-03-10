@@ -36,7 +36,7 @@ class CreateFigureType extends AbstractType
             ->add('media', CollectionType::class,
                 [
                     'entry_type' => MediaType::class,
-                    'allow_add' => true
+                    'allow_add' => true // allow adding of several media forms
 
                 ])/*
             ->add('CreateDate')

@@ -8,7 +8,7 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Modifier la figure {{ title }}</h1>
+        <h1>Modifier {{ title }}</h1>
         {{ form_start(form) }}
         <div class="row">
             <div class="col">
@@ -73,6 +73,7 @@
             deleteMedia();
         });
 
+        //delete the form not the content in the database
         function deleteMedia() {
 
             $('button[data-action = "delete"]').click(function () {

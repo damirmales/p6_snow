@@ -23,7 +23,7 @@ class MediaType extends AbstractType
 
                 ]])
             ->add('photo_figure', FileType::class, [
-                'label' => 'Média en rapport avec la figure (jpeg file)',
+                'label' => 'Média en rapport avec la figure',
                 'attr' => ['placeholder' => 'Télécharger une photo locale'],
                 'mapped' => false,
                 'required' => false])/*

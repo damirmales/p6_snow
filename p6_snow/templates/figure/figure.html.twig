@@ -29,8 +29,20 @@
             {% for media in medias %}
                 {% if media.url %}
                     <div class="col">
-                        <img src="{{ media.url }}" alt="image de figure snowboard"
-                             style="width:150px">
+                        {% if media.type == 'photo' %}
+                            <img src="{{ media.url }}" alt="image de figure snowboard"
+                                 style="width:150px">
+
+                        {% else %}
+                            <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+                                <iframe class="embed-responsive-item"
+                                        src="{{ media.url }}">
+
+                                </iframe>
+
+
+                            </div>
+                        {% endif %}
                         <div class="card-header">
                             <a href="{{ path('edit_media',{'id':media.id}) }}"><i class='fas fa-pen'></i></a>
                             <a href="{{ path('delete_media',{'id':media.id}) }}"> <i class='fas fa-trash-alt'></i></a>
@@ -77,24 +89,7 @@
             </div> <!-- block pagination comments -->
 
         </div>
-        <!-- Portfolio Gallery videos -->
-        <div class="row mt-4">
 
-            <div class="col">
-                <h3> Vidéos </h3>
-                <label for="Video">Video </label>
-                <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
-                    <iframe class="embed-responsive-item"
-                            src="https://www.youtube.com/embed/v64KOxKVLVg"></iframe>
-                </div>
-                <div class="card-header"><i class='fas fa-pen'></i>
-                    <i class='fas fa-trash-alt'></i>
-
-                </div>
-            </div>
-
-
-        </div>
         <!-- dates and group-->
         <div class="row mt-4">
             <div class="col">
