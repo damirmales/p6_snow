@@ -5,52 +5,76 @@
 {% block body %}
 
 
-    <div class="container ">
+<div class="container ">
 
-        <div class="jumbotron mt-4">
+    <div class="jumbotron mt-4">
 
-            <h1 class="display-3 text-center">Bienvenu sur Snow tricks</h1>
+        <h1 class="display-3 text-center">Bienvenu sur Snow tricks</h1>
 
 
-        </div>
+    </div>
 
-        <div class="row ">
-            {% for message in app.flashes('warning') %}
-                <div class="alert alert-warning">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-        <div class="row ">
-            {% for fig in figs %}
+    <div class="row ">
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row ">
+        {% for fig in figs %}
 
-                <div class="col-md-2 text-center">
+            <div class="col-md-2 text-center">
 
-                    <div class="card border-primary mb-3 flex-fill" style="max-width: 12rem;">
+                <div class="card border-primary mb-3 flex-fill" style="max-width: 12rem;">
 
-                        <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
-                             alt="Figure image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ fig.title }}</h4>
+                    <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
+                         alt="Figure image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ fig.title }}</h4>
 
-                            <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link">Lien
-                                vers la
-                                figure</a>
-                            <div class="card-header"><i class='fas fa-pen'></i>
-                                <i class='fas fa-trash-alt'></i>
-
-                            </div>
+                        <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link">Lien
+                            vers la
+                            figure</a>
+                        <div class="card-header">
+                            <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
+                            <a href="#" data-toggle="modal" data-target="#deleteFigure">
+                                <i class='fas fa-trash-alt'></i></a>
                         </div>
-
                     </div>
-                </div>
-            {% endfor %}
 
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+<!--*********** Tigger modal  when delete figure button is clicked ****************-->
+
+<!-- Modal -->
+<div class="modal fade" id="deleteFigure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Êtes vous sûr de vouloir supprimer la figure ?
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
         </div>
     </div>
-{% endblock %}
+    {% endblock %}

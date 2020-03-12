@@ -17,6 +17,7 @@
 
                 </div>
             {% endif %}
+            <a href="{{ path('create_media', {'slug': fig.slug}) }}" class="">ajout médias</a>
         </div>
         <!-- Portfolio Gallery pictures -->
         <div class="row mt-4">
@@ -30,16 +31,16 @@
                 {% if media.url %}
                     <div class="col">
                         {% if media.type == 'photo' %}
-                            <img src="{{ media.url }}" alt="image de figure snowboard"
+                            <img src="{{ asset('/uploads/figures/') }}{{ media.url }}" alt="image de figure snowboard"
                                  style="width:150px">
 
                         {% else %}
                             <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
-                                <iframe class="embed-responsive-item"
-                                        src="{{ media.url }}">
 
-                                </iframe>
-
+                                <iframe class="embed-responsive-item" width="150" height="200"
+                                        src="{{ media.url }}?controls=0" frameborder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
 
                             </div>
                         {% endif %}

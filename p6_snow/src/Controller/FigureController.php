@@ -72,14 +72,18 @@ class FigureController extends AbstractController
 
             $this->addFlash("success", "Modification réussie");
 
-            return $this->redirectToRoute('figure', [
-                'slug' => $figure->getSlug()
+            return $this->redirectToRoute('page_figure', [
+                'slug' => $figure->getSlug(),
+
+
             ]);
         }
 
         return $this->render('figure/edit.html.twig', [
             'form' => $form->createView(),
-            'title' => $figure->getTitle()
+            'fig' => $figure,
+
+
         ]);
     }
 
@@ -100,10 +104,9 @@ class FigureController extends AbstractController
 
         if ($formCreateFig->isSubmitted() && $formCreateFig->isValid()) {
             $fig->setCreateDate(new DateTime('now'));
-
             $fig->setEditor($this->getUser()); // available because user is connected
 
-            //-------- Manage the field devoted to upload extra figure default picture ----------------
+            //-------- Manage the field devoted to upload default picture ----------------
             $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype
 
             if ($imageFile) {
@@ -125,34 +128,34 @@ class FigureController extends AbstractController
                 // instead of its contents
                 $fig->setFeatureImage($newFilename);
             }
+            /*-
+                        //-------- Manage the field devoted to upload extra figure pictures ----------------
+                        $mediumFile = $formCreateFig->get($media)->get('photo_figure')->getData(); //from CreateFigureType Filetype
 
-            //-------- Manage the field devoted to upload extra figure pictures ----------------
-            $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype
+                        if ($mediumFile) {
+                            $imageFilename = pathinfo($mediumFile->getClientOriginalName(), PATHINFO_FILENAME);
 
-            if ($imageFile) {
-                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                            $newFilename = $imageFilename . '-' . uniqid() . '.' . $mediumFile->guessExtension();
 
-                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                            // Move the file to the directory where pictures of figures are stored
+                            try {
+                                $mediumFile->move(
+                                    $this->getParameter('figures_directory'),
+                                    $newFilename
+                                );
+                            } catch (FileException $e) {
+                                // ... handle exception if something happens during file upload
+                            }
 
-                // Move the file to the directory where pictures of figures are stored
-                try {
-                    $imageFile->move(
-                        $this->getParameter('figures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'picture' field property to store the jpeg file name
-                // instead of its contents
-                $fig->setFeatureImage($newFilename);
-            }
+                            // updates the 'picture' field property to store the jpeg file name
+                            // instead of its contents
+                            $media->setUrl($newFilename);
+                        } */
 
             // let added media to persist before insert it to the database
             foreach ($fig->getMedia() as $medium) {
                 $medium->setCreateDate(new DateTime('now'));
-
+                $medium->setType('photo');
                 $medium->setFigure($fig);
                 $entityManager->persist($medium);
             }
@@ -160,9 +163,10 @@ class FigureController extends AbstractController
             $entityManager->persist($fig);
             $entityManager->flush();
 
+
             $this->addFlash("success", "Création de figure réussie");
 
-            return $this->redirectToRoute('home', [
+            return $this->redirectToRoute('edit_figure', [
                 'slug' => $fig->getSlug()
             ]);
         }
@@ -170,6 +174,18 @@ class FigureController extends AbstractController
         return $this->render('figure/new_figure.html.twig', [
             'form' => $formCreateFig->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/figure/{slug}/delete", name="delete_figure")
+     */
+    public function delete(Figure $figure, EntityManagerInterface $entityManager)
+    {
+
+        $entityManager->remove($figure);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
     }
 
 
@@ -201,9 +217,9 @@ class FigureController extends AbstractController
         }
         //------------------------- Pagination Pictures gallery -----------------------------
         $numPictPage = 1;
-        $paginationPictLimit = 2;
+        $paginationPictLimit = 3;
         $paginationPictOffset = $numPictPage * $paginationPictLimit - $paginationPictLimit;
-        $numberOfPictPerpage = 2;
+        $numberOfPictPerpage = 3;
         $totalPict = count($mediaRepository->findByFigure([
             'figure' => $figure,
         ]));
@@ -237,17 +253,6 @@ class FigureController extends AbstractController
             'pagesOfPictures' => $rangeOfPictures,
             'numPictPage' => $numPictPage,
         ));
-    }
-
-    /**
-     * @Route("/figure/{slug}/delete", name="delete_figure")
-     */
-    public function delete(Figure $figure, EntityManagerInterface $entityManager)
-    {
-        $entityManager->remove($figure);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('home');
     }
 
 

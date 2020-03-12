@@ -8,7 +8,22 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Modifier {{ title }}</h1>
+        <h1>Modifier {{ fig.title }}</h1>
+        <div class="row mt-4"
+             style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
+
+            <h1 class="display-3 text-center"> {{ fig.title }}</h1>
+
+
+            <div class="card-header">
+                <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
+                <a href="{{ path('delete_figure', {'slug': fig.slug}) }}"> <i class='fas fa-trash-alt'></i></a>
+
+            </div>
+
+
+        </div>
+
         {{ form_start(form) }}
         <div class="row">
             <div class="col">
@@ -50,8 +65,8 @@
                 {{ form_widget(form.title) }}
                 {{ form_label(form.url, 'Url du média') }}
                 {{ form_widget(form.url) }}
-                {{ form_label(form.type, 'Type du média') }}
-                {{ form_widget(form.type) }}
+                {# {{ form_label(form.type, 'Type du média') }}
+                {{ form_widget(form.type) }} #}
                 <button type="button" data-action="delete" data-target="#media_{{ id }}"
                         class=" mt-3 btn btn-warning">
                     Supprimer le média
