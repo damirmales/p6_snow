@@ -7,6 +7,7 @@ use App\Entity\Figure;
 use App\Entity\Media;
 use App\Form\CommentType;
 use App\Form\CreateFigureType;
+use App\Form\FeatureImgType;
 use App\Repository\CommentRepository;
 use App\Repository\MediaRepository;
 use DateTime;
@@ -21,6 +22,34 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FigureController extends AbstractController
 {
+
+    /**
+     * @Route("/figure/{slug}/featureImage", name="image_presentation")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editFeatureimage(Figure $figure)
+    {
+        $form = $this->createForm(FeatureImgType::class, $figure);
+        return $this->render('figure/edit_feature_image.html.twig', [
+
+                'form' => $form->createView(),
+            ]
+        );
+
+    }
+
+    /**
+     * @Route("/figure/{slug}/featureImage/delete", name="delete_feature_image")
+     */
+    public function deleteFeatureImage(Figure $figure, EntityManagerInterface $entityManager)
+    {
+
+        $entityManager->remove($figure);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home');
+    }
+
 
     /**
      * @Route("/figure/{slug}/edit", name="edit_figure")
@@ -194,8 +223,7 @@ class FigureController extends AbstractController
      * @Route("/figure/{slug}/{page}", name="page_figure" )
      *
      */
-    public function show($page = 1, Request $request, Figure $figure,
-                         EntityManagerInterface $entityManager,
+    public function show($page = 1, Request $request, Figure $figure, EntityManagerInterface $entityManager,
                          CommentRepository $commentRepository,
                          MediaRepository $mediaRepository)
     {
