@@ -40,6 +40,8 @@
     </div>
 {% endblock %}
 
+
+
 {% block _create_figure_media_widget %}
     <p>Ajoutez des Médias</p>
     {{ form_widget(form) }}
@@ -79,7 +81,7 @@
     <script>
 
         $('#add-photo').click(function () {
-            const index = $('#create_figure_media div.form-group').length; // on récupère les div ayant la classe form_group
+            let index = $('#create_figure_media div.form-group').length; // on récupère les div qui ont la classe form_group
             console.log(index);
             const getPrototypEntry = $('#create_figure_media').data('prototype').replace(/__name__/g, index);
 // add another MediaType form instance (code)
@@ -95,6 +97,23 @@
                     $(mediatarget).remove();
                 }
             );
+        }
+
+        if (index > 0) {
+            console.log("#create_figure_media_" + index + "_type");
+            for (i = 0; i < index; i++) {
+
+                $("#create_figure_media_" + i + "_type").change(function () {
+
+                    if ($("#create_figure_media_" + i + "_type").val() === "Video") {
+                        $("#create_figure_media_" + i + "_url").show();
+                        $(".custom-file").hide();
+                    } else {
+                        $("#create_figure_media_" + i + "_url").hide();
+                        $(".custom-file").show();
+                    }
+                });
+            }
         }
 
         deleteMedia();

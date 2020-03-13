@@ -84,7 +84,7 @@ class MediaController extends AbstractController
             return $this->redirectToRoute('page_figure', ['slug' => $slug]);
         }
 
-        return $this->render('update.html.twig', [
+        return $this->render('media/update.html.twig', [
             'media' => $media,
             'title' => $title,
             'form' => $form->createView()

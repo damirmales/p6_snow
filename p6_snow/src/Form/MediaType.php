@@ -23,7 +23,7 @@ class MediaType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'choices' => [
                     'Photo' => 'Photo',
-                    'Vidéo' => 'Vidéo',
+                    'Vidéo' => 'Video',
 
                 ]])
             ->add('photo_figure', FileType::class, [

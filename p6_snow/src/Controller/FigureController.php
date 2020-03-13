@@ -43,10 +43,10 @@ class FigureController extends AbstractController
      */
     public function deleteFeatureImage(Figure $figure, EntityManagerInterface $entityManager)
     {
-        $figure->setFeatureImage('https://via.placeholder.com/160x160');
+        $figure->setFeatureImage('');
         $entityManager->persist($figure);
         $entityManager->flush();
-   
+
         return $this->redirectToRoute('home');
     }
 
@@ -135,6 +135,9 @@ class FigureController extends AbstractController
             $fig->setCreateDate(new DateTime('now'));
             $fig->setEditor($this->getUser()); // available because user is connected
 
+            dump($formCreateFig);
+            // die();
+
             //-------- Manage the field devoted to upload default picture ----------------
             $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype
 
@@ -179,8 +182,8 @@ class FigureController extends AbstractController
                             // updates the 'picture' field property to store the jpeg file name
                             // instead of its contents
                             $media->setUrl($newFilename);
-                        } */
-
+                        }
+ */
             // let added media to persist before insert it to the database
             foreach ($fig->getMedia() as $medium) {
                 $medium->setCreateDate(new DateTime('now'));

@@ -36,14 +36,26 @@ class CreateFigureType extends AbstractType
             ->add('media', CollectionType::class,
                 [
                     'entry_type' => MediaType::class,
-                    'allow_add' => true // allow adding of several media forms
+                    'allow_add' => true, // allow adding several media forms
+                    'allow_delete' => true
 
-                ])/*
-            ->add('CreateDate')
-               ->add('updateDate')
-            ->add('editor')
-            */
-        ;
+                ]);
+        /*
+                 // on inclus le formulaire des photos
+                 ->add('media', CollectionType::class,
+                     [
+                         'entry_type' => PhotoType::class,
+                         'allow_add' => true // allow adding several Photo forms
+
+                     ])
+
+                 // on inclus le formulaire des videos
+                 ->add('video', CollectionType::class,
+                     [
+                         'entry_type' => VideoType::class,
+                         'allow_add' => true // allow adding several Video forms
+
+                     ]); */
     }
 
     public function configureOptions(OptionsResolver $resolver)
