@@ -33,29 +33,29 @@ class CreateFigureType extends AbstractType
                 'required' => false])
 
             // on inclus le formulaire des medias
-            ->add('media', CollectionType::class,
+            /*      ->add('media', CollectionType::class,
+                      [
+                          'entry_type' => MediaType::class,
+                          'allow_add' => true, // allow adding several media forms
+                          'allow_delete' => true
+
+                      ]);  */
+
+            // on inclus le formulaire des photos
+            ->add('photos', CollectionType::class,
                 [
-                    'entry_type' => MediaType::class,
-                    'allow_add' => true, // allow adding several media forms
-                    'allow_delete' => true
+                    'entry_type' => PhotoType::class,
+                    'allow_add' => true // allow adding several Photo forms
+
+                ])
+
+            // on inclus le formulaire des videos
+            ->add('videos', CollectionType::class,
+                [
+                    'entry_type' => VideoType::class,
+                    'allow_add' => true // allow adding several Video forms
 
                 ]);
-        /*
-                 // on inclus le formulaire des photos
-                 ->add('media', CollectionType::class,
-                     [
-                         'entry_type' => PhotoType::class,
-                         'allow_add' => true // allow adding several Photo forms
-
-                     ])
-
-                 // on inclus le formulaire des videos
-                 ->add('video', CollectionType::class,
-                     [
-                         'entry_type' => VideoType::class,
-                         'allow_add' => true // allow adding several Video forms
-
-                     ]); */
     }
 
     public function configureOptions(OptionsResolver $resolver)

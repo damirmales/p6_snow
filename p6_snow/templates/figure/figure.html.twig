@@ -17,7 +17,9 @@
 
                 </div>
             {% endif %}
-            <a href="{{ path('create_media', {'slug': fig.slug}) }}" class="">ajout médias</a>
+            {% if app.user %}
+                <a href="{{ path('create_media', {'slug': fig.slug}) }}" class="">ajout médias</a>
+            {% endif %}
         </div>
         <!-- Portfolio Gallery pictures -->
         <div class="row mt-4">
@@ -44,11 +46,13 @@
 
                             </div>
                         {% endif %}
-                        <div class="card-header">
-                            <a href="{{ path('edit_media',{'id':media.id}) }}"><i class='fas fa-pen'></i></a>
-                            <a href="{{ path('delete_media',{'id':media.id}) }}"> <i class='fas fa-trash-alt'></i></a>
-                        </div>
-
+                        {% if app.user %}
+                            <div class="card-header">
+                                <a href="{{ path('edit_media',{'id':media.id}) }}"><i class='fas fa-pen'></i></a>
+                                <a href="{{ path('delete_media',{'id':media.id}) }}"> <i
+                                            class='fas fa-trash-alt'></i></a>
+                            </div>
+                        {% endif %}
                         <h5>Photo figure {{ media.title }}</h5>
                     </div><!-- col-->
                 {% endif %}

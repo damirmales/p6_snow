@@ -41,34 +41,30 @@
 {% endblock %}
 
 
-
-{% block _create_figure_media_widget %}
-    <p>Ajoutez des Médias</p>
+{# ********************* gestion  du sous-formulaires pour ajout de photos ******************* #}
+{% block _create_figure_photos_widget %}
+    <p>Ajoutez des photos</p>
     {{ form_widget(form) }}
     <div class="form-group">
         <div class="row">
-            <button type="button" id="add-photo" class="btn btn-info">Ajouter un média</button>
+            <button type="button" id="add-photo" class="btn btn-info">Ajouter une photo</button>
         </div>
     </div>
 {% endblock %}
 
 {# redefini les label des champs des sous-formulaires #}
-{% block _create_figure_media_entry_row %}
+{% block _create_figure_photos_entry_row %}
     {{ form_widget(form) }}
 {% endblock %}
 
-{% block _create_figure_media_entry_widget %}
-    <div class="form-group" id="media_{{ id }}"> <!-- id : identifiant du form-group pour le gérer -->
+{% block _create_figure_photos_entry_widget %}
+    <div class="form-group" id="photo_{{ id }}"> <!-- id : identifiant du form-group pour le gérer -->
         <div class="row">
             <div class="col">
-                {{ form_label(form.title, 'Titre du média') }}
+                {{ form_label(form.title, 'Titre de la photo') }}
                 {{ form_widget(form.title) }}
-                {{ form_label(form.url, 'Url d\'une video') }}
-                {{ form_widget(form.url) }}
-                {{ form_label(form.type, 'Type du média') }}
-                {{ form_widget(form.type) }}
                 {{ form_widget(form) }} {# allow to add the photo_figure filetype#}
-                <button type="button" data-action="delete" data-target="#media_{{ id }}"
+                <button type="button" data-action="delete" data-target="#photo_{{ id }}"
                         class=" mt-3 btn btn-warning">
                     Supprimer le formulaire
                 </button>
@@ -77,43 +73,72 @@
     </div>
 {% endblock %}
 
+{# ********************* gestion  du sous-formulaire pour ajout de vidéos ******************* #}
+
+{% block _create_figure_videos_widget %}
+    <p>Ajoutez des vidéos</p>
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <div class="row">
+            <button type="button" id="add-video" class="btn btn-info">Ajouter une vidéo</button>
+        </div>
+    </div>
+{% endblock %}
+
+{# redefini les label des champs des sous-formulaires #}
+{% block _create_figure_videos_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _create_figure_videos_entry_widget %}
+    <div class="form-group" id="video_{{ id }}">
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.title, 'Titre de la vidéo') }}
+                {{ form_widget(form.title) }}
+                {{ form_label(form.title, 'Url de la vidéo') }}
+                {{ form_widget(form.url) }}
+                {{ form_widget(form) }} {# allow to add the video_figure filetype#}
+                <button type="button" data-action="delete" data-target="#video_{{ id }}"
+                        class=" mt-3 btn btn-warning">
+                    Supprimer le formulaire
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
 {% block javascripts %}
     <script>
 
         $('#add-photo').click(function () {
-            let index = $('#create_figure_media div.form-group').length; // on récupère les div qui ont la classe form_group
+            let index = $('#create_figure_photos div.form-group').length; // on récupère les div qui ont la classe form_group
             console.log(index);
-            const getPrototypEntry = $('#create_figure_media').data('prototype').replace(/__name__/g, index);
-// add another MediaType form instance (code)
-            $('#create_figure_media').append(getPrototypEntry);
+            const getPrototypEntry = $('#create_figure_photos').data('prototype').replace(/__name__/g, index);
+// add another PhotoType form instance (code)
+            $('#create_figure_photos').append(getPrototypEntry);
             deleteMedia();
         });
 
-        function deleteMedia() {
+        $('#add-video').click(function () {
+            let index = $('#create_figure_videos div.form-group').length;
 
+            const getPrototypEntry = $('#create_figure_videos').data('prototype').replace(/__name__/g, index);
+
+            $('#create_figure_videos').append(getPrototypEntry);
+            deleteMedia();
+        });
+
+
+        function deleteMedia() {
+            console.log("delete");
             $('button[data-action = "delete"]').click(function () {
                     const mediatarget = this.dataset.target;
-                    console.log(mediatarget);
+
                     $(mediatarget).remove();
                 }
             );
-        }
-
-        if (index > 0) {
-            console.log("#create_figure_media_" + index + "_type");
-            for (i = 0; i < index; i++) {
-
-                $("#create_figure_media_" + i + "_type").change(function () {
-
-                    if ($("#create_figure_media_" + i + "_type").val() === "Video") {
-                        $("#create_figure_media_" + i + "_url").show();
-                        $(".custom-file").hide();
-                    } else {
-                        $("#create_figure_media_" + i + "_url").hide();
-                        $(".custom-file").show();
-                    }
-                });
-            }
         }
 
         deleteMedia();

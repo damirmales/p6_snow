@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Figure;
 use App\Entity\Media;
+use App\Entity\Photo;
+use App\Entity\Video;
 use App\Form\CommentType;
 use App\Form\CreateFigureType;
 use App\Form\FeatureImgType;
@@ -125,8 +127,11 @@ class FigureController extends AbstractController
     {
 
         $fig = new Figure();
-        $media = new  Media();
-        $fig->addMedium($media);// link Media entity to Figure
+        $photo = new  Photo();
+        $video = new Video();
+
+        $fig->addPhoto($photo);// link Photo entity to Figure
+        $fig->addVideo($video);// link Video entity to Figure
 
         $formCreateFig = $this->createForm(CreateFigureType::class, $fig);
         $formCreateFig->handleRequest($request);
@@ -184,12 +189,19 @@ class FigureController extends AbstractController
                             $media->setUrl($newFilename);
                         }
  */
-            // let added media to persist before insert it to the database
-            foreach ($fig->getMedia() as $medium) {
-                $medium->setCreateDate(new DateTime('now'));
-                $medium->setType('photo');
-                $medium->setFigure($fig);
-                $entityManager->persist($medium);
+            // let added photo to persist before insert it to the database
+            foreach ($fig->getPhotos() as $photo) {
+                $photo->setCreatedDate(new DateTime('now'));
+                $photo->setFigure($fig);
+                $entityManager->persist($photo);
+            }
+
+            // let added video to persist before insert it to the database
+            foreach ($fig->getVideos() as $video) {
+                $video->setCreatedDate(new DateTime('now'));
+      
+                $video->setFigure($fig);
+                $entityManager->persist($video);
             }
 
             $entityManager->persist($fig);
@@ -198,7 +210,7 @@ class FigureController extends AbstractController
 
             $this->addFlash("success", "Création de figure réussie");
 
-            return $this->redirectToRoute('edit_figure', [
+            return $this->redirectToRoute('page_figure', [
                 'slug' => $fig->getSlug()
             ]);
         }

@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Media;
+use App\Entity\Video;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,17 +13,14 @@ class VideoType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('url')
-            ->add('type', null, [
-                'required' => false,
-                'empty_data' => 'video',
-            ]);
+            ->add('url');
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Media::class,
+            'data_class' => Video::class,
             'allow_add' => true
         ]);
     }

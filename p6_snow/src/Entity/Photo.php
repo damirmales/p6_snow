@@ -31,6 +31,11 @@ class Photo
      */
     private $figure;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $filename;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class Photo
     public function setFigure(?Figure $figure): self
     {
         $this->figure = $figure;
+
+        return $this;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
 
         return $this;
     }
