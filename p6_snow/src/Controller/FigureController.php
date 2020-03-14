@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -140,8 +141,6 @@ class FigureController extends AbstractController
             $fig->setCreateDate(new DateTime('now'));
             $fig->setEditor($this->getUser()); // available because user is connected
 
-            dump($formCreateFig);
-            // die();
 
             //-------- Manage the field devoted to upload default picture ----------------
             $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype
@@ -165,30 +164,31 @@ class FigureController extends AbstractController
                 // instead of its contents
                 $fig->setFeatureImage($newFilename);
             }
-            /*-
-                        //-------- Manage the field devoted to upload extra figure pictures ----------------
-                        $mediumFile = $formCreateFig->get($media)->get('photo_figure')->getData(); //from CreateFigureType Filetype
 
-                        if ($mediumFile) {
-                            $imageFilename = pathinfo($mediumFile->getClientOriginalName(), PATHINFO_FILENAME);
+            //-------- Manage the field devoted to upload extra figure pictures ----------------
+            $photoFile = $formCreateFig->get('photos')->get('photo_load')->getData(); //from PhotoType Filetype
 
-                            $newFilename = $imageFilename . '-' . uniqid() . '.' . $mediumFile->guessExtension();
+            if ($photoFile) {
+                $imageFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
 
-                            // Move the file to the directory where pictures of figures are stored
-                            try {
-                                $mediumFile->move(
-                                    $this->getParameter('figures_directory'),
-                                    $newFilename
-                                );
-                            } catch (FileException $e) {
-                                // ... handle exception if something happens during file upload
-                            }
+                $newFilename = $imageFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
 
-                            // updates the 'picture' field property to store the jpeg file name
-                            // instead of its contents
-                            $media->setUrl($newFilename);
-                        }
- */
+                // Move the file to the directory where pictures of figures are stored
+                try {
+                    $photoFile->move(
+                        $this->getParameter('figures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    return new Response("une erreur a été détectée");
+                }
+
+                // updates the 'picture' field property to store the jpeg file name
+                // instead of its contents
+                $photo->setUrl($newFilename);
+            }
+
             // let added photo to persist before insert it to the database
             foreach ($fig->getPhotos() as $photo) {
                 $photo->setCreatedDate(new DateTime('now'));
@@ -199,7 +199,7 @@ class FigureController extends AbstractController
             // let added video to persist before insert it to the database
             foreach ($fig->getVideos() as $video) {
                 $video->setCreatedDate(new DateTime('now'));
-      
+
                 $video->setFigure($fig);
                 $entityManager->persist($video);
             }

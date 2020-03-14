@@ -45,16 +45,16 @@ class CreateFigureType extends AbstractType
             ->add('photos', CollectionType::class,
                 [
                     'entry_type' => PhotoType::class,
-                    'allow_add' => true // allow adding several Photo forms
-
+                    'allow_add' => true, // allow adding several Photo forms
+                    'allow_delete' => true
                 ])
 
             // on inclus le formulaire des videos
             ->add('videos', CollectionType::class,
                 [
                     'entry_type' => VideoType::class,
-                    'allow_add' => true // allow adding several Video forms
-
+                    'allow_add' => true, // allow adding several Video forms
+                    'allow_delete' => true
                 ]);
     }
 
