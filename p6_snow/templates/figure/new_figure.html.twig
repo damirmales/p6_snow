@@ -2,7 +2,7 @@
 
 {% block title %}Ajout de figure snow tricks{% endblock %}
 
-{% form_theme form _self %}
+{% form_theme form _self %} {#  permet de faire reference aux formulaires du CollectionType#}
 {% block body %}
 
     <div class="container mt-4">
@@ -52,7 +52,7 @@
     </div>
 {% endblock %}
 
-{# redefini les label des champs des sous-formulaires #}
+{# Gère les champs du sous-formulaire PhotoType #}
 {% block _create_figure_photos_entry_row %}
     {{ form_widget(form) }}
 {% endblock %}
@@ -85,7 +85,7 @@
     </div>
 {% endblock %}
 
-{# redefini les label des champs du sous-formulaire video #}
+{# Renomme les champs en mode row du sous-formulaire VideoType par ceux de widget #}
 {% block _create_figure_videos_entry_row %}
     {{ form_widget(form) }}
 {% endblock %}

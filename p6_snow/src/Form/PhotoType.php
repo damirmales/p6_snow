@@ -15,11 +15,13 @@ class PhotoType extends AbstractType
         $builder
             ->add('title')
             //  ->add('url')
-            ->add('photo_load', FileType::class, [
+
+            ->add('file', FileType::class, [
                 'label' => 'Photo en rapport avec la figure',
                 'attr' => ['placeholder' => 'Télécharger une photo'],
-                'mapped' => false,
-                'required' => false]);
+                //'mapped' => false,
+                'required' => false
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

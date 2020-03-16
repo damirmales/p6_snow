@@ -76,7 +76,7 @@ class Figure
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="relation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="figure")
      */
     private $photos;
 

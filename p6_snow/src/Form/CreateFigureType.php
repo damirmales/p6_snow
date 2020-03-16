@@ -41,6 +41,7 @@ class CreateFigureType extends AbstractType
 
                       ]);  */
 
+
             // on inclus le formulaire des photos
             ->add('photos', CollectionType::class,
                 [
@@ -56,6 +57,7 @@ class CreateFigureType extends AbstractType
                     'allow_add' => true, // allow adding several Video forms
                     'allow_delete' => true
                 ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

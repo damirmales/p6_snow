@@ -18,6 +18,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,9 +31,42 @@ class FigureController extends AbstractController
      * @Route("/figure/{slug}/featureImage", name="image_presentation")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editFeatureimage(Figure $figure)
+    public function editFeatureimage(Figure $figure, EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(FeatureImgType::class, $figure);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $figure->setUpdateDate(new DateTime('now'));
+            //-------------------------------------------------------
+
+            $figure->setEditor($this->getUser()); // available because user is connected
+            $imageFile = $form->get('image_base')->getData();
+
+            if ($imageFile) {
+                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                // Move the file to the directory where pictures of figures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('figures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    return new Response("une erreur a été détectée");
+                }
+
+                // updates the 'picture' field property to store the jpeg file name
+                // instead of its contents
+                $figure->setFeatureImage($newFilename);
+            }
+
+            $entityManager->persist($figure);
+            $entityManager->flush();
+        }
+
         return $this->render('figure/edit_feature_image.html.twig', [
 
                 'form' => $form->createView(),
@@ -40,6 +74,7 @@ class FigureController extends AbstractController
         );
 
     }
+
 
     /**
      * @Route("/figure/{slug}/featureImage/remove", name="delete_feature_image")
@@ -84,6 +119,7 @@ class FigureController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
+                    return new Response("une erreur a été détectée");
                 }
 
                 // updates the 'picture' field property to store the jpeg file name
@@ -131,8 +167,8 @@ class FigureController extends AbstractController
         $photo = new  Photo();
         $video = new Video();
 
-        $fig->addPhoto($photo);// link Photo entity to Figure
-        $fig->addVideo($video);// link Video entity to Figure
+        //$fig->addPhoto($photo);// link Photo entity to Figure
+        // $fig->addVideo($video);// link Video entity to Figure
 
         $formCreateFig = $this->createForm(CreateFigureType::class, $fig);
         $formCreateFig->handleRequest($request);
@@ -158,15 +194,21 @@ class FigureController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
+                    return new Response("une erreur a été détectée");
                 }
 
-                // updates the 'picture' field property to store the jpeg file name
+                // updates the 'FeatureImage' field property to store the jpeg file name
                 // instead of its contents
                 $fig->setFeatureImage($newFilename);
             }
 
             //-------- Manage the field devoted to upload extra figure pictures ----------------
-            $photoFile = $formCreateFig->get('photos')->get('photo_load')->getData(); //from PhotoType Filetype
+            $photoFile = $formCreateFig->getData()->getPhotos(); //from PhotoType Filetype
+
+            /*  foreach ($formCreateFig->getData()->getPhotos() as $photo) {
+          
+            }
+
 
             if ($photoFile) {
                 $imageFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -181,25 +223,45 @@ class FigureController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
-                    return new Response("une erreur a été détectée");
+                    return new Response("Une erreur a été détectée");
                 }
 
                 // updates the 'picture' field property to store the jpeg file name
                 // instead of its contents
-                $photo->setUrl($newFilename);
+                $photo->setFilename($newFilename);
             }
-
+ */
             // let added photo to persist before insert it to the database
-            foreach ($fig->getPhotos() as $photo) {
+            foreach ($photoFile as $photo) {
                 $photo->setCreatedDate(new DateTime('now'));
-                $photo->setFigure($fig);
+                $photo->setFigure($fig); // combine photo to the figure
+                $imageFilename = pathinfo($photo->getFile()->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $imageFilename . '-' . uniqid() . '.' . $photo->getFile()->guessExtension();
+
+                // Move the file to the directory where pictures of figures are stored
+                try {
+                    $photo->getFile()->move(
+                        $this->getParameter('figures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    return new Response("Une erreur a été détectée");
+                }
+                $photo->setFilename($newFilename);
+
+                /*    $file = $photo->getFile(); // This is the file
+                    dump($photo);
+                    die();
+                    $photo->setPath($uploadedFile->upload($file));
+       */
                 $entityManager->persist($photo);
+
             }
 
             // let added video to persist before insert it to the database
             foreach ($fig->getVideos() as $video) {
                 $video->setCreatedDate(new DateTime('now'));
-
                 $video->setFigure($fig);
                 $entityManager->persist($video);
             }

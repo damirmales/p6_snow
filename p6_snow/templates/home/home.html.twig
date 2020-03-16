@@ -29,7 +29,8 @@
             <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
         </div>
         <div class="row ">
-            {% for fig in figs %}
+
+            {% for fig in figs|slice(0,10) %}
 
                 <div class="col-md-2 text-center">
 
@@ -56,12 +57,15 @@
 
         </div>
         <div class="row">
+            <button onclick="loadMore()" id="loadFigBtn" title="Plus de figures">Plus de figures</button>
+        </div>
+        <div class="row">
             <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
         </div>
 
     </div>
 
-    <!--*********** Tigger modal  when delete figure button is clicked ****************-->
+    <!--*********** Trigger modal  when delete figure button is clicked ****************-->
 
     <!-- Modal -->
     <div class="modal fade" id="deleteFigure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
