@@ -12,6 +12,9 @@ use App\Form\CreateFigureType;
 use App\Form\FeatureImgType;
 use App\Repository\CommentRepository;
 use App\Repository\MediaRepository;
+use App\Repository\PhotoRepository;
+use App\Repository\VideoRepository;
+use App\Services\PaginationParam;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -126,12 +129,19 @@ class FigureController extends AbstractController
                 // instead of its contents
                 $figure->setFeatureImage($newFilename);
             }
-            // let added media to persist before insert it to the database
-            foreach ($figure->getMedia() as $medium) {
-                $medium->setCreateDate(new DateTime('now'));
+            // let added photo to persist before insert it to the database
+            foreach ($figure->getPhotos() as $photo) {
+                $photo->setCreatedDate(new DateTime('now'));
 
-                $medium->setFigure($figure);
-                $entityManager->persist($medium);
+                $photo->setFigure($figure);
+                $entityManager->persist($photo);
+            }
+
+            // let added video to persist before insert it to the database
+            foreach ($figure->getVideos() as $video) {
+                $video->setCreatedDate(new DateTime('now'));
+                $video->setFigure($figure);
+                $entityManager->persist($video);
             }
 
             $entityManager->persist($figure);
@@ -142,7 +152,8 @@ class FigureController extends AbstractController
 
             return $this->redirectToRoute('page_figure', [
                 'slug' => $figure->getSlug(),
-
+                'photos' => $figure->getPhotos(),
+                'video' => $figure->getVideos()
 
             ]);
         }
@@ -150,6 +161,8 @@ class FigureController extends AbstractController
         return $this->render('figure/edit.html.twig', [
             'form' => $form->createView(),
             'fig' => $figure,
+            'photos' => $figure->getPhotos(),
+            'video' => $figure->getVideos()
 
 
         ]);
@@ -167,8 +180,6 @@ class FigureController extends AbstractController
         $photo = new  Photo();
         $video = new Video();
 
-        //$fig->addPhoto($photo);// link Photo entity to Figure
-        // $fig->addVideo($video);// link Video entity to Figure
 
         $formCreateFig = $this->createForm(CreateFigureType::class, $fig);
         $formCreateFig->handleRequest($request);
@@ -205,32 +216,6 @@ class FigureController extends AbstractController
             //-------- Manage the field devoted to upload extra figure pictures ----------------
             $photoFile = $formCreateFig->getData()->getPhotos(); //from PhotoType Filetype
 
-            /*  foreach ($formCreateFig->getData()->getPhotos() as $photo) {
-          
-            }
-
-
-            if ($photoFile) {
-                $imageFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-
-                $newFilename = $imageFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
-
-                // Move the file to the directory where pictures of figures are stored
-                try {
-                    $photoFile->move(
-                        $this->getParameter('figures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                    return new Response("Une erreur a été détectée");
-                }
-
-                // updates the 'picture' field property to store the jpeg file name
-                // instead of its contents
-                $photo->setFilename($newFilename);
-            }
- */
             // let added photo to persist before insert it to the database
             foreach ($photoFile as $photo) {
                 $photo->setCreatedDate(new DateTime('now'));
@@ -250,13 +235,7 @@ class FigureController extends AbstractController
                 }
                 $photo->setFilename($newFilename);
 
-                /*    $file = $photo->getFile(); // This is the file
-                    dump($photo);
-                    die();
-                    $photo->setPath($uploadedFile->upload($file));
-       */
                 $entityManager->persist($photo);
-
             }
 
             // let added video to persist before insert it to the database
@@ -302,12 +281,14 @@ class FigureController extends AbstractController
      */
     public function show($page = 1, Request $request, Figure $figure, EntityManagerInterface $entityManager,
                          CommentRepository $commentRepository,
-                         MediaRepository $mediaRepository)
+                         PhotoRepository $photoRepository,
+                         VideoRepository $videoRepository)
     {
 
         $comment = new Comment();
-        $numPage = $page;
-
+        $commentPagination = new PaginationParam($page, 2, 2);
+        $picturePagination = new PaginationParam(1, 3, 3);
+        $videoPagination = new PaginationParam(1, 3, 3);
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -321,42 +302,57 @@ class FigureController extends AbstractController
             $entityManager->flush();
         }
         //------------------------- Pagination Pictures gallery -----------------------------
-        $numPictPage = 1;
-        $paginationPictLimit = 3;
-        $paginationPictOffset = $numPictPage * $paginationPictLimit - $paginationPictLimit;
-        $numberOfPictPerpage = 3;
-        $totalPict = count($mediaRepository->findByFigure([
+        $picturePageLimit = $picturePagination->getPageItemLimit();
+        $picturePerPage = $picturePagination->getNumberOfItemPerPage();
+        $pictureOffset = $picturePagination->paginationOffset();
+
+
+        $totalPict = count($photoRepository->findByFigure([
             'figure' => $figure,
         ]));
-        $rangeOfPictures = ceil($totalPict / $numberOfPictPerpage);
+        $rangeOfPictures = ceil($totalPict / $picturePerPage);
+
+        //------------------------- Pagination videos gallery -----------------------------
+        $videoPageLimit = $videoPagination->getPageItemLimit();
+        $videoPerPage = $videoPagination->getNumberOfItemPerPage();
+        $videoOffset = $videoPagination->paginationOffset();
+
+
+        $totalVideos = count($photoRepository->findByFigure([
+            'figure' => $figure,
+        ]));
+        $rangeOfVideo = ceil($totalVideos / $videoPerPage);
 
 
 //------------------------- pagination Comments-----------------------------
-        $paginationLimit = 2;
-        $paginationOffset = $numPage * $paginationLimit - $paginationLimit;
-        $numberOfCommentPerpage = 2;
+
+        $pageLimit = $commentPagination->getPageItemLimit();
+        $commentPerPage = $commentPagination->getNumberOfItemPerPage();
+        $commentOffset = $commentPagination->paginationOffset();
+
         $totalComments = count($commentRepository->findByFigure([
             'figure' => $figure,
-
         ]));
 
-        $rangeOfComments = ceil($totalComments / $numberOfCommentPerpage);
+        $rangeOfComments = ceil($totalComments / $commentPerPage);
 
 
 //------------------------- -----------------------------
 
         return $this->render('figure/figure.html.twig', array(
-            'comments' => $commentRepository->findByFigure(['figure' => $figure], array('createDate' => 'DESC'), $paginationLimit, $paginationOffset),
-            'medias' => $mediaRepository->findByFigure(['figure' => $figure], array('createDate' => 'DESC'), $paginationLimit, $paginationPictOffset),
+            'comments' => $commentRepository->findByFigure(['figure' => $figure], array('createDate' => 'DESC'), $pageLimit, $commentOffset),
+
+            'photos' => $photoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC'), $picturePageLimit, $pictureOffset),
+            'videos' => $videoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC'), $videoPageLimit, $videoOffset),
 
             'fig' => $figure,
             'form' => $form->createView(),
 
             'pagesOfComments' => $rangeOfComments,
-            'numPage' => $numPage,
+            'numPage' => $commentPagination->getStartPageNumber(),
 
             'pagesOfPictures' => $rangeOfPictures,
-            'numPictPage' => $numPictPage,
+            'numPictPage' => $picturePagination->getStartPageNumber(),
         ));
     }
 

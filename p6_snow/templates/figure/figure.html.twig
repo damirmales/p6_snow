@@ -5,21 +5,22 @@
 {% block body %}
 
     <div class="container">
-        <div class="row mt-4"
-             style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
+        <div class="row mt-4">
+            <div class="col featureImageFigure"
+                 style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
+                <h1 class="display-3 text-center"> {{ fig.title }}</h1>
+                {% if app.user %}
 
-            <h1 class="display-3 text-center"> {{ fig.title }}</h1>
-            {% if app.user %}
+                    <div class="card-header">
+                        <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
+                        <a href="{{ path('delete_figure', {'slug': fig.slug}) }}"> <i class='fas fa-trash-alt'></i></a>
 
-                <div class="card-header">
-                    <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
-                    <a href="{{ path('delete_figure', {'slug': fig.slug}) }}"> <i class='fas fa-trash-alt'></i></a>
-
-                </div>
-            {% endif %}
-            {% if app.user %}
-                <a href="{{ path('create_media', {'slug': fig.slug}) }}" class="">ajout médias</a>
-            {% endif %}
+                    </div>
+                {% endif %}
+                {% if app.user %}
+                    <a href="{{ path('create_media', {'slug': fig.slug}) }}" class="">ajout médias</a>
+                {% endif %}
+            </div>
         </div>
         <!-- Portfolio Gallery pictures -->
         <div class="row mt-4">
@@ -29,40 +30,32 @@
         </div>
         <div class="row">
 
-            {% for media in medias %}
-                {% if media.url %}
+            {% for photo in photos %}
+                {% if photo.filename %}
                     <div class="col">
-                        {% if media.type == 'photo' %}
-                            <img src="{{ asset('/uploads/figures/') }}{{ media.url }}" alt="image de figure snowboard"
-                                 style="width:150px">
 
-                        {% else %}
-                            <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+                        <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}" alt="image de figure snowboard"
+                             style="width:150px">
 
-                                <iframe class="embed-responsive-item" width="150" height="200"
-                                        src="{{ media.url }}?controls=0" frameborder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-
-                            </div>
-                        {% endif %}
                         {% if app.user %}
                             <div class="card-header">
-                                <a href="{{ path('edit_media',{'id':media.id}) }}"><i class='fas fa-pen'></i></a>
-                                <a href="{{ path('delete_media',{'id':media.id}) }}"> <i
+                                <a href="{{ path('edit_photo',{'id':photo.id}) }}"><i class='fas fa-pen'></i></a>
+                                <a href="{{ path('delete_photo',{'id':photo.id}) }}"> <i
                                             class='fas fa-trash-alt'></i></a>
                             </div>
                         {% endif %}
-                        <h5>Photo figure {{ media.title }}</h5>
+                        <h5>Photo figure {{ photo.title }}</h5>
                     </div><!-- col-->
                 {% endif %}
             {% endfor %}
+
+
         </div>
         <div class=" row mt-4">
             <div class="col-md-6">
                 <!------------ pagination pictures of figure ---------------------->
                 <div class="d-flex justify-content-center">
-                    <nav aria-label="Comments navigation block">
+                    <nav aria-label="Pictures navigation block">
                         <ul class="pagination">
                             <li class="page-item">
                                 <a class="page-link" {% if numPictPage > 1 %}
@@ -91,7 +84,64 @@
                         </ul>
                     </nav>
                 </div>
-            </div> <!-- block pagination comments -->
+            </div>
+
+        </div>
+
+
+        <!-- Portfolio videos -->
+        <div class="row mt-4">
+            <div class="col">
+                <h3> Vidéos</h3>
+            </div>
+        </div>
+        {% for video in videos %}
+            {% if video.url %}
+                <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+
+                    <iframe class="embed-responsive-item" width="150" height="200"
+                            src="{{ video.url }}?controls=0" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <!-- block pagination videos -->
+        <div class=" row mt-4">
+            <div class="col-md-6">
+
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Videos navigation block">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" {% if numPictPage > 1 %}
+
+                                   href="{{ path('page_figure',{'slug':fig.slug,'page':numPictPage-1}) }}"
+                                   {% endif %}aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous </span>
+                                </a>
+                            </li>
+                            {% if pagesOfPictures > 0 %}
+                                {% for i in 1..pagesOfPictures %}
+                                    <li class="page-item  {% if numPictPage == i %} active{% endif %} "><a
+                                                class="page-link"
+                                                href="{{ path('page_figure',{'slug':fig.slug,'page':i}) }}">{{ i }}</a>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+                            <li class="page-item ">
+                                <a class="page-link"{% if numPictPage < pagesOfPictures %} href="{{ path('page_figure',{'slug':fig.slug,'page':numPictPage+1}) }}"
+                                        {% endif %} aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
 
         </div>
 

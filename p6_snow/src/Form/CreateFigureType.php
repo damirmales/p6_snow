@@ -32,16 +32,6 @@ class CreateFigureType extends AbstractType
                 'mapped' => false,
                 'required' => false])
 
-            // on inclus le formulaire des medias
-            /*      ->add('media', CollectionType::class,
-                      [
-                          'entry_type' => MediaType::class,
-                          'allow_add' => true, // allow adding several media forms
-                          'allow_delete' => true
-
-                      ]);  */
-
-
             // on inclus le formulaire des photos
             ->add('photos', CollectionType::class,
                 [
