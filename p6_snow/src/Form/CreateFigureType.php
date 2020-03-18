@@ -16,7 +16,7 @@ class CreateFigureType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('slug')
+            // ->add('slug')
             //  ->add('featureImage')
             ->add('description')
             ->add('figGroup', ChoiceType::class, [
@@ -32,18 +32,22 @@ class CreateFigureType extends AbstractType
                 'mapped' => false,
                 'required' => false])
 
-            // on inclus le formulaire des medias
-            ->add('media', CollectionType::class,
+            // on inclus le formulaire des photos
+            ->add('photos', CollectionType::class,
                 [
-                    'entry_type' => MediaType::class,
-                    'allow_add' => true
+                    'entry_type' => PhotoType::class,
+                    'allow_add' => true, // allow adding several Photo forms
+                    'allow_delete' => true
+                ])
 
-                ])/*
-            ->add('CreateDate')
-               ->add('updateDate')
-            ->add('editor')
-            */
-        ;
+            // on inclus le formulaire des videos
+            ->add('videos', CollectionType::class,
+                [
+                    'entry_type' => VideoType::class,
+                    'allow_add' => true, // allow adding several Video forms
+                    'allow_delete' => true
+                ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

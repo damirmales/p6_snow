@@ -11,7 +11,6 @@
 
             <h1 class="display-3 text-center">Bienvenu sur Snow tricks</h1>
 
-
         </div>
 
         <div class="row ">
@@ -26,7 +25,11 @@
                 </div>
             {% endfor %}
         </div>
+        <div class="row">
+            <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
+        </div>
         <div class="row ">
+
             {% for fig in figs %}
 
                 <div class="col-md-2 text-center">
@@ -41,9 +44,11 @@
                             <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link">Lien
                                 vers la
                                 figure</a>
-                            <div class="card-header"><i class='fas fa-pen'></i>
-                                <i class='fas fa-trash-alt'></i>
-
+                            <div class="card-header">
+                                <a href="{{ path('edit_figure', {'slug': fig.getSlug}) }}"><i
+                                            class='fas fa-pen'></i></a>
+                                <a href="#" data-toggle="modal" data-target="#deleteFigure">
+                                    <i class='fas fa-trash-alt'></i></a>
                             </div>
                         </div>
 
@@ -52,5 +57,40 @@
             {% endfor %}
 
         </div>
+        <div class="row">
+            <button onclick="loadMore()" id="loadFigBtn" title="Plus de figures">Plus de figures</button>
+        </div>
+        <div class="row">
+            <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
+        </div>
+
     </div>
+
+    <!--*********** Trigger modal  when delete figure button is clicked ****************-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteFigure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Êtes vous sûr de vouloir supprimer la figure ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src={{ asset('/js/js_scroll') }}></script>
 {% endblock %}
+
+
+

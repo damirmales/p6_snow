@@ -28,7 +28,7 @@ class FigureFixtures extends Fixture
         $group = ['slide', 'grab', 'rotation', 'flip'];
 
         for ($i = 0; $i < 11; $i++) {
-            //  $user = $this->getDoctrine()->getRepository(User::class)->find($editor[array_rand($editor)]);
+
             $user = new User();
             $user->setFirstname("toto$i")
                 ->setLastname("titi")
@@ -53,36 +53,21 @@ class FigureFixtures extends Fixture
 
             $entityManager->persist($fig);
 
-            for ($j = 0; $j < 20; $j++) {
-                $img = new Media();
-                $img->setTitle("Media $j")
-                    ->setType("photo")
-                    ->setUrl("https://via.placeholder.com/150")
-                    ->setFigure($fig
-                    )
-                    ->setCreateDate(DateTime::createFromFormat('j-M-Y', '15-Feb-2009'));
+          
+            $img = new Media();
+            $img->setTitle("Media $i")
+                ->setType("photo")
+                ->setUrl("https://via.placeholder.com/150")
+                ->setFigure($fig
+                )
+                ->setCreateDate(DateTime::createFromFormat('j-M-Y', '15-Feb-2009'));
 
-                $entityManager->persist($img);
-            }
+            $entityManager->persist($img);
+
 
             $entityManager->flush();
 
         }
-
-
-        /*************** media only **************************
-         * for ($j = 0; $j < 20; $j++) {
-         * $img = new Media();
-         * $fig = new Figure();
-         * $img->setTitle("Media $j")
-         * ->setType("photo")
-         * ->setUrl("https://via.placeholder.com/150")
-         * ->setCreateDate(DateTime::createFromFormat('j-M-Y', '15-Feb-2009'))
-         * ->setFigure($fig);
-         *
-         * $entityManager->persist($img);
-         * $entityManager->flush();
-         * } */
 
     }
 }

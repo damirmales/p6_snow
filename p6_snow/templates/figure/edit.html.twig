@@ -4,16 +4,32 @@
 
 {% endblock %}
 
-{% form_theme form _self %}
+{% form_theme form _self %} {#  #}
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Modifier la figure {{ title }}</h1>
+        <h1>Modifier {{ fig.title }}</h1>
+        <div class="row mt-4">
+            <div class="col featureImageFigure"
+                 style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
+                <h1 class="display-3 text-center"> {{ fig.title }}</h1>
+
+
+                <div class="card-header">
+                    <a href="{{ path('image_presentation', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
+                    <a href="{{ path('delete_feature_image', {'slug': fig.slug}) }}"> <i
+                                class='fas fa-trash-alt'></i></a>
+
+                </div>
+
+            </div>
+        </div>
+
         {{ form_start(form) }}
         <div class="row">
             <div class="col">
                 <div>{{ form_row(form.title,{"label":"Nom de la figure","attr":{ "placeholder":"Nom de la figure"}}) }}</div>
-                <div>{{ form_row(form.slug,{"label":"Slug","attr":{ "placeholder":"Slug"}}) }}</div>
+
                 <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
                 <div>{{ form_row(form.figGroup,{"label":"Groupe de la figure","attr":{ "placeholder":"Groupe de la figure"}}) }}</div>
 
@@ -27,57 +43,103 @@
     </div>
 {% endblock %}
 
-{% block _create_figure_media_widget %}
+{# ********************* gestion  du sous-formulaires pour ajout de photos ******************* #}
+{% block _create_figure_photos_widget %}
     <p>Ajoutez des photos</p>
     {{ form_widget(form) }}
     <div class="form-group">
         <div class="row">
-            <button type="button" id="add-photo" class="btn btn-info">Ajouter un média</button>
+            <button type="button" id="add-photo" class="btn btn-info">Ajouter une photo</button>
         </div>
     </div>
 {% endblock %}
 
-{# redefini les label des champs des sous-formulaires #}
-{% block _create_figure_media_entry_row %}
+{# Gère les champs du sous-formulaire PhotoType #}
+{% block _create_figure_photos_entry_row %}
     {{ form_widget(form) }}
 {% endblock %}
 
-{% block _create_figure_media_entry_widget %}
-    <div class="form-group" id="media_{{ id }}">
+{% block _create_figure_photos_entry_widget %}
+    <div class="form-group" id="photo_{{ id }}"> <!-- id : identifiant du form-group pour le gérer -->
         <div class="row">
             <div class="col">
-                {{ form_label(form.title, 'Titre du média') }}
+                {{ form_label(form.title, 'Titre de la photo') }}
                 {{ form_widget(form.title) }}
-                {{ form_label(form.url, 'Url du média') }}
-                {{ form_widget(form.url) }}
-                {{ form_label(form.type, 'Type du média') }}
-                {{ form_widget(form.type) }}
-                <button type="button" data-action="delete" data-target="#media_{{ id }}"
+                {{ form_widget(form) }} {# allow to add the photo_load filetype#}
+                <button type="button" data-action="delete" data-target="#photo_{{ id }}"
                         class=" mt-3 btn btn-warning">
-                    Supprimer le média
+                    Supprimer le formulaire
                 </button>
             </div>
         </div>
     </div>
 {% endblock %}
 
+{# ********************* gestion  du sous-formulaire pour ajout de vidéos ******************* #}
+
+{% block _create_figure_videos_widget %}
+    <p>Ajoutez des vidéos</p>
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <div class="row">
+            <button type="button" id="add-video" class="btn btn-info">Ajouter une vidéo</button>
+        </div>
+    </div>
+{% endblock %}
+
+{# Renomme les champs en mode row du sous-formulaire VideoType par ceux de widget #}
+{% block _create_figure_videos_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _create_figure_videos_entry_widget %}
+    <div class="form-group" id="video_{{ id }}">
+        <div class="row">
+            <div class="col">
+                {{ form_label(form.title, 'Titre de la vidéo') }}
+                {{ form_widget(form.title) }}
+                {{ form_label(form.title, 'Url de la vidéo') }}
+                {{ form_widget(form.url) }}
+                {{ form_widget(form) }} {# allow to add the video_figure filetype#}
+                <button type="button" data-action="delete" data-target="#video_{{ id }}"
+                        class=" mt-3 btn btn-warning">
+                    Supprimer le formulaire
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
 {% block javascripts %}
     <script>
-
+        /*************** créé des instances de formulaire ****************/
         $('#add-photo').click(function () {
-            const index = $('#create_figure_media div.form-group').length;
+            let index = $('#create_figure_photos div.form-group').length; // on récupère les div qui ont la classe form_group
             console.log(index);
-            const getPrototypEntry = $('#create_figure_media').data('prototype').replace(/__name__/g, index);
-            // add another MediaType form instance (code)
-            $('#create_figure_media').append(getPrototypEntry);
+            const getPrototypEntry = $('#create_figure_photos').data('prototype').replace(/__name__/g, index);
+// add another PhotoType form instance (code)
+            $('#create_figure_photos').append(getPrototypEntry);
             deleteMedia();
         });
+
+        $('#add-video').click(function () {
+            let index = $('#create_figure_videos div.form-group').length;
+
+            const getPrototypEntry = $('#create_figure_videos').data('prototype').replace(/__name__/g, index);
+
+            $('#create_figure_videos').append(getPrototypEntry);
+            deleteMedia();
+        });
+
 
         function deleteMedia() {
 
             $('button[data-action = "delete"]').click(function () {
                     const mediatarget = this.dataset.target;
-                    console.log(mediatarget);
+
                     $(mediatarget).remove();
                 }
             );

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mise à jour d'une vidéo{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Modifier {{ title }}</h1>
+        {{ form_start(form) }}
+        <img src="{{ video.url }}" alt="" class="src">
+        {{ form_widget(form) }}
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Soumettre</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
