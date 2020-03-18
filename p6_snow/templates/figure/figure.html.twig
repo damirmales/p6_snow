@@ -104,6 +104,15 @@
                             allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                 </div>
+                {% if app.user %}
+                    <div class="card-header">
+                        <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
+                                    class='fas fa-pen'></i></a>
+                        <a href="{{ path('delete_video',{'id':video.id}) }}"> <i
+                                    class='fas fa-trash-alt'></i></a>
+                    </div>
+                {% endif %}
+                <h5>Video figure {{ video.title }}</h5>
             {% endif %}
         {% endfor %}
 
@@ -115,24 +124,24 @@
                     <nav aria-label="Videos navigation block">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a class="page-link" {% if numPictPage > 1 %}
+                                <a class="page-link" {% if numVideoPage > 1 %}
 
-                                   href="{{ path('page_figure',{'slug':fig.slug,'page':numPictPage-1}) }}"
+                                   href="{{ path('page_figure',{'slug':fig.slug,'page':numVideoPage-1}) }}"
                                    {% endif %}aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">Previous </span>
                                 </a>
                             </li>
-                            {% if pagesOfPictures > 0 %}
-                                {% for i in 1..pagesOfPictures %}
-                                    <li class="page-item  {% if numPictPage == i %} active{% endif %} "><a
+                            {% if pagesOfvideos > 0 %}
+                                {% for i in 1..pagesOfvideos %}
+                                    <li class="page-item  {% if numVideoPage == i %} active{% endif %} "><a
                                                 class="page-link"
                                                 href="{{ path('page_figure',{'slug':fig.slug,'page':i}) }}">{{ i }}</a>
                                     </li>
                                 {% endfor %}
                             {% endif %}
                             <li class="page-item ">
-                                <a class="page-link"{% if numPictPage < pagesOfPictures %} href="{{ path('page_figure',{'slug':fig.slug,'page':numPictPage+1}) }}"
+                                <a class="page-link"{% if numVideoPage < pagesOfvideos %} href="{{ path('page_figure',{'slug':fig.slug,'page':numVideoPage+1}) }}"
                                         {% endif %} aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
@@ -177,7 +186,7 @@
                         {{ form_start(form) }}
 
                         <h3>{{ form_row(form.content,{'label':'Votre commentaire'}) }}</h3>
-
+                        {{ form_errors(form.content) }}
                         <button type="submit" name="submit">Envoyer votre commentaire</button>
                         {{ form_end(form) }}
                     {% endif %}

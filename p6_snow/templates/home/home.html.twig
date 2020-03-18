@@ -45,7 +45,8 @@
                                 vers la
                                 figure</a>
                             <div class="card-header">
-                                <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
+                                <a href="{{ path('edit_figure', {'slug': fig.getSlug}) }}"><i
+                                            class='fas fa-pen'></i></a>
                                 <a href="#" data-toggle="modal" data-target="#deleteFigure">
                                     <i class='fas fa-trash-alt'></i></a>
                             </div>

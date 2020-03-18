@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     fields={"title"},
  *     message="Ce titre est déjà utilisé."
  * )
+ * @ORM\HasLifecycleCallbacks()
  */
 class Figure
 {
@@ -93,6 +94,16 @@ class Figure
         $this->videos = new ArrayCollection();
     }
 
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function defineSlug()
+    {
+        if (empty($this->slug)) {
+            $this->setSlug('snowtrick' . '_' . $this->getTitle());
+        }
+    }
 
     public function getId()
     {

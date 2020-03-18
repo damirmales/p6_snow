@@ -4,7 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Figure;
 use App\Entity\Media;
+use App\Entity\Photo;
+use App\Entity\Video;
 use App\Form\MediaType;
+use App\Form\PhotoType;
+use App\Form\VideoType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -91,6 +95,83 @@ class MediaController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/photo/{id}", name="edit_photo")
+     *
+     */
+    public function updatePhoto(Photo $photo, Request $request, EntityManagerInterface $entityManager)
+    {
+
+        $title = $photo->getTitle();
+        $slug = $photo->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
+
+        $form = $this->createForm(PhotoType::class, $photo);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($photo);
+            $entityManager->flush();
+            return $this->redirectToRoute('page_figure', ['slug' => $slug]);
+        }
+
+        return $this->render('media/update_photo.html.twig', [
+            'photo' => $photo,
+            'title' => $title,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/photo/{id}/delete", name="delete_photo")
+     */
+    public function deletePhoto(Photo $photo, EntityManagerInterface $entityManager)
+    {
+        $slug = $photo->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
+        $entityManager->remove($photo);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('page_figure', ['slug' => $slug]);
+    }
+
+    /**
+     * @Route("/video/{slug}/{id}", name="edit_video")
+     *
+     */
+    public function updateVideo(Video $video, Request $request, EntityManagerInterface $entityManager)
+    {
+
+        $title = $video->getTitle();
+        $slug = $video->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
+
+        $form = $this->createForm(VideoType::class, $video);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($video);
+            $entityManager->flush();
+            return $this->redirectToRoute('page_figure', ['slug' => $slug]);
+        }
+
+        return $this->render('media/update_video.html.twig', [
+            'video' => $video,
+            'title' => $title,
+            'slug' => $slug,
+            'form' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/video/{id}/delete", name="delete_video")
+     */
+    public function deleteVideo(Video $video, EntityManagerInterface $entityManager)
+    {
+        $slug = $video->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
+        $entityManager->remove($video);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('page_figure', ['slug' => $slug]);
+    }
 
     /**
      * @Route("/media/{id}/delete", name="delete_media")

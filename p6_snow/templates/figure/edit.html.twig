@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col">
                 <div>{{ form_row(form.title,{"label":"Nom de la figure","attr":{ "placeholder":"Nom de la figure"}}) }}</div>
-                <div>{{ form_row(form.slug,{"label":"Slug","attr":{ "placeholder":"Slug"}}) }}</div>
+
                 <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
                 <div>{{ form_row(form.figGroup,{"label":"Groupe de la figure","attr":{ "placeholder":"Groupe de la figure"}}) }}</div>
 
@@ -115,22 +115,31 @@
 
 {% block javascripts %}
     <script>
-
+        /*************** créé des instances de formulaire ****************/
         $('#add-photo').click(function () {
-            const index = $('#create_figure_media div.form-group').length;
+            let index = $('#create_figure_photos div.form-group').length; // on récupère les div qui ont la classe form_group
             console.log(index);
-            const getPrototypEntry = $('#create_figure_media').data('prototype').replace(/__name__/g, index);
-            // add another MediaType form instance (code)
-            $('#create_figure_media').append(getPrototypEntry);
+            const getPrototypEntry = $('#create_figure_photos').data('prototype').replace(/__name__/g, index);
+// add another PhotoType form instance (code)
+            $('#create_figure_photos').append(getPrototypEntry);
             deleteMedia();
         });
 
-        //delete the form not the content in the database
+        $('#add-video').click(function () {
+            let index = $('#create_figure_videos div.form-group').length;
+
+            const getPrototypEntry = $('#create_figure_videos').data('prototype').replace(/__name__/g, index);
+
+            $('#create_figure_videos').append(getPrototypEntry);
+            deleteMedia();
+        });
+
+
         function deleteMedia() {
 
             $('button[data-action = "delete"]').click(function () {
                     const mediatarget = this.dataset.target;
-                    console.log(mediatarget);
+
                     $(mediatarget).remove();
                 }
             );
