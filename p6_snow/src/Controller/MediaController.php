@@ -96,7 +96,7 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route("/photo/{id}", name="edit_photo")
+     * @Route("/figure/{slug}/photo/{id}", name="edit_photo")
      *
      */
     public function updatePhoto(Photo $photo, Request $request, EntityManagerInterface $entityManager)
@@ -117,6 +117,7 @@ class MediaController extends AbstractController
         return $this->render('media/update_photo.html.twig', [
             'photo' => $photo,
             'title' => $title,
+            'slug' => $slug,
             'form' => $form->createView()
         ]);
     }
@@ -134,7 +135,7 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route("/video/{slug}/{id}", name="edit_video")
+     * @Route("/figure/{slug}/video/{id}", name="edit_video")
      *
      */
     public function updateVideo(Video $video, Request $request, EntityManagerInterface $entityManager)

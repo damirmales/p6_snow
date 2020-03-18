@@ -39,7 +39,8 @@
 
                         {% if app.user %}
                             <div class="card-header">
-                                <a href="{{ path('edit_photo',{'id':photo.id}) }}"><i class='fas fa-pen'></i></a>
+                                <a href="{{ path('edit_photo',{'slug':photo.figure.slug,'id':photo.id}) }}"><i
+                                            class='fas fa-pen'></i></a>
                                 <a href="{{ path('delete_photo',{'id':photo.id}) }}"> <i
                                             class='fas fa-trash-alt'></i></a>
                             </div>
