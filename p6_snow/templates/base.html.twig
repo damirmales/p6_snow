@@ -43,8 +43,15 @@
                     <a class="nav-link" href="{{ path('deconnection_user') }}">Deconnexion </a>
                 </li>
 
-                <li class="nav-item ">
-                    <span class="align-item-center">{{ app.user.username }} </span>
+                <li class="nav-item dropdown">
+
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        {{ app.user.username }}
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('deconnection_user') }}">Deconnexion </a></li>
+
+                    </ul>
                 </li>
             {% endif %}
         </ul>
@@ -56,16 +63,18 @@
 
 {% block footer %}{% endblock %}
 
+{% block script_vendor %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+{% endblock %}
 {% block javascripts %}
 
 {% endblock %}
+
+
 </body>
 </html>

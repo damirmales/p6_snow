@@ -28,13 +28,12 @@
         <div class="row">
             <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
         </div>
-        <div class="row ">
 
+        <div class="row ">
             {% for fig in figs %}
 
-                <div class="col-md-2 text-center">
-
-                    <div class="card border-primary mb-3 flex-fill" style="max-width: 12rem;">
+                <div class="col-12 col-lg-3 col-md-4 grid-item " style="display: block;">
+                    <div class="card border-primary mx-2 mb-3 flex-fill" style="max-width: 12rem;">
 
                         <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
                              alt="Figure image cap">
@@ -51,14 +50,13 @@
                                     <i class='fas fa-trash-alt'></i></a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             {% endfor %}
 
         </div>
         <div class="row">
-            <button onclick="loadMore()" id="loadFigBtn" title="Plus de figures">Plus de figures</button>
+            <button type="button" id="loadMoreFigBtn" title="Plus de figures">Plus de figures</button>
         </div>
         <div class="row">
             <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
@@ -89,8 +87,11 @@
             </div>
         </div>
     </div>
-    <script src={{ asset('/js/js_scroll') }}></script>
+
 {% endblock %}
 
 
-
+{% block javascripts %}
+    <script src={{ asset('/js/js_scroll') }}></script>
+    <script src={{ asset('/js/load_more.js') }}></script>
+{% endblock %}
