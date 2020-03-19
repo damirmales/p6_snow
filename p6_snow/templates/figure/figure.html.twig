@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Figure {{ fig.title }}{% endblock %}
-
+{% block tag_body %}
+<body onload="initGridItem(4)">
+{% endblock %}
 {% block body %}
 
     <div class="container">
@@ -10,7 +12,6 @@
                  style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
                 <h1 class="display-3 text-center"> {{ fig.title }}</h1>
                 {% if app.user %}
-
                     <div class="card-header">
                         <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
                         <a href="{{ path('delete_figure', {'slug': fig.slug}) }}"> <i class='fas fa-trash-alt'></i></a>
@@ -29,10 +30,9 @@
             </div>
         </div>
         <div class="row">
-
             {% for photo in photos %}
                 {% if photo.filename %}
-                    <div class="col">
+                    <div class="col-12 col-lg-3 col-md-3 grid-item text-center" style="display: block;">
 
                         <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}" alt="image de figure snowboard"
                              style="width:150px">
@@ -49,11 +49,13 @@
                     </div><!-- col-->
                 {% endif %}
             {% endfor %}
-
-
         </div>
+
         <div class=" row mt-4">
             <div class="col-md-6">
+                <button type="button" id="loadMoreFigBtn" title="Plus de figures" onclick="loadMore(4)">Plus de
+                    figures
+                </button>
                 <!------------ pagination pictures of figure ---------------------->
                 <div class="d-flex justify-content-center">
                     <nav aria-label="Pictures navigation block">
@@ -261,4 +263,7 @@
         </div><!-- row -->
     </div>
 
+{% endblock %}
+{% block javascripts %}
+<script src={{ asset('/js/load_more.js') }}></script>
 {% endblock %}

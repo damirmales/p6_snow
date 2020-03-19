@@ -299,7 +299,7 @@ class FigureController extends AbstractController
 
         $comment = new Comment();
         $commentPagination = new PaginationParam($page, 2, 2);
-        $picturePagination = new PaginationParam(1, 3, 3);
+        $picturePagination = new PaginationParam(1, 10, 6);
         $videoPagination = new PaginationParam(1, 3, 3);
 
         $form = $this->createForm(CommentType::class, $comment);

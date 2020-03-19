@@ -2,6 +2,10 @@
 
 {% block title %}Snow tricks{% endblock %}
 
+{% block tag_body %}
+<body onload="initGridItem(8)">
+{% endblock %}
+
 {% block body %}
 
 
@@ -52,11 +56,45 @@
                         </div>
                     </div>
                 </div>
+
+                <!--*********** Trigger modal  when button delete figure  is clicked ****************-->
+
+                <!-- Modal -->
+                <div class="modal fade" id="deleteFigure" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" action="{{ path('delete_figure', {'slug': fig.slug}) }}"
+                                      id="newModalForm">
+                                    Êtes vous sûr de vouloir supprimer la figure ?
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
+                                        <button type="submit" class="btn btn-primary"
+                                        >Save changes
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
 
         </div>
         <div class="row">
-            <button type="button" id="loadMoreFigBtn" title="Plus de figures">Plus de figures</button>
+            <button type="button" id="loadMoreFigBtn" title="Plus de figures" onclick="loadMore(4)">Plus de figures
+            </button>
         </div>
         <div class="row">
             <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
@@ -64,29 +102,7 @@
 
     </div>
 
-    <!--*********** Trigger modal  when delete figure button is clicked ****************-->
 
-    <!-- Modal -->
-    <div class="modal fade" id="deleteFigure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Êtes vous sûr de vouloir supprimer la figure ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 {% endblock %}
 
