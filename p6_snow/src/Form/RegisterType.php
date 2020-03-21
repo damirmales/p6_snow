@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RegisterType extends AbstractType
@@ -20,14 +21,25 @@ class RegisterType extends AbstractType
             ->add('firstname', TextType::class, $this->getConfiguration("Prénom", "Votre prénom"))
             ->add('lastname', TextType::class, $this->getConfiguration("Nom", "Votre nom"))
             ->add('email', TextType::class, $this->getConfiguration("Email", "Votre email"))
-            //->add('picture', UrlType::class, $this->getConfiguration("Photo", "Votre photo"))
+
             // add a user's image as avatar
             ->add('avatar', FileType::class, [
                 'label' => 'Avatar (jpeg file)',
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
-                'required' => false])
+                'required' => false,
+
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k', 'maxSizeMessage' => "l'image doit être doit inférieure à 1Mo",
+                        'mimeTypes' => [
+                            'image/*',
+                        ],
+                        'mimeTypesMessage' => "Le type de format image n'est pas valide",
+                    ])
+                ],
+            ])
             /*  ->add('role')
               ->add('status')
               ->add('token') */

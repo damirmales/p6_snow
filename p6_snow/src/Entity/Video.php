@@ -28,6 +28,7 @@ class Video
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Figure", inversedBy="videos")
+     * @ORM\JoinColumn(name="figure_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $figure;
 

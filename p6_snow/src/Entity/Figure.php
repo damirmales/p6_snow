@@ -77,12 +77,12 @@ class Figure
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="figure")
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="figure", orphanRemoval=true)
      */
     private $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="figure")
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="figure", orphanRemoval=true)
      */
     private $videos;
 
@@ -96,9 +96,9 @@ class Figure
 
     /**
      * @ORM\PrePersist()
-     * @ORM\PreUpdate()
+     * @ORM\PreUpdate()     *
      */
-    public function defineSlug()
+    public function defineSlug() // linked to HasLifecycleCallbacks
     {
         if (empty($this->slug)) {
             $this->setSlug('snowtrick' . '_' . $this->getTitle());

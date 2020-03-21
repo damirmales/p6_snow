@@ -11,6 +11,7 @@ use App\Form\CommentType;
 use App\Form\CreateFigureType;
 use App\Form\FeatureImgType;
 use App\Repository\CommentRepository;
+use App\Repository\FigureRepository;
 use App\Repository\MediaRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\VideoRepository;
@@ -155,7 +156,7 @@ class FigureController extends AbstractController
                 $video->setFigure($figure);
                 $entityManager->persist($video);
             }
-
+            dd($figure->setFeatureImage($newFilename));
             $entityManager->persist($figure);
             $entityManager->flush();
 
@@ -276,8 +277,12 @@ class FigureController extends AbstractController
     /**
      * @Route("/figure/{slug}/delete", name="delete_figure")
      */
-    public function delete(Figure $figure, EntityManagerInterface $entityManager)
+    public function delete($slug, Figure $figure, PhotoRepository $photoRepository, FigureRepository $figureRepository, EntityManagerInterface $entityManager)
     {
+        // dd($photoRepository->findBy(['figure' => $figure]));
+        //dd($photoRepository->findBy(['figure' => $figure]));
+
+        //$entityManager->remove($photo);
 
         $entityManager->remove($figure);
         $entityManager->flush();

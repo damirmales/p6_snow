@@ -29,6 +29,7 @@ class Photo
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Figure", inversedBy="photos")
+     * @ORM\JoinColumn(name="figure_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $figure;
 

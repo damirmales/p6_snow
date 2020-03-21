@@ -3,6 +3,19 @@ img {
     max-width: 100%;
 }
 
+.jumbotron {
+
+    height: 400px;
+    background-image: url("/img/home_snowboard.jpg");
+}
+
+.jumbotron h1 {
+
+    font-size: 100px;
+    font-weight: bolder;
+    color: whitesmoke;
+}
+
 .loginForm {
 
 }

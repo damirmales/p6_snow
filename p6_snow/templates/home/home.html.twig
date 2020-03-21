@@ -11,9 +11,9 @@
 
     <div class="container ">
 
-        <div class="jumbotron mt-4">
+        <div class=" row jumbotron mt-4">
 
-            <h1 class="display-3 text-center">Bienvenu sur Snow tricks</h1>
+            <h1 class="display-3 text-center">Snow tricks</h1>
 
         </div>
 
@@ -33,34 +33,38 @@
             <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
         </div>
 
-        <div class="row ">
+        <div class="row">
             {% for fig in figs %}
 
-                <div class="col-12 col-lg-3 col-md-4 grid-item " style="display: block;">
-                    <div class="card border-primary mx-2 mb-3 flex-fill" style="max-width: 12rem;">
+                <!--  <div class="col-12 col-lg-3 col-md-4 grid-item "> -->
 
-                        <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
-                             alt="Figure image cap">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ fig.title }}</h4>
+                <div class="card border-primary mx-2 mb-3 flex-fill" style="max-width: 12rem;">
 
-                            <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link">Lien
-                                vers la
-                                figure</a>
+                    <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
+                         alt="Figure image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ fig.title }}</h4>
+
+                        <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link">Lien
+                            vers la
+                            figure</a>
+                        {% if app.user %}
                             <div class="card-header">
                                 <a href="{{ path('edit_figure', {'slug': fig.getSlug}) }}"><i
                                             class='fas fa-pen'></i></a>
-                                <a href="#" data-toggle="modal" data-target="#deleteFigure">
+                                <a href="#" data-toggle="modal" data-target="#deleteFigure{{ fig.getSlug }}">
                                     <i class='fas fa-trash-alt'></i></a>
                             </div>
-                        </div>
+                        {% endif %}
                     </div>
+
+                    <!--   </div> -->
                 </div>
 
                 <!--*********** Trigger modal  when button delete figure  is clicked ****************-->
 
                 <!-- Modal -->
-                <div class="modal fade" id="deleteFigure" tabindex="-1" role="dialog"
+                <div class="modal fade" id="deleteFigure{{ fig.getSlug }}" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -101,7 +105,6 @@
         </div>
 
     </div>
-
 
 
 {% endblock %}
