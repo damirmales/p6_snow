@@ -9,7 +9,7 @@
     {{ form_start(form) }}
     <div class="container mt-4">
         <h2>Modifier image de présentation de {{ title }}</h2>
-        {{ form_widget(form) }}
+        {{ form_row(form.image_base) }}
         <div class="row">
             <button type="submit" class="btn btn-primary">Soumettre</button>
         </div>

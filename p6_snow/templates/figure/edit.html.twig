@@ -35,17 +35,20 @@
 
             </div>
         </div>
-        {{ form_widget(form) }}
+        {# {{ form_widget(form) }}#} <!-- si présent active l'affichage des sous-formulaires -->
         <div class="row">
-            <button type="submit" class="btn btn-primary">Soumettre</button>
+
+            <button type="submit" class="btn btn-primary mx-2">Soumettre</button>
+
+
         </div>
-        {{ form_end(form) }}
+        {#   {{ form_end(form) }}#}
     </div>
 {% endblock %}
 
 {# ********************* gestion  du sous-formulaires pour ajout de photos ******************* #}
 {% block _create_figure_photos_widget %}
-    <p>Ajoutez des photos</p>
+    <p>Modifiez les photos</p>
     {{ form_widget(form) }}
     <div class="form-group">
         <div class="row">

@@ -120,29 +120,34 @@ class FigureController extends AbstractController
             //-------------------------------------------------------
 
             $figure->setEditor($this->getUser()); // available because user is connected
-            $imageFile = $form->get('image_base')->getData();
 
-            if ($imageFile) {
-                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            // let added photo to persist before insert it to the database
 
-                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+            //-------- Manage the field devoted to upload extra figure pictures ----------------
+            $photoFile = $form->getData()->getPhotos(); //from PhotoType Filetype
+
+            // let added photo to persist before insert it to the database
+            foreach ($photoFile as $photo) {
+                $photo->setCreatedDate(new DateTime('now'));
+                $photo->setFigure($figure); // combine photo to the figure
+                $photoFilename = pathinfo($photo->getFile()->getClientOriginalName(), PATHINFO_FILENAME);
+                $newPhotoFilename = $photoFilename . '-' . uniqid() . '.' . $photo->getFile()->guessExtension();
 
                 // Move the file to the directory where pictures of figures are stored
                 try {
-                    $imageFile->move(
+                    $photo->getFile()->move(
                         $this->getParameter('figures_directory'),
-                        $newFilename
+                        $newPhotoFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
-                    return new Response("une erreur a été détectée");
+                    return new Response("Une erreur a été détectée");
                 }
+                $photo->setFilename($newPhotoFilename);
 
-                // updates the 'picture' field property to store the jpeg file name
-                // instead of its contents
-                $figure->setFeatureImage($newFilename);
+                $entityManager->persist($photo);
             }
-            // let added photo to persist before insert it to the database
+
             foreach ($figure->getPhotos() as $photo) {
                 $photo->setCreatedDate(new DateTime('now'));
 
@@ -156,7 +161,7 @@ class FigureController extends AbstractController
                 $video->setFigure($figure);
                 $entityManager->persist($video);
             }
-            dd($figure->setFeatureImage($newFilename));
+
             $entityManager->persist($figure);
             $entityManager->flush();
 
@@ -233,20 +238,20 @@ class FigureController extends AbstractController
             foreach ($photoFile as $photo) {
                 $photo->setCreatedDate(new DateTime('now'));
                 $photo->setFigure($fig); // combine photo to the figure
-                $imageFilename = pathinfo($photo->getFile()->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $imageFilename . '-' . uniqid() . '.' . $photo->getFile()->guessExtension();
+                $photoFilename = pathinfo($photo->getFile()->getClientOriginalName(), PATHINFO_FILENAME);
+                $newPhotoFilename = $photoFilename . '-' . uniqid() . '.' . $photo->getFile()->guessExtension();
 
                 // Move the file to the directory where pictures of figures are stored
                 try {
                     $photo->getFile()->move(
                         $this->getParameter('figures_directory'),
-                        $newFilename
+                        $newPhotoFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                     return new Response("Une erreur a été détectée");
                 }
-                $photo->setFilename($newFilename);
+                $photo->setFilename($newPhotoFilename);
 
                 $entityManager->persist($photo);
             }

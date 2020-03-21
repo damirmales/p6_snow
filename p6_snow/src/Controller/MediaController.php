@@ -69,6 +69,8 @@ class MediaController extends AbstractController
         ]);
     }
 
+    //TODO delete routes devoted to Media
+
     /**
      * @Route("/media/{id}", name="edit_media")
      *
@@ -118,6 +120,7 @@ class MediaController extends AbstractController
             'photo' => $photo,
             'title' => $title,
             'slug' => $slug,
+            'id' => $photo->getId(),
             'form' => $form->createView()
         ]);
     }

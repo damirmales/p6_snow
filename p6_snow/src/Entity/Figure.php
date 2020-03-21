@@ -78,6 +78,7 @@ class Figure
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="figure", orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $photos;
 

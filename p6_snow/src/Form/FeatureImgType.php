@@ -17,7 +17,7 @@ class FeatureImgType extends AbstractType
                 'label' => 'Image de présentation (jpeg file)',
                 'attr' => ['placeholder' => 'Télécharger une image locale'],
                 'mapped' => false,
-                'required' => false]);
+                'required' => true]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
