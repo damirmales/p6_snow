@@ -24,19 +24,19 @@ class MediaController extends AbstractController
      */
     public function createMedia(Figure $figure, Request $request, EntityManagerInterface $entityManager)
     {
-        $media = new Media();
+        $photo = new Photo();
+        $video = new Video();
 
-        $form = $this->createForm(MediaType::class, $media);
-        $form->handleRequest($request);
+        $photoForm = $this->createForm(PhotoType::class, $photo);
+        $photoForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $media->setType('photo');
-            $media->setCreateDate(new DateTime('now'));
-            $media->setFigure($figure);
+        if ($photoForm->isSubmitted() && $photoForm->isValid()) {
 
+            $photo->setCreatedDate(new DateTime('now'));
+            $photo->setFigure($figure);
 
             //-------- Manage the field devoted to upload default picture ----------------
-            $imageFile = $form->get('photo_figure')->getData(); //from MediaType Filetype
+            $imageFile = $photoForm->get('file')->getData(); //from PhotoType Filetype
 
             if ($imageFile) {
                 $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -55,47 +55,20 @@ class MediaController extends AbstractController
 
                 // updates the 'picture' field property to store the jpeg file name
                 // instead of its contents
-                $media->setUrl($newFilename);
+                $photo->setFilename($newFilename);
             }
-            $entityManager->persist($media);
+            $entityManager->persist($photo);
             $entityManager->flush();
 
             $this->addFlash("success", "Ajout de média réussi");
             return $this->redirectToRoute('home');
         }
         return $this->render('media/add_media.html.twig', [
-            'form' => $form->createView(),
+            'form' => $photoForm->createView(),
             'figTitle' => $figure->getTitle(),
         ]);
     }
 
-    //TODO delete routes devoted to Media
-
-    /**
-     * @Route("/media/{id}", name="edit_media")
-     *
-     */
-    public function update(Media $media, Request $request, EntityManagerInterface $entityManager)
-    {
-
-        $title = $media->getTitle();
-        $slug = $media->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
-
-        $form = $this->createForm(MediaType::class, $media);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($media);
-            $entityManager->flush();
-            return $this->redirectToRoute('page_figure', ['slug' => $slug]);
-        }
-
-        return $this->render('media/update.html.twig', [
-            'media' => $media,
-            'title' => $title,
-            'form' => $form->createView()
-        ]);
-    }
 
     /**
      * @Route("/figure/{slug}/photo/{id}", name="edit_photo")
@@ -118,6 +91,7 @@ class MediaController extends AbstractController
 
         return $this->render('media/update_photo.html.twig', [
             'photo' => $photo,
+            'filename' => $photo->getFilename(),
             'title' => $title,
             'slug' => $slug,
             'id' => $photo->getId(),
@@ -177,15 +151,5 @@ class MediaController extends AbstractController
         return $this->redirectToRoute('page_figure', ['slug' => $slug]);
     }
 
-    /**
-     * @Route("/media/{id}/delete", name="delete_media")
-     */
-    public function delete(Media $media, EntityManagerInterface $entityManager)
-    {
-        $slug = $media->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
-        $entityManager->remove($media);
-        $entityManager->flush();
 
-        return $this->redirectToRoute('page_figure', ['slug' => $slug]);
-    }
 }

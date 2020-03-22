@@ -40,14 +40,12 @@
 
                 <div class="card border-primary mx-2 mb-3 flex-fill" style="max-width: 12rem;">
 
-                    <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
-                         alt="Figure image cap">
+                    <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link"><img
+                                class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
+                                alt="Figure image cap"></a>
                     <div class="card-body">
                         <h4 class="card-title">{{ fig.title }}</h4>
 
-                        <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link">Lien
-                            vers la
-                            figure</a>
                         {% if app.user %}
                             <div class="card-header">
                                 <a href="{{ path('edit_figure', {'slug': fig.getSlug}) }}"><i

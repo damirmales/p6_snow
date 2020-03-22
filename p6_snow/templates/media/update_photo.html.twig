@@ -4,14 +4,20 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Modifier la photo {{ title }}</h1>
-        {{ form_start(form) }}
-        <img src="{{ photo.filename }}" alt="" class="src">
-        {{ form_row(form.file) }}
         <div class="row">
-            <button type="submit" class="btn btn-primary">Soumettre</button>
+            <div class="col">
+                <h1>Modifier la photo {{ title }}</h1>
+                <img src="{{ asset('/uploads/figures/{{filename}}') }}" alt="{{ filename }}"/>
+                {{ form_start(form) }}
+
+                {{ form_row(form.title) }}
+                {{ form_row(form.file) }}
+                <div class="row">
+                    <button type="submit" class="btn btn-primary">Soumettre</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
         </div>
-        {{ form_end(form) }}
     </div>
 
 {% endblock %}

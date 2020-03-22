@@ -27,6 +27,10 @@ class Figure
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Le titre ne doit pas être un nombre")
      */
     private $title;
 
@@ -42,6 +46,7 @@ class Figure
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min="50", minMessage="Doit contenir une description de 50 caractères minimum")
      */
     private $description;
 

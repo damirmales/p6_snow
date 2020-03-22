@@ -18,6 +18,12 @@
 
                     </div>
                 {% endif %}
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
                 {% if app.user %}
                     <a href="{{ path('create_media', {'slug': fig.slug}) }}" class="">ajout médias</a>
                 {% endif %}
@@ -35,16 +41,9 @@
                     <div class="col-12 col-lg-3 col-md-3 grid-item text-center" style="display: block;">
 
                         <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}" alt="image de figure snowboard"
-                             style="width:150px">
+                             style="width:150px; height:130px">
 
-                        {% if app.user %}
-                            <div class="card-header">
-                                <a href="{{ path('edit_photo',{'slug':photo.figure.slug,'id':photo.id}) }}"><i
-                                            class='fas fa-pen'></i></a>
-                                <a href="{{ path('delete_photo',{'id':photo.id}) }}"> <i
-                                            class='fas fa-trash-alt'></i></a>
-                            </div>
-                        {% endif %}
+
                         <h5>Photo figure {{ photo.title }}</h5>
                     </div><!-- col-->
                 {% endif %}
@@ -88,7 +87,6 @@
                     </nav>
                 </div>
             </div>
-
         </div>
 
 

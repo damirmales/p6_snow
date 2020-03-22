@@ -110,7 +110,8 @@ class FigureController extends AbstractController
      * @IsGranted({"ROLE_USER", "ROLE_ADMIN"})
      *
      */
-    public function editFigure(Figure $figure, Request $request, EntityManagerInterface $entityManager)
+    public function editFigure(Figure $figure, Request $request, EntityManagerInterface $entityManager,
+                               PhotoRepository $photoRepository, VideoRepository $videoRepository)
     {
         $form = $this->createForm(CreateFigureType::class, $figure);
         $form->handleRequest($request);
@@ -171,16 +172,17 @@ class FigureController extends AbstractController
             return $this->redirectToRoute('page_figure', [
                 'slug' => $figure->getSlug(),
                 'photos' => $figure->getPhotos(),
-                'video' => $figure->getVideos()
+                'videos' => $figure->getVideos()
 
             ]);
         }
 
+
         return $this->render('figure/edit.html.twig', [
             'form' => $form->createView(),
             'fig' => $figure,
-            'photos' => $figure->getPhotos(),
-            'video' => $figure->getVideos()
+            'photos' => $photoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC')),
+            'videos' => $videoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC')),
 
 
         ]);

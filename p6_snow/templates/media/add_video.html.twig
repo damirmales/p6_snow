@@ -1,17 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Médias{% endblock %}
+{% block title %}Ajout de vidéo{% endblock %}
 
 {% block body %}
+    {{ form_start(form) }}
     <div class="container mt-4">
-        <h1>Modifier {{ title }}</h1>
-        {{ form_start(form) }}
-        <img src="{{ media.url }}" alt="" class="src">
+        <p>Ajout de vidéo pour la figure {{ figTitle }}</p>
         {{ form_widget(form) }}
         <div class="row">
             <button type="submit" class="btn btn-primary">Soumettre</button>
         </div>
-        {{ form_end(form) }}
     </div>
+    {{ form_end(form) }}
 
 {% endblock %}
