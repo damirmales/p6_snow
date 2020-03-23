@@ -3,7 +3,7 @@
 {% block title %}Snow tricks{% endblock %}
 
 {% block tag_body %}
-<body onload="initGridItem(8)">
+<body onload="initGridItem(6)">
 {% endblock %}
 
 {% block body %}
@@ -36,29 +36,29 @@
         <div class="row">
             {% for fig in figs %}
 
-                <!--  <div class="col-12 col-lg-3 col-md-4 grid-item "> -->
+                <div class="col-12 col-lg-3 col-md-4 grid-item ">
 
-                <div class="card border-primary mx-2 mb-3 flex-fill" style="max-width: 12rem;">
+                    <div class="card border-primary mx-2 mb-3 flex-fill" style="max-width: 12rem;">
 
-                    <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link"><img
-                                class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
-                                alt="Figure image cap"></a>
-                    <div class="card-body">
-                        <h4 class="card-title">{{ fig.title }}</h4>
+                        <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link"><img
+                                    class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
+                                    alt="Figure image cap"></a>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ fig.title }}</h4>
 
-                        {% if app.user %}
-                            <div class="card-header">
-                                <a href="{{ path('edit_figure', {'slug': fig.getSlug}) }}"><i
-                                            class='fas fa-pen'></i></a>
-                                <a href="#" data-toggle="modal" data-target="#deleteFigure{{ fig.getSlug }}">
-                                    <i class='fas fa-trash-alt'></i></a>
-                            </div>
-                        {% endif %}
+                            {% if app.user %}
+                                <div class="card-header">
+                                    <a href="{{ path('edit_figure', {'slug': fig.getSlug}) }}"><i
+                                                class='fas fa-pen'></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#deleteFigure{{ fig.getSlug }}">
+                                        <i class='fas fa-trash-alt'></i></a>
+                                </div>
+                            {% endif %}
+                        </div>
+
                     </div>
-
-                    <!--   </div> -->
                 </div>
-
+                {#TODO: voir si besoin de créer un service pour modal #}
                 <!--*********** Trigger modal  when button delete figure  is clicked ****************-->
 
                 <!-- Modal -->
@@ -68,7 +68,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Vous allez supprimer {{ fig.title }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -79,10 +79,11 @@
                                     Êtes vous sûr de vouloir supprimer la figure ?
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Non je
+                                            renonce
                                         </button>
                                         <button type="submit" class="btn btn-primary"
-                                        >Save changes
+                                        >Oui j'assume
                                         </button>
                                     </div>
                                 </form>

@@ -20,7 +20,9 @@ class PhotoType extends AbstractType
                 'label' => 'Photo en rapport avec la figure',
                 'attr' => ['placeholder' => 'Télécharger une photo'],
                 //'mapped' => false,
-                'required' => false,
+                // make it optional so you don't have to re-upload the jpeg file
+                // every time you edit the Photo details
+                'required' => true, // contrainte au niveau front
                 'empty_data' => null
             ]);
     }

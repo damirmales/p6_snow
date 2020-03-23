@@ -12,8 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\FigureRepository")
  * @UniqueEntity(
  *     fields={"title"},
- *     message="Ce titre est déjà utilisé."
- * )
+ *     message="Ce titre est déjà utilisé.")
  * @ORM\HasLifecycleCallbacks()
  */
 class Figure
@@ -26,11 +25,9 @@ class Figure
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\Regex(
-     *     pattern="/\d/",
-     *     match=false,
-     *     message="Le titre ne doit pas être un nombre")
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="4",minMessage="Le titre doit contenir au moins 4 caractères")
+     *
      */
     private $title;
 

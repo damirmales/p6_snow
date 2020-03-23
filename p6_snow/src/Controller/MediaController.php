@@ -35,6 +35,7 @@ class MediaController extends AbstractController
             $photo->setCreatedDate(new DateTime('now'));
             $photo->setFigure($figure);
 
+//TODO: factorisez l'upload des photos
             //-------- Manage the field devoted to upload default picture ----------------
             $imageFile = $photoForm->get('file')->getData(); //from PhotoType Filetype
 
@@ -50,7 +51,7 @@ class MediaController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    return new Response("Une erreur a été détectée");
                 }
 
                 // updates the 'picture' field property to store the jpeg file name
@@ -61,7 +62,7 @@ class MediaController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash("success", "Ajout de média réussi");
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('page_figure', ['slug' => $figure->getSlug()]);
         }
         return $this->render('media/add_media.html.twig', [
             'form' => $photoForm->createView(),
@@ -84,6 +85,31 @@ class MediaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //TODO: factorisez l'upload des photos
+            //-------- Manage the field devoted to upload default picture ----------------
+            $imageFile = $form->get('file')->getData(); //from PhotoType Filetype
+
+            if ($imageFile) {
+                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                // Move the file to the directory where pictures of figures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('figures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'picture' field property to store the jpeg file name
+                // instead of its contents
+                $photo->setFilename($newFilename);
+            }
+
             $entityManager->persist($photo);
             $entityManager->flush();
             return $this->redirectToRoute('page_figure', ['slug' => $slug]);
