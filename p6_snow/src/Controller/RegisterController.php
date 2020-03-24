@@ -90,7 +90,7 @@ class RegisterController extends AbstractController
     public function checkToken(Request $request, UserRepository $userRepo, EntityManagerInterface $manager) // check token from user's email
     {
         $token_from_email = $request->query->get('user_token');
-        dump($token_from_email);
+
         $user = $manager->getRepository(User::class)->findOneBy(array('token' => $token_from_email));
 
 

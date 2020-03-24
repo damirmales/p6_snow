@@ -5,18 +5,49 @@
     border-radius: 50%;
 }
 
+.card {
+    /*width: 200px;
+    max-height: 300px;*/
+}
+
+.card-picto {
+    width: 60px;
+    padding: 5px;
+}
+
+.card-img-top {
+    max-height: 150px;
+}
+
+.col {
+    background-color: cornflowerblue;
+    border-radius: 10px;
+}
+
+div label {
+    font-weight: bold;
+}
+
+#forgetPassword {
+    font-weight: bold;
+    font-style: italic;
+}
+
+h1 {
+    font-size: 1.6em;
+    color: dodgerblue;
+}
+
 img {
     max-width: 100%;
 }
 
 .jumbotron {
-
     height: 400px;
     background-image: url("/img/home_snowboard.jpg");
 }
 
 .jumbotron h1 {
-
     font-size: 100px;
     font-weight: bolder;
     color: whitesmoke;
@@ -26,19 +57,6 @@ img {
 
 }
 
-.videoFigure {
-
-    max-width: 200px;
-}
-
-.col {
-
-    background-color: beige;
-}
-
-.card-header {
-    width: 100px;
-}
 
 /* ******** scroll top button *********** */
 #myBtn {
@@ -75,12 +93,10 @@ img {
     cursor: pointer;
     padding: 15px;
     border-radius: 4px;
-
 }
 
 .featureImageFigure {
     height: 400px;
-
 }
 
 .grid-item {
@@ -90,11 +106,12 @@ img {
 #loadMoreFigBtn {
     padding: 10px;
     text-align: center;
-    background-color: #33739E;
+    background-color: dodgerblue;
     color: #fff;
     border-width: 0 1px 1px 0;
     border-style: solid;
     border-color: #fff;
+    border-radius: 14px;
     box-shadow: 0 1px 1px #ccc;
     transition: all 600ms ease-in-out;
     -webkit-transition: all 600ms ease-in-out;
@@ -105,4 +122,8 @@ img {
 #loadMoreFigBtn:hover {
     background-color: #abc;
     color: #33739E;
+}
+
+.videoFigure {
+    max-width: 200px;
 }

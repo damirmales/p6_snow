@@ -5,8 +5,8 @@
 {% block body %}
     <div class="container">
 
-        <div class="row ">
-            <div class="mt-4 py-4 bg-secondary">
+        <div class="row justify-content-center">
+            <div class="mt-4 py-4">
 
                 {% for message in app.flashes('warning') %}
                     <div class="alert alert-warning">
@@ -18,7 +18,9 @@
                         {{ message }}
                     </div>
                 {% endfor %}
-
+                <div class="alert alert-success">
+                    ggggggggggggggggggggg
+                </div>
                 <div class="col-md-12">
                     <h1>SE CONNECTER</h1>
                     {% if errorMessage %}

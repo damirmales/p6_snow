@@ -32,10 +32,10 @@ class PasswordLostController extends AbstractController
         $form->handleRequest($request);
 
         //get user's data with user's username
-        // $userData = $form->get('username');
+
         $userData = $form->get('email');
         $userProvidedEmail = $userData->getViewData();
-        $bodyEmailMessage = "Cliquez sur le lien pour accéder au formulaire de changement de mot de passe:";
+        $bodyEmailMessage = "Cliquez sur le lien pour accèder au formulaire de changement de mot de passe:";
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -77,10 +77,6 @@ class PasswordLostController extends AbstractController
 
         $repo = $this->getDoctrine()->getRepository(User::class);
 
-        /* $findEmail = $repo->findByUsername([
-             'username' => $userProvidedEmail
-         ]);
-         */
 
         $findEmail = $repo->findOneBy([
             'email' => $userProvidedEmail

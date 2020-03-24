@@ -33,12 +33,14 @@
             <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
         </div>
 
-        <div class="row">
+        <div class="row justify-content-start m-4">
             {% for fig in figs %}
 
-                <div class="col-12 col-lg-3 col-md-4 grid-item ">
+                <!-- <div class="col-12 col-lg-3 col-md-4 grid-item "> -->
+                <div class="col-sm-6 col-md-2 grid-item"
+                     style="min-height: 200px; min-width: 250px; height: 100%; width: auto">
 
-                    <div class="card border-primary mx-2 mb-3 flex-fill" style="max-width: 12rem;">
+                    <div class="card border-primary mx-2 mb-3 flex-fill">
 
                         <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link"><img
                                     class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ fig.featureImage }}"
@@ -47,7 +49,7 @@
                             <h4 class="card-title">{{ fig.title }}</h4>
 
                             {% if app.user %}
-                                <div class="card-header">
+                                <div class="card-picto">
                                     <a href="{{ path('edit_figure', {'slug': fig.getSlug}) }}"><i
                                                 class='fas fa-pen'></i></a>
                                     <a href="#" data-toggle="modal" data-target="#deleteFigure{{ fig.getSlug }}">
@@ -96,7 +98,8 @@
 
         </div>
         <div class="row">
-            <button type="button" id="loadMoreFigBtn" title="Plus de figures" onclick="loadMore(4)">Plus de figures
+            <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures" onclick="loadMore(4)">Plus de
+                figures
             </button>
         </div>
         <div class="row">
@@ -105,9 +108,7 @@
 
     </div>
 
-
 {% endblock %}
-
 
 {% block javascripts %}
     <script src={{ asset('/js/js_scroll') }}></script>

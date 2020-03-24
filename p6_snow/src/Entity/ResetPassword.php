@@ -11,7 +11,7 @@ class ResetPassword
     // private $email;
 
     /**
-     * @Assert\Length(min=5, minMessage = "Il faut au minimum 5 caractères")
+     * @Assert\Length(min=4, minMessage = "Il faut au minimum 4 caractères")
      *
      */
     private $password;

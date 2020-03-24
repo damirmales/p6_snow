@@ -16,7 +16,7 @@
             </div>
         </div>
         {% if app.user %}
-            <div class="card-header">
+            <div class="card-picto">
                 <a href="{{ path('edit_figure', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
                 <a href="{{ path('delete_figure', {'slug': fig.slug}) }}" data-toggle="modal"
                    data-target="#deleteFigure{{ fig.getSlug }}"> <i class='fas fa-trash-alt'></i></a>

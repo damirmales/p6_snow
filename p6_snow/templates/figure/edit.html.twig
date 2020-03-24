@@ -12,8 +12,8 @@
         <div class="row mt-4">
             <div class="col featureImageFigure"
                  style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
-                <h1 class="display-3 text-center"> {{ fig.title }}</h1>
-                <div class="card-header">
+
+                <div class="card-picto">
                     <a href="{{ path('image_presentation', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
                     <a href="{{ path('delete_feature_image', {'slug': fig.slug}) }}"> <i
                                 class='fas fa-trash-alt'></i></a>
@@ -24,17 +24,18 @@
         <div class="row">
             <div class="col">
                 {% if app.user %}
-                    <a href="{{ path('add_photo', {'slug': fig.slug}) }}" class="">ajout de photo</a>
-                    <a href="{{ path('add_video', {'slug': fig.slug}) }}" class="">ajout de vidéo</a>
+                    <a href="{{ path('add_photo', {'slug': fig.slug}) }}" class="">
+                        <button>ajout de photo</button>
+                    </a>
+                    <a href="{{ path('add_video', {'slug': fig.slug}) }}" class="">
+                        <button>ajout de vidéo</button>
+                    </a>
                 {% endif %}
             </div>
         </div>
 
         <!-- Afficher les photos si existantes -->
         {% if photos %}
-            <div class="alert alert-danger">
-                Photos là
-            </div>
 
             <!-- Portfolio Gallery pictures -->
             <div class="row mt-4">
@@ -52,7 +53,7 @@
                                  style="width:150px">
 
 
-                            <div class="card-header">
+                            <div class="card-picto">
                                 <a href="{{ path('edit_photo',{'slug':photo.figure.slug,'id':photo.id}) }}"><i
                                             class='fas fa-pen'></i></a>
                                 <a href="{{ path('delete_photo',{'id':photo.id}) }}"> <i
@@ -69,9 +70,6 @@
 
         <!-- Afficher les vidéos si existantes -->
         {% if videos %}
-            <div class="alert alert-danger">
-                videos là
-            </div>
 
             <!-- Portfolio videos -->
             <div class="row mt-4">
@@ -89,7 +87,7 @@
                                 allowfullscreen></iframe>
                     </div>
 
-                    <div class="card-header">
+                    <div class="card-picto">
                         <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
                                     class='fas fa-pen'></i></a>
                         <a href="{{ path('delete_video',{'id':video.id}) }}"> <i

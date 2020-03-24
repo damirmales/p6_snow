@@ -13,8 +13,8 @@ class ResetPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('password', PasswordType::class)
-            ->add('repeatPassword', PasswordType::class);
+            ->add('Mot de passe', PasswordType::class)
+            ->add('Répéter mot de passe', PasswordType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

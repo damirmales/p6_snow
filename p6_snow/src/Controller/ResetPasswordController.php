@@ -40,11 +40,12 @@ class ResetPasswordController extends AbstractController
             // on place le nouveau mot de passe dans le champ password de l'entité User
             $user->setPassword($cryptedPassword);
             // on lance l'EntityManager pour effectuer les modifications dans la base de données
+
             $manager->persist($user);
             $manager->flush();
 
             $this->addFlash("success", "Votre mot de passe à bien été modifié");
-
+            dd($user);
             //return $this->redirectToRoute("home");
 
         }
