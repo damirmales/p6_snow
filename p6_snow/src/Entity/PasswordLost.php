@@ -9,24 +9,24 @@ class PasswordLost
 {
     /**
      * @return mixed
-     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
+     * @Assert\Email(message = "Le format '{{ value }}' n'est pas un email valide")
      */
-    private $username;
+    private $email;
 
     /**
      * @return mixed
      */
-    public function getUsername()
+    public function getEmail()
     {
-        return $this->username;
+        return $this->email;
     }
 
     /**
-     * @param mixed $username
+     * @param mixed $email
      */
-    public function setUsername($username): void
+    public function setEmail($email): void
     {
-        $this->username = $username;
+        $this->email = $email;
     }
 
 

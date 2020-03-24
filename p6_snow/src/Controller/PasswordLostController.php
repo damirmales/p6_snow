@@ -32,13 +32,14 @@ class PasswordLostController extends AbstractController
         $form->handleRequest($request);
 
         //get user's data with user's username
-        $userData = $form->get('username');
-        $username = $userData->getViewData();
+        // $userData = $form->get('username');
+        $userData = $form->get('email');
+        $userProvidedEmail = $userData->getViewData();
         $bodyEmailMessage = "Cliquez sur le lien pour accéder au formulaire de changement de mot de passe:";
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $user = $this->findUserEmail($username);
+            $user = $this->findUserEmail($userProvidedEmail);
 
             if ($user !== null) {
                 $userLastname = $user->getLastname();
@@ -52,10 +53,10 @@ class PasswordLostController extends AbstractController
                 $token = $user->getToken();
                 $pathToEmailPage = 'emails/password_email.html.twig';
 
-                $sendEmail->sendEmail($user->getEmail(), $token, $userLastname, $bodyEmailMessage, $pathToEmailPage);  //find user's email with given user's username
+                $sendEmail->sendEmail($user->getEmail(), $token, $userLastname, $bodyEmailMessage, $pathToEmailPage);
                 $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
             } else {
-                $this->addFlash('warning', 'Ce pseudo ne correspond pas à un utilisateur inscrit');
+                $this->addFlash('warning', 'Cet email ne correspond pas à un utilisateur inscrit');
             }
             // return $this->redirectToRoute('reset_password');
 
@@ -68,21 +69,21 @@ class PasswordLostController extends AbstractController
 
 
     /**
-     * @param $username
+     * @param $userProvidedEmail
      * @return mixed
      */
-    public function findUserEmail($username)
+    public function findUserEmail($userProvidedEmail)
     {
 
         $repo = $this->getDoctrine()->getRepository(User::class);
 
         /* $findEmail = $repo->findByUsername([
-             'username' => $username
+             'username' => $userProvidedEmail
          ]);
          */
 
         $findEmail = $repo->findOneBy([
-            'username' => $username
+            'email' => $userProvidedEmail
         ]);
 
         return $findEmail;

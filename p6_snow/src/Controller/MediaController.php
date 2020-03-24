@@ -70,6 +70,85 @@ class MediaController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/photo/add/{slug}", name="add_photo")
+     */
+    public function addPhoto(Figure $figure, Request $request, EntityManagerInterface $entityManager)
+    {
+        $photo = new Photo();
+
+        $photoForm = $this->createForm(PhotoType::class, $photo);
+        $photoForm->handleRequest($request);
+
+        if ($photoForm->isSubmitted() && $photoForm->isValid()) {
+
+            $photo->setCreatedDate(new DateTime('now'));
+            $photo->setFigure($figure);
+
+//TODO: factorisez l'upload des photos
+            //-------- Manage the field devoted to upload default picture ----------------
+            $imageFile = $photoForm->get('file')->getData(); //from PhotoType Filetype
+
+            if ($imageFile) {
+                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                // Move the file to the directory where pictures of figures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('figures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    return new Response("Une erreur a été détectée");
+                }
+
+                // updates the 'picture' field property to store the jpeg file name
+                // instead of its contents
+                $photo->setFilename($newFilename);
+            }
+            $entityManager->persist($photo);
+            $entityManager->flush();
+
+            $this->addFlash("success", "Ajout de média réussi");
+            return $this->redirectToRoute('page_figure', ['slug' => $figure->getSlug()]);
+        }
+        return $this->render('media/add_media.html.twig', [
+            'form' => $photoForm->createView(),
+            'figTitle' => $figure->getTitle(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/video/add/{slug}", name="add_video")
+     */
+    public function addVideo(Figure $figure, Request $request, EntityManagerInterface $entityManager)
+    {
+        $video = new Video();
+
+        $videoForm = $this->createForm(VideoType::class, $video);
+        $videoForm->handleRequest($request);
+
+        if ($videoForm->isSubmitted() && $videoForm->isValid()) {
+
+            $video->setCreatedDate(new DateTime('now'));
+            $video->setFigure($figure);
+     
+            $entityManager->persist($video);
+            $entityManager->flush();
+
+            $this->addFlash("success", "Ajout de vidéo réussi");
+            return $this->redirectToRoute('page_figure', ['slug' => $figure->getSlug()]);
+        }
+
+        return $this->render('media/add_video.html.twig', [
+            'form' => $videoForm->createView(),
+            'figTitle' => $figure->getTitle(),
+        ]);
+    }
+
 
     /**
      * @Route("/figure/{slug}/photo/{id}", name="edit_photo")

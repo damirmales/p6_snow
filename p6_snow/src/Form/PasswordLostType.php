@@ -15,7 +15,7 @@ class PasswordLostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class);
+            ->add('email', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
