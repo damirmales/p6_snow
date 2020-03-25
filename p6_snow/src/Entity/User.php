@@ -26,14 +26,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
+     * @Assert\Length(min = 3,max = 55,minMessage = "Prénom doit avoir un minimum de caractères 3 ", maxMessage = "Prénom doit avoir un maximum de caractères 55")
      * @Assert\Regex(pattern="/^[^0-9]/", message="Le prénom ne doit pas être un nombre ou débuter par un nombre")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
+     * @Assert\Length(min = 3,max = 55,minMessage = "Nom doit avoir un minimum de caractères 3 ", maxMessage = "Nom doit avoir un maximum de caractères 55")
      * @Assert\Regex(pattern="/^[^0-9]/",message="Le nom ne doit pas être un nombre ou débuter par un nombre")
      */
     private $lastname;
@@ -66,19 +66,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
+     * @Assert\Length(min = 3,max = 40,minMessage = "Pseudo doit avoir un minimum de caractères 3 ", maxMessage = "Pseudo doit avoir un mximum de caractères 40")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
+     * @Assert\Length(min = 3,minMessage = "Mot de passe minimum de caractères 3 ")
      */
     private $password;
 
     /**
      * @Assert\EqualTo(propertyPath="password", message="Confirmation de mot de passe non correcte")
-     * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
+     * @Assert\Length(min = 3,minMessage = "Mot de passe minimum de caractères 3 ")
      */
     private $repeatPassword;
 

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le profil utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container mt-4 ">
+
+        <div class="row justify-content-center ">
+
+            <div class="col-md-6">
+                {% for message in app.flashes('warning') %}
+                    <div class="alert alert-warning">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <h1>Modifier votre profil</h1>
+                {{ form_start(form) }}
+
+                {{ form_widget(form ) }}
+
+                <button type="submit" class="btn btn-primary mb-4">Soumettre</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

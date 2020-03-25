@@ -47,6 +47,7 @@
                         <img src="/uploads/avatars/{{ app.user.getPicture }}" alt="Avatar" class="avatar">
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('profil_update') }}">Modifier profil </a></li>
                         <li><a class="dropdown-item" href="{{ path('deconnection_user') }}">Deconnexion </a></li>
 
                     </ul>
