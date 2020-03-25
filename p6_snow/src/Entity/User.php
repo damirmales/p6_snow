@@ -27,20 +27,14 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
-     * @Assert\Regex(
-     *     pattern="/\d/",
-     *     match=false,
-     *     message="Le prénom ne doit pas être un nombre")
+     * @Assert\Regex(pattern="/^[^0-9]/", message="Le prénom ne doit pas être un nombre ou débuter par un nombre")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min = 3,max = 40,minMessage = "Minimum de caractères 3 ", maxMessage = "Maximum de caractères 40")
-     * @Assert\Regex(
-     *     pattern="/\d/",
-     *     match=false,
-     *     message="Le nom ne doit pas être un nombre")
+     * @Assert\Regex(pattern="/^[^0-9]/",message="Le nom ne doit pas être un nombre ou débuter par un nombre")
      */
     private $lastname;
 
