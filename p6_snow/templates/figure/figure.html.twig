@@ -12,7 +12,6 @@
                  style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
                 <h1 class="display-3 text-center"> {{ fig.title }}</h1>
 
-
             </div>
         </div>
         {% if app.user %}
@@ -23,14 +22,7 @@
 
             </div>
         {% endif %}
-        <!-- Link add medias-->
-        <div class="row">
-            <div class="col">
 
-                <a href="{{ path('create_media', {'slug': fig.slug}) }}" class="">ajout médias</a>
-
-            </div>
-        </div>
 
         {#TODO: voir si besoin de créer un service pour modal #}
         <!--*********** Trigger modal  when button delete figure  is clicked ****************-->
@@ -255,8 +247,9 @@
 
                             <tr>
                                 <td>{{ comment.author.username }}</td>
-                                <td><img src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
-                                         alt="{{ comment.figure.title }}">
+                                <td class="avatar"><img
+                                            src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
+                                            alt="{{ comment.figure.title }}">
                                 </td>
                                 <td>{{ comment.content }}</td>
                                 <td>{{ comment.createDate|date('d-m-Y H:i:s') }}</td>

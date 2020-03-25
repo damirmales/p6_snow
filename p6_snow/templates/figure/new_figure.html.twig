@@ -112,16 +112,17 @@
     <script>
         /*************** créé des instances de formulaire ****************/
         $('#add-photo').click(function () {
-            let index = $('#create_figure_photos div.form-group').length; // on récupère les div qui ont la classe form_group
+            const index = $('#create_figure_photos div.form-group').length; // on récupère les div qui ont la classe form_group
             console.log(index);
             const getPrototypEntry = $('#create_figure_photos').data('prototype').replace(/__name__/g, index);
+
 // add another PhotoType form instance (code)
             $('#create_figure_photos').append(getPrototypEntry);
             deleteMedia();
         });
 
         $('#add-video').click(function () {
-            let index = $('#create_figure_videos div.form-group').length;
+            const index = $('#create_figure_videos div.form-group').length;
 
             const getPrototypEntry = $('#create_figure_videos').data('prototype').replace(/__name__/g, index);
 

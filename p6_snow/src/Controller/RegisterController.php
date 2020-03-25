@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints\IsFalse;
@@ -57,11 +58,14 @@ class RegisterController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
+                    return new Response("Une erreur a été détectée");
                 }
 
                 // updates the 'picture' field property to store the jpeg file name
                 // instead of its contents
                 $newUser->setPicture($newFilename);
+            } else {
+                $newUser->setPicture('default-avatar.png');
             }
 
             $pswd = $encoder->encodePassword($newUser, $newUser->getPassword());
