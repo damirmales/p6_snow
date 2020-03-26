@@ -8,7 +8,7 @@ security:
     in_database:
       entity:
         class: App\Entity\User
-        property: username # use to sign in
+        property: email # use to sign in
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/

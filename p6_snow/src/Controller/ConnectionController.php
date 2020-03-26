@@ -23,7 +23,7 @@ class ConnectionController extends AbstractController
     public function login(AuthenticationUtils $utils)
     {
         $error = $utils->getLastAuthenticationError();
-        $username = $utils->getLastUsername();
+        $username = $utils->getLastUsername(); // dernière valeur entrée dans le champ _username du formulaire de login
 
         return $this->render('connection/login.html.twig', [
             'errorMessage' => $error !== null,
