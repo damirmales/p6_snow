@@ -45,7 +45,7 @@ class ResetPasswordController extends AbstractController
             $manager->flush();
 
             $this->addFlash("success", "Votre mot de passe à bien été modifié");
-            dd($user);
+     
             //return $this->redirectToRoute("home");
 
         }

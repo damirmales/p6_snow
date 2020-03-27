@@ -11,6 +11,7 @@ use App\Form\PhotoType;
 use App\Form\VideoType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,9 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class MediaController extends AbstractController
 {
 
- 
+
     /**
      * @Route("/photo/add/{slug}", name="add_photo")
+     * @IsGranted("ROLE_USER")
      */
     public function addPhoto(Figure $figure, Request $request, EntityManagerInterface $entityManager)
     {
@@ -73,6 +75,7 @@ class MediaController extends AbstractController
 
     /**
      * @Route("/video/add/{slug}", name="add_video")
+     * @IsGranted("ROLE_USER")
      */
     public function addVideo(Figure $figure, Request $request, EntityManagerInterface $entityManager)
     {
@@ -102,6 +105,7 @@ class MediaController extends AbstractController
 
     /**
      * @Route("/figure/{slug}/photo/{id}", name="edit_photo")
+     * @IsGranted("ROLE_USER")
      *
      */
     public function updatePhoto(Photo $photo, Request $request, EntityManagerInterface $entityManager)
@@ -156,6 +160,7 @@ class MediaController extends AbstractController
 
     /**
      * @Route("/photo/{id}/delete", name="delete_photo")
+     * @IsGranted("ROLE_USER")
      */
     public function deletePhoto(Photo $photo, EntityManagerInterface $entityManager)
     {
@@ -168,6 +173,7 @@ class MediaController extends AbstractController
 
     /**
      * @Route("/figure/{slug}/video/{id}", name="edit_video")
+     * @IsGranted("ROLE_USER")
      *
      */
     public function updateVideo(Video $video, Request $request, EntityManagerInterface $entityManager)
@@ -196,6 +202,7 @@ class MediaController extends AbstractController
 
     /**
      * @Route("/video/{id}/delete", name="delete_video")
+     * @IsGranted("ROLE_USER")
      */
     public function deleteVideo(Video $video, EntityManagerInterface $entityManager)
     {
