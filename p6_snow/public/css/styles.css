@@ -5,6 +5,11 @@
     border-radius: 50%;
 }
 
+/* nav background color */
+.bg-primary {
+    background-color: #4f71ae !important;
+}
+
 .card {
     /*width: 200px;
     max-height: 300px;*/
@@ -28,8 +33,13 @@ div label {
     font-weight: bold;
 }
 
+.fa-pen, .fa-trash-alt {
+    color: midnightblue;
+}
+
 .featureImageFigure {
     height: 400px;
+    border-radius: 0;
 }
 
 #forgetPassword {
@@ -38,10 +48,13 @@ div label {
 }
 
 
-.grid-item {
-    background-color: none;
+.grid-item-photo {
+    background-color: unset;
 }
 
+.grid-item-video {
+    background-color: unset;
+}
 
 h1 {
     font-size: 1.6em;
@@ -56,6 +69,8 @@ img {
 .jumbotron {
     height: 400px;
     background-image: url("/img/home_snowboard.jpg");
+    background-repeat: no-repeat;
+    border-radius: 0;
 }
 
 .jumbotron h1 {
@@ -106,7 +121,7 @@ img {
 }
 
 
-#loadMoreFigBtn {
+#loadMoreFigBtn, #loadMoreVidBtn {
     padding: 10px;
     text-align: center;
     background-color: dodgerblue;

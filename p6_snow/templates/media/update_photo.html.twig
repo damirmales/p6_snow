@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col">
                 <h1>Modifier la photo {{ title }}</h1>
-                <img src="{{ asset('/uploads/figures/{{filename}}') }}" alt="{{ filename }}"/>
+                <img src="{{ asset('/uploads/figures/') }}{{ filename }}" alt="{{ filename }}"/>
                 {{ form_start(form) }}
 
                 {{ form_row(form.title) }}

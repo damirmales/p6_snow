@@ -3,7 +3,9 @@
 {% block title %}
     Modifier {{ fig.title }}
 {% endblock %}
-
+{% block tag_body %}
+<body onload="initGridItem(6)">
+{% endblock %}
 {% form_theme form _self %} {#  #}
 
 {% block body %}
@@ -46,7 +48,7 @@
             <div class="row">
                 {% for photo in photos %}
                     {% if photo.filename %}
-                        <div class="col-12 col-lg-3 col-md-3 grid-item text-center" style="display: block;">
+                        <div class="col-12 col-lg-3 col-md-3 grid-item-photo text-center" style="display: block;">
 
                             <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
                                  alt="image de figure snowboard"
@@ -68,6 +70,15 @@
 
         {% endif %}
 
+        <div class=" row mt-4">
+            <div class="col-md-6">
+                <button type="button" id="loadMoreFigBtn" title="Plus de figures"
+                        onclick="loadMore(4,'grid-item-photo')">Plus de
+                    figures
+                </button>
+
+            </div>
+        </div>
         <!-- Afficher les vidéos si existantes -->
         {% if videos %}
 
@@ -77,28 +88,39 @@
                     <h3> Vidéos</h3>
                 </div>
             </div>
-            {% for video in videos %}
-                {% if video.url %}
-                    <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+            <div class="row mt-4">
+                {% for video in videos %}
+                    {% if video.url %}
+                        <div class="col-12 col-lg-3 col-md-3 grid-item-video text-center">
+                            <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
 
-                        <iframe class="embed-responsive-item" width="150" height="200"
-                                src="{{ video.url }}?controls=0" frameborder="0"
-                                allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                    </div>
+                                <iframe class="embed-responsive-item" width="150" height="200"
+                                        src="{{ video.url }}?controls=0" frameborder="0"
+                                        allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                            </div>
 
-                    <div class="card-picto">
-                        <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
-                                    class='fas fa-pen'></i></a>
-                        <a href="{{ path('delete_video',{'id':video.id}) }}"> <i
-                                    class='fas fa-trash-alt'></i></a>
-                    </div>
+                            <div class="card-picto">
+                                <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
+                                            class='fas fa-pen'></i></a>
+                                <a href="{{ path('delete_video',{'id':video.id}) }}"> <i
+                                            class='fas fa-trash-alt'></i></a>
+                            </div>
 
-                    <h5>Video figure {{ video.title }}</h5>
-                {% endif %}
-            {% endfor %}
+                            <h5>Video figure {{ video.title }}</h5>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         {% endif %}
-
+        <div class=" row mt-4">
+            <div class="col-md-6">
+                <button type="button" id="loadMoreVidBtn" title="Plus de vidéos"
+                        onclick="loadMore(4,'grid-item-video')">Plus de
+                    vidéos
+                </button>
+            </div>
+        </div>
         {{ form_start(form) }}
         <div class="row">
             <div class="col">
