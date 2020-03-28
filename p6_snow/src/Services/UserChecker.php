@@ -3,13 +3,19 @@
 
 namespace App\Services;
 
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserChecker implements UserCheckerInterface
 {
+    private $flashMessage;
+
+    public function __construct(FlashBagInterface $flashBag)
+    {
+        $this->flashMessage = $flashBag;
+    }
 
     /**
      * @inheritDoc
@@ -18,7 +24,8 @@ class UserChecker implements UserCheckerInterface
     {
         $status = $user->getStatus();
         if ($status == 0) {
-            throw new DisabledException("Le status est 0, avez vous validé votre inscription par l'email reçu ?");
+            $messageToUser = $this->flashMessage->set("status", "Avez vous validé votre inscription par l'email reçu ?");
+            throw new DisabledException("Le status est 0," . $messageToUser);
         }
     }
 

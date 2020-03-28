@@ -98,6 +98,11 @@ class User implements UserInterface
         $this->comments = new ArrayCollection();
     }
 
+    public function isEnabled()
+    {
+        return 0 !== $this->status;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

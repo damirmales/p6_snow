@@ -19,6 +19,12 @@
                     </div>
                 {% endfor %}
 
+                {% for message in app.flashes('status') %}
+                    <div class="alert alert-warning">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
                 <div class="col-md-12">
                     <h1>SE CONNECTER</h1>
                     {% if errorMessage %}

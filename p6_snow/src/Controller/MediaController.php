@@ -66,7 +66,7 @@ class MediaController extends AbstractController
             $this->addFlash("success", "Ajout de média réussi");
             return $this->redirectToRoute('page_figure', ['slug' => $figure->getSlug()]);
         }
-        return $this->render('media/add_media.html.twig', [
+        return $this->render('media/add_photo.html.twig', [
             'form' => $photoForm->createView(),
             'figTitle' => $figure->getTitle(),
         ]);
