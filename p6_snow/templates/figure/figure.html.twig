@@ -58,99 +58,100 @@
                 </div>
             </div>
         </div>
-
         <!-- Portfolio Gallery pictures -->
-        <div class="row mt-4">
-            <div class="col">
-                <h3> Images</h3>
-            </div>
-        </div>
-        <div class="row">
-            {% for photo in photos %}
-                {% if photo.filename %}
-                    <div class="col-12 col-lg-3 col-md-3 grid-item-photo text-center" style="display: block;">
+        <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showPhotosCards">
 
-                        <div class="card border-primary mb-3 mt-3" style="width: 300px; height: 250px">
-                            <div class="card-header"><img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
-                                                          alt="image de figure snowboard"
-                                                          style="width:150px; height:130px"></div>
-                            <div class="card-body">
-                                <h4 class="card-title"> {{ photo.title }}</h4>
-                                <p class="card-text"> {% if app.user %}
-                                <div class="card-picto ">
-                                    <a href="{{ path('edit_photo',{'slug':photo.figure.slug,'id':photo.id}) }}"><i
-                                                class='fas fa-pen'></i></a>
-                                    <a href="{{ path('delete_photo',{'id':photo.id}) }}"> <i
-                                                class='fas fa-trash-alt'></i></a>
+            <div class="row mt-4 hidden-sm-down">
+                <div class="col">
+                    <h3> Images</h3>
+                </div>
+            </div>
+            <div class="row">
+                {% for photo in photos %}
+                    {% if photo.filename %}
+                        <div class="  col-lg-3 col-sm-6 col-md-6 grid-item-photo align-items-center">
+
+                            <div class="card border-primary mb-3 mt-3" style="width: 300px; height: 250px">
+                                <div class="card-header">
+                                    <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
+                                         alt="image de figure snowboard"
+                                         style="width:150px; height:130px"></div>
+                                <div class="card-body">
+                                    <h4 class="card-title"> {{ photo.title }}</h4>
+
+
                                 </div>
-                                {% endif %}</p>
                             </div>
-                        </div>
+                        </div><!-- col-->
 
+                    {% endif %}
+                {% endfor %}
+            </div>
 
-                    </div><!-- col-->
+            <div class=" row mt-4">
+                <div class="col-md-6 ">
+                    <button type="button" id="loadMoreFigBtn" title="Plus de figures"
+                            onclick="loadMore(4,'grid-item-photo')">Plus de
+                        figures
+                    </button>
 
-                {% endif %}
-            {% endfor %}
-        </div>
-
-        <div class=" row mt-4">
-            <div class="col-md-6">
-                <button type="button" id="loadMoreFigBtn" title="Plus de figures"
-                        onclick="loadMore(4,'grid-item-photo')">Plus de
-                    figures
-                </button>
-
+                </div>
             </div>
         </div>
-
+        <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
+                data-toggle="collapse"
+                data-target="#showPhotosCards"
+                aria-expanded="false" aria-controls="showPhotosCards">
+            Montrer les photos
+        </button>
 
         <!-- Portfolio videos -->
-        <div class="row mt-4">
-            <div class="col">
-                <h3> Vidéos</h3>
-            </div>
-        </div>
-        <div class="row mt-4">
-            {% for video in videos %}
-                {% if video.url %}
-                    <div class="col-12 col-lg-3 col-md-3 grid-item-video text-center">
+        <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showVideosCards">
+            <!-- Afficher les vidéos si existantes -->
+            {% if videos %}
 
-                        <div class="card border-primary mb-3 mt-3" style="width: 300px; height: 250px">
-                            <div class="card-header">
-                                <div class="embed-responsive embed-responsive-16by9 videoFigure">
-                                    <iframe class="embed-responsive-item" width="225" height="300"
-                                            src="{{ video.url }}?controls=0" frameborder="0"
-                                            allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
-                                            allowfullscreen></iframe>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">{{ video.title }}</h4>
-                                {% if app.user %}
-                                    <div class="card-picto">
-                                        <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
-                                                    class='fas fa-pen'></i></a>
-                                        <a href="{{ path('delete_video',{'id':video.id}) }}"> <i
-                                                    class='fas fa-trash-alt'></i></a>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
 
+                <div class="row mt-4">
+                    <div class="col">
+                        <h3> Vidéos</h3>
                     </div>
+                </div>
+                <div class="row mt-4">
+                    {% for video in videos %}
+                        <div class="col-12 col-lg-3 col-md-3 grid-item-video text-center">
+                            <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
 
-                {% endif %}
-            {% endfor %}
-        </div>
-        <div class=" row mt-4">
-            <div class="col-md-6">
-                <button type="button" id="loadMoreVidBtn" title="Plus de vidéos"
-                        onclick="loadMore(4,'grid-item-video')">Plus de
-                    vidéos
-                </button>
+                                <iframe class="embed-responsive-item" width="150" height="200"
+                                        src="{{ video.url }}?controls=0" frameborder="0"
+                                        allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                            </div>
+
+
+                            <h5>Video figure {{ video.title }}</h5>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+
+            <div class=" row mt-4">
+                <div class="col-md-6">
+                    <button type="button" id="loadMoreVidBtn" title="Plus de vidéos"
+                            onclick="loadMore(4,'grid-item-video')">Plus de
+                        vidéos
+                    </button>
+                </div>
             </div>
         </div>
+
+        <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
+                data-toggle="collapse"
+                data-target="#showVideosCards"
+                aria-expanded="false" aria-controls="showVideosCards">
+            Montrer les vidéos
+        </button>
+
         <!-- dates and group-->
         <div class="row mt-4">
             <div class="col">
@@ -171,10 +172,9 @@
             </div>
 
         </div>
+
         <!--**** Comments zone *****-->
         <!-- Add a Comment -->
-
-
         <div class="row mt-4">
             <div class="col">
 
@@ -184,7 +184,9 @@
 
                         <h3>{{ form_row(form.content,{'label':'Votre commentaire'}) }}</h3>
                         {{ form_errors(form.content) }}
-                        <button type="submit" name="submit">Envoyer votre commentaire</button>
+                        <button type="submit" class="btn-info" id="submitComment" name="submit">Envoyer votre
+                            commentaire
+                        </button>
                         {{ form_end(form) }}
                     {% endif %}
                 </div>
@@ -261,4 +263,16 @@
 {% endblock %}
 {% block javascripts %}
 <script src={{ asset('/js/load_more.js') }}></script>
+<script>
+    if ($("#showVideosCards").hasClass("d-xs-none")) {
+        $("#showVideosCards").removeClass("d-xs-none");
+        $("#showVideosCards").addClass("d-xs-none");
+        $("#showVideosCards").show();
+    }
+    if ($("#showPhotosCards").hasClass("d-xs-none")) {
+        $("#showPhotosCards").removeClass("d-xs-none");
+        $("#showPhotosCards").addClass("d-xs-none");
+        $("#showPhotosCards").show();
+    }
+</script>
 {% endblock %}

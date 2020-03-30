@@ -3,9 +3,11 @@
 {% block title %}
     Modifier {{ fig.title }}
 {% endblock %}
+
 {% block tag_body %}
-<body onload="initGridItem(6)">
+<body onload="initGridItem(4)">
 {% endblock %}
+
 {% form_theme form _self %} {#  #}
 
 {% block body %}
@@ -35,92 +37,108 @@
                 {% endif %}
             </div>
         </div>
+        <!-- Portfolio Gallery pictures -->
+        <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showPhotosCards">
+            <!-- Afficher les photos si existantes -->
+            {% if photos %}
 
-        <!-- Afficher les photos si existantes -->
-        {% if photos %}
+                <div class="row mt-4">
+                    <div class="col">
+                        <h3> Images</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for photo in photos %}
+                        {% if photo.filename %}
+                            <div class="col-12 col-lg-3 col-md-3 grid-item-photo text-center"
+                                 style="display: block;">
 
-            <!-- Portfolio Gallery pictures -->
-            <div class="row mt-4">
-                <div class="col">
-                    <h3> Images</h3>
+                                <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
+                                     alt="image de figure snowboard"
+                                     style="width:150px">
+
+                                <div class="card-picto">
+                                    <a href="{{ path('edit_photo',{'slug':photo.figure.slug,'id':photo.id}) }}"><i
+                                                class='fas fa-pen'></i></a>
+                                    <a href="{{ path('delete_photo',{'id':photo.id}) }}"> <i
+                                                class='fas fa-trash-alt'></i></a>
+                                </div>
+
+                                <h5>Photo figure {{ photo.title }}</h5>
+                            </div><!-- col-->
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+
+            <div class=" row mt-4">
+                <div class="col-md-6">
+                    <button type="button" id="loadMoreFigBtn" title="Plus de figures"
+                            onclick="loadMore(4,'grid-item-photo')">Plus de
+                        figures
+                    </button>
+
                 </div>
             </div>
-            <div class="row">
-                {% for photo in photos %}
-                    {% if photo.filename %}
-                        <div class="col-12 col-lg-3 col-md-3 grid-item-photo text-center" style="display: block;">
-
-                            <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
-                                 alt="image de figure snowboard"
-                                 style="width:150px">
-
-
-                            <div class="card-picto">
-                                <a href="{{ path('edit_photo',{'slug':photo.figure.slug,'id':photo.id}) }}"><i
-                                            class='fas fa-pen'></i></a>
-                                <a href="{{ path('delete_photo',{'id':photo.id}) }}"> <i
-                                            class='fas fa-trash-alt'></i></a>
-                            </div>
-
-                            <h5>Photo figure {{ photo.title }}</h5>
-                        </div><!-- col-->
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-        {% endif %}
-
-        <div class=" row mt-4">
-            <div class="col-md-6">
-                <button type="button" id="loadMoreFigBtn" title="Plus de figures"
-                        onclick="loadMore(4,'grid-item-photo')">Plus de
-                    figures
-                </button>
-
-            </div>
         </div>
-        <!-- Afficher les vidéos si existantes -->
-        {% if videos %}
+        <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
+                data-toggle="collapse"
+                data-target="#showPhotosCards"
+                aria-expanded="false" aria-controls="showPhotosCards">
+            Montrer les photos
+        </button>
+        <!-- Portfolio videos -->
+        <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showVideosCards">
+            <!-- Afficher les vidéos si existantes -->
+            {% if videos %}
 
-            <!-- Portfolio videos -->
-            <div class="row mt-4">
-                <div class="col">
-                    <h3> Vidéos</h3>
+                <div class="row mt-4">
+                    <div class="col">
+                        <h3> Vidéos</h3>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    {% for video in videos %}
+                        {% if video.url %}
+                            <div class="col-12 col-lg-3 col-md-3 grid-item-video d-none d-sm-none d-md-block  text-center">
+                                <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+
+                                    <iframe class="embed-responsive-item" width="150" height="200"
+                                            src="{{ video.url }}?controls=0" frameborder="0"
+                                            allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
+                                            allowfullscreen></iframe>
+                                </div>
+
+                                <div class="card-picto">
+                                    <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
+                                                class='fas fa-pen'></i></a>
+                                    <a href="{{ path('delete_video',{'id':video.id}) }}"> <i
+                                                class='fas fa-trash-alt'></i></a>
+                                </div>
+
+                                <h5>Video figure {{ video.title }}</h5>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class=" row mt-4">
+                <div class="col-md-6">
+                    <button type="button" id="loadMoreVidBtn" title="Plus de vidéos"
+                            onclick="loadMore(4,'grid-item-video')">Plus de
+                        vidéos
+                    </button>
                 </div>
             </div>
-            <div class="row mt-4">
-                {% for video in videos %}
-                    {% if video.url %}
-                        <div class="col-12 col-lg-3 col-md-3 grid-item-video text-center">
-                            <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
-
-                                <iframe class="embed-responsive-item" width="150" height="200"
-                                        src="{{ video.url }}?controls=0" frameborder="0"
-                                        allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                            </div>
-
-                            <div class="card-picto">
-                                <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
-                                            class='fas fa-pen'></i></a>
-                                <a href="{{ path('delete_video',{'id':video.id}) }}"> <i
-                                            class='fas fa-trash-alt'></i></a>
-                            </div>
-
-                            <h5>Video figure {{ video.title }}</h5>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endif %}
-        <div class=" row mt-4">
-            <div class="col-md-6">
-                <button type="button" id="loadMoreVidBtn" title="Plus de vidéos"
-                        onclick="loadMore(4,'grid-item-video')">Plus de
-                    vidéos
-                </button>
-            </div>
         </div>
+        <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
+                data-toggle="collapse"
+                data-target="#showVideosCards"
+                aria-expanded="false" aria-controls="showVideosCards">
+            Montrer les vidéos
+        </button>
+
         {{ form_start(form) }}
         <div class="row">
             <div class="col">
@@ -140,4 +158,7 @@
         </div>
         {#  {{ form_end(form) }} #}
     </div>
+{% endblock %}
+{% block javascripts %}
+<script src={{ asset('/js/load_more.js') }}></script>
 {% endblock %}

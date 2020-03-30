@@ -10,6 +10,11 @@
     background-color: #4f71ae !important;
 }
 
+#submitComment {
+    background-color: sandybrown;
+    border-radius: 8px;
+}
+
 .card {
     /*width: 200px;
     max-height: 300px;*/
@@ -26,7 +31,7 @@
 
 .col {
     background-color: cornflowerblue;
-    border-radius: 10px;
+    border-radius: 0px;
 }
 
 div label {

@@ -36,7 +36,7 @@
         <div class="row justify-content-start m-4">
             {% for fig in figs %}
 
-                <!-- <div class="col-12 col-lg-3 col-md-4 grid-item "> -->
+
                 <div class="col-sm-6 col-md-2 grid-item"
                      style="min-height: 200px; min-width: 250px; height: 100%; width: auto">
 
@@ -98,20 +98,19 @@
 
         </div>
         <div class="row">
-            <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures"
-                    onclick="loadMore(4,'grid-item')">Plus de
-                figures
-            </button>
-        </div>
-        <div class="row">
-            <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
-        </div>
+            <div class="col-md-6">
+                <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures"
+                        onclick="loadMore(4,'grid-item')">Plus de
+                    figures
+                </button>
+            </div>
 
+            <div class="col-md-3">
+                <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
 
-{% block javascripts %}
-    <script src={{ asset('/js/js_scroll') }}></script>
-    <script src={{ asset('/js/load_more.js') }}></script>
-{% endblock %}
+
