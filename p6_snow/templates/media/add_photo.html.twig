@@ -6,7 +6,12 @@
     {{ form_start(form) }}
     <div class="container mt-4">
         <p>Ajout de photo pour la figure {{ figTitle }}</p>
-        {{ form_widget(form) }}
+
+        {{ form_row(form.title) }}
+
+        {{ form_label(form.file) }}
+        {{ form_widget(form.file,{'attr':{'required':'required'}}) }}
+        {{ form_errors(form.file) }}
         <div class="row">
             <button type="submit" class="btn btn-primary">Soumettre</button>
         </div>

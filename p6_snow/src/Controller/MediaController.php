@@ -142,9 +142,10 @@ class MediaController extends AbstractController
                 // instead of its contents
                 $photo->setFilename($newFilename);
             }
-
             $entityManager->persist($photo);
             $entityManager->flush();
+            $this->addFlash("success", "Mise àjour de la photo effectuée");
+
             return $this->redirectToRoute('page_figure', ['slug' => $slug]);
         }
 

@@ -35,63 +35,66 @@ class RegisterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $token_for_email = $request->get('_token');
+            if ($this->isCsrfTokenValid('token-email', $token_for_email)) {
 
-            $newUser->setRole('ROLE_WAIT');
-            $newUser->setStatus(false);
-            $newUser->setToken($token_for_email);
+                $newUser->setRole('ROLE_WAIT');
+                $newUser->setStatus(false);
+                $newUser->setToken($token_for_email);
 
-            $bodyEmailMessage = "cliquez sur le lien pour valider votre inscription";
-            $pathToEmailPage = 'emails/register_email.html.twig';
-            $avatarFile = $form->get('avatar')->getData();
+                $bodyEmailMessage = "cliquez sur le lien pour valider votre inscription";
+                $pathToEmailPage = 'emails/register_email.html.twig';
+                $avatarFile = $form->get('avatar')->getData();
 
-            if ($avatarFile) {
-                $avatarFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                // $safeFilename = $transliterator->transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $avatarFilename);
-                $newFilename = $avatarFilename . '-' . uniqid() . '.' . $avatarFile->guessExtension();
+                if ($avatarFile) {
+                    $avatarFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    // $safeFilename = $transliterator->transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $avatarFilename);
+                    $newFilename = $avatarFilename . '-' . uniqid() . '.' . $avatarFile->guessExtension();
 
-                // Move the file to the directory where avatars are stored
-                try {
-                    $avatarFile->move(
-                        $this->getParameter('avatars_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                    return new Response("Une erreur a été détectée");
+                    // Move the file to the directory where avatars are stored
+                    try {
+                        $avatarFile->move(
+                            $this->getParameter('avatars_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                        return new Response("Une erreur a été détectée");
+                    }
+
+                    // updates the 'picture' field property to store the jpeg file name
+                    // instead of its contents
+                    $newUser->setPicture($newFilename);
+                } else {
+                    $newUser->setPicture('default-avatar.png');
                 }
 
-                // updates the 'picture' field property to store the jpeg file name
-                // instead of its contents
-                $newUser->setPicture($newFilename);
-            } else {
-                $newUser->setPicture('default-avatar.png');
+                $pswd = $encoder->encodePassword($newUser, $newUser->getPassword());
+                $newUser->setPassword($pswd);
+
+                $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage, $pathToEmailPage);
+
+                $this->addFlash('success', 'Un email vous a été envoyé');
+
+                $manager->persist($newUser);
+
+                $manager->flush();
+
+                // return $this->redirectToRoute('check_token');
             }
-
-            $pswd = $encoder->encodePassword($newUser, $newUser->getPassword());
-            $newUser->setPassword($pswd);
-
-            $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage, $pathToEmailPage);
-
-            $this->addFlash('success', 'Un email vous a été envoyé');
-
-            $manager->persist($newUser);
-
-            $manager->flush();
-
-            // return $this->redirectToRoute('check_token');
-
         }
         return $this->render('register/register.html.twig', [
             'form' => $form->createView()
         ]);
+
     }
 
 
     /**
      * @Route("/home", name="check_token")
      */
-    public function checkToken(Request $request, UserRepository $userRepo, EntityManagerInterface $manager) // check token from user's email
+    public
+    function checkToken(Request $request, UserRepository $userRepo, EntityManagerInterface $manager) // check token from user's email
     {
         $token_from_email = $request->query->get('user_token');
 
@@ -102,7 +105,7 @@ class RegisterController extends AbstractController
 
             $user->setStatus(1);
             $user->setRole('ROLE_USER');
-
+            $user->setToken(0);
             // Don't use persist() to perform an update
             $manager->flush();
 

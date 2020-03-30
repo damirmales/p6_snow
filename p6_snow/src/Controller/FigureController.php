@@ -283,12 +283,8 @@ class FigureController extends AbstractController
     /**
      * @Route("/figure/{slug}/delete", name="delete_figure")
      */
-    public function delete($slug, Figure $figure, PhotoRepository $photoRepository, FigureRepository $figureRepository, EntityManagerInterface $entityManager)
+    public function delete($slug, Figure $figure, EntityManagerInterface $entityManager)
     {
-        // dd($photoRepository->findBy(['figure' => $figure]));
-        //dd($photoRepository->findBy(['figure' => $figure]));
-
-        //$entityManager->remove($photo);
 
         $entityManager->remove($figure);
         $entityManager->flush();

@@ -58,10 +58,20 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-4">
+            <div class="col-md-3">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
         <!-- Portfolio Gallery pictures -->
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showPhotosCards">
 
-            <div class="row mt-4 hidden-sm-down">
+            <div class="row mt-4">
                 <div class="col">
                     <h3> Images</h3>
                 </div>
@@ -116,19 +126,31 @@
                         <h3> Vidéos</h3>
                     </div>
                 </div>
+
                 <div class="row mt-4">
                     {% for video in videos %}
                         <div class="col-12 col-lg-3 col-md-3 grid-item-video text-center">
-                            <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
 
-                                <iframe class="embed-responsive-item" width="150" height="200"
-                                        src="{{ video.url }}?controls=0" frameborder="0"
-                                        allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
+                            <div class="card border-primary mb-3 mt-3" style="width: 300px; height: 250px">
+                                <div class="card-header">
+                                    <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+
+                                        <iframe class="embed-responsive-item" width="150" height="200"
+                                                src="{{ video.url }}?controls=0" frameborder="0"
+                                                allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe>
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body">
+                                    <h4 class="card-title"> {{ video.title }}</h4>
+
+
+                                </div>
                             </div>
 
 
-                            <h5>Video figure {{ video.title }}</h5>
                         </div>
                     {% endfor %}
                 </div>

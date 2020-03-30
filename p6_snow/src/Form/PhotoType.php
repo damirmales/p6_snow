@@ -22,7 +22,7 @@ class PhotoType extends AbstractType
                 //'mapped' => false,
                 // make it optional so you don't have to re-upload the jpeg file
                 // every time you edit the Photo details
-                'required' => true, // contrainte au niveau front
+                'required' => false, // contrainte au niveau front
                 'empty_data' => null
             ]);
     }

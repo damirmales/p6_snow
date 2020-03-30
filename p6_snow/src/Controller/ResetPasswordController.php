@@ -31,22 +31,23 @@ class ResetPasswordController extends AbstractController
         // à partir du token on récupère une instance de l'entité User pour la passer à la méthode d'encodage encodePassword
         $user = $manager->getRepository(User::class)->findOneBy(array('token' => $token));
 
-
         if ($form->isSubmitted() && $form->isValid()) {
+
             //on récupère le mot de passe inscrit dans le champ password du formulaire password/reset_password.html.twig
             $newPassword = $resetPassword->getPassword();
+
             // on crypte le mot de passe
             $cryptedPassword = $encoder->encodePassword($user, $newPassword);
             // on place le nouveau mot de passe dans le champ password de l'entité User
             $user->setPassword($cryptedPassword);
             // on lance l'EntityManager pour effectuer les modifications dans la base de données
-
+            $user->setToken(0);
             $manager->persist($user);
             $manager->flush();
 
             $this->addFlash("success", "Votre mot de passe à bien été modifié");
-     
-            //return $this->redirectToRoute("home");
+
+            return $this->redirectToRoute("home");
 
         }
 
