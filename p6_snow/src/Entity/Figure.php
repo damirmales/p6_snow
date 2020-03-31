@@ -69,11 +69,6 @@ class Figure
     private $editor;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Media", mappedBy="figure", cascade={"persist"}, orphanRemoval=true)
-     */
-    private $media;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="figure", orphanRemoval=true)
      */
     private $comments;
@@ -91,7 +86,7 @@ class Figure
 
     public function __construct()
     {
-        $this->media = new ArrayCollection();
+
         $this->comments = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->videos = new ArrayCollection();
@@ -209,37 +204,7 @@ class Figure
         return $this;
     }
 
-    /**
-     * @return Collection|Media[]
-     */
-    public function getMedia(): Collection
-    {
-        return $this->media;
-    }
-
-    public function addMedium(Media $medium): self
-    {
-        if (!$this->media->contains($medium)) {
-            $this->media[] = $medium;
-            $medium->setFigure($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMedium(Media $medium): self
-    {
-        if ($this->media->contains($medium)) {
-            $this->media->removeElement($medium);
-            // set the owning side to null (unless already changed)
-            if ($medium->getFigure() === $this) {
-                $medium->setFigure(null);
-            }
-        }
-
-        return $this;
-    }
-
+   
     /**
      * @return Collection|Comment[]
      */

@@ -26,7 +26,7 @@
             {% endfor %}
         </div>
 
-        <div class="row text-center m-1">
+        <div class="row text-center mx-5">
             <div class="">
                 <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
             </div>
@@ -91,18 +91,20 @@
             {% endfor %}
 
         </div>
-        <div class="row">
-            <div class="col-md-6">
+        <div class="row justify-content-between mx-4">
+
+            <div class="">
                 <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures"
                         onclick="loadMore(4,'grid-item')">Plus de
                     figures
                 </button>
             </div>
 
-            <div class="col-md-3">
+            <div class="">
                 <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
             </div>
         </div>
+
     </div>
 
 {% endblock %}

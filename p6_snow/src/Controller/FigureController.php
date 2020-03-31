@@ -36,16 +36,12 @@ class FigureController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $figure->setUpdateDate(new DateTime('now'));
-
             $figure->setEditor($this->getUser()); // available because user is connected
-
             $imageFile = $form->get('image_base')->getData();
 
             if ($imageFile) {
                 $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-
                 $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
                 // Move the file to the directory where pictures of figures are stored
@@ -63,18 +59,12 @@ class FigureController extends AbstractController
                 // instead of its contents
                 $figure->setFeatureImage($newFilename);
             }
-
             $entityManager->persist($figure);
             $entityManager->flush();
-
             $this->addFlash("success", "Photo d'entête de figure modifiée");
-
             return $this->redirectToRoute('page_figure', [
                 'slug' => $figure->getSlug(),
-
             ]);
-
-
         }
 
         return $this->render('figure/edit_feature_image.html.twig', [

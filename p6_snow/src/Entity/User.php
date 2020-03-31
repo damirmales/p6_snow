@@ -60,7 +60,7 @@ class User implements UserInterface
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $token;
 
@@ -177,6 +177,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getToken(): ?string
     {
         return $this->token;

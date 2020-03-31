@@ -2,11 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Figure;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class FeatureImgType extends AbstractType
 {
@@ -18,12 +19,13 @@ class FeatureImgType extends AbstractType
                 'attr' => ['placeholder' => 'Télécharger une image locale'],
                 'mapped' => false,
                 'required' => true]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Figure::class,
+            
         ]);
     }
 }
