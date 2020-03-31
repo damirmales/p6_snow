@@ -43,8 +43,9 @@
                 <li class="nav-item dropdown">
 
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                        {{ app.user.username }}
                         <img src="/uploads/avatars/{{ app.user.getPicture }}" alt="Avatar" class="avatar">
+                        <span> {{ app.user.username }}</span>
+
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ path('profil_update') }}">Modifier profil </a></li>

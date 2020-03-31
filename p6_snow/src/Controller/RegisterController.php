@@ -74,13 +74,12 @@ class RegisterController extends AbstractController
 
                 $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage, $pathToEmailPage);
 
-                $this->addFlash('success', 'Un email vous a été envoyé');
 
                 $manager->persist($newUser);
 
                 $manager->flush();
-
-                // return $this->redirectToRoute('check_token');
+                $this->addFlash('success', 'Un email vous a été envoyé');
+                //return $this->redirectToRoute('home');
             }
         }
         return $this->render('register/register.html.twig', [
@@ -109,12 +108,12 @@ class RegisterController extends AbstractController
             // Don't use persist() to perform an update
             $manager->flush();
 
-            $this->addFlash('success', "hourra vous êtes membre");
+            $this->addFlash('success', "Hourra vous êtes membre");
 
 
         } else {
 
-            $this->addFlash('warning', "Désolé mais on ne se connait pas");
+            $this->addFlash('warning', "Votre enregistrement n'as pas été validé");
 
         }
         return $this->redirectToRoute('home');

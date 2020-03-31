@@ -166,6 +166,7 @@ class MediaController extends AbstractController
     public function deletePhoto(Photo $photo, EntityManagerInterface $entityManager)
     {
         $slug = $photo->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
+        $photo->getFigure()->setFeatureImage('figure_default.jpeg');
         $entityManager->remove($photo);
         $entityManager->flush();
 

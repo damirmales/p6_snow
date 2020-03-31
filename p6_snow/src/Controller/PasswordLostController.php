@@ -5,15 +5,11 @@ namespace App\Controller;
 use App\Entity\PasswordLost;
 use App\Entity\User;
 use App\Form\PasswordLostType;
-use App\Form\RegisterType;
-use App\Repository\PasswordLostRepository;
-use App\Repository\UserRepository;
-use App\Services\RandomGeneratedValues;
 use App\Services\SendEmail;
 use Doctrine\ORM\EntityManagerInterface;
-use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PasswordLostController extends AbstractController
@@ -55,11 +51,13 @@ class PasswordLostController extends AbstractController
                     $pathToEmailPage = 'emails/password_email.html.twig';
 
                     $sendEmail->sendEmail($user->getEmail(), $token, $userLastname, $bodyEmailMessage, $pathToEmailPage);
-                    
+
                     $entityManager->persist($user);
                     $entityManager->flush();
 
                     $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
+                } else {
+                    return new Response('Token non valide.');
                 }
             } else {
                 $this->addFlash('warning', 'Cet email ne correspond pas à un utilisateur inscrit');

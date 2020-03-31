@@ -41,29 +41,20 @@
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showPhotosCards">
             <!-- Afficher les photos si existantes -->
             {% if photos %}
-
-                <div class="row mt-4">
-                    <div class="col">
-                        <h3> Images</h3>
-                    </div>
-                </div>
                 <div class="row">
                     {% for photo in photos %}
                         {% if photo.filename %}
                             <div class="col-12 col-lg-3 col-md-3 grid-item-photo text-center"
                                  style="display: block;">
-
-                                <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
-                                     alt="image de figure snowboard"
-                                     style="width:150px">
-
-                                <div class="card-picto">
-                                    <a href="{{ path('edit_photo',{'slug':photo.figure.slug,'id':photo.id}) }}"><i
-                                                class='fas fa-pen'></i></a>
-                                    <a href="{{ path('delete_photo',{'id':photo.id}) }}"> <i
-                                                class='fas fa-trash-alt'></i></a>
+                                <div class="card border-primary mb-3 mt-3  align-items-center" style="">
+                                    <div class="card-header">
+                                        <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
+                                             alt="image de figure snowboard"
+                                             style="width:150px; height:130px"></div>
+                                    <div class="card-body">
+                                        <h4 class="card-title"> {{ photo.title }}</h4>
+                                    </div>
                                 </div>
-
                                 <h5>Photo figure {{ photo.title }}</h5>
                             </div><!-- col-->
                         {% endif %}
@@ -92,39 +83,23 @@
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showVideosCards">
             <!-- Afficher les vidéos si existantes -->
             {% if videos %}
-
-                <div class="row mt-4">
-                    <div class="col">
-                        <h3> Vidéos</h3>
-                    </div>
-                </div>
                 <div class="row mt-4">
                     {% for video in videos %}
                         {% if video.url %}
                             <div class="col-12 col-lg-3 col-md-3 grid-item-video d-none d-sm-none d-md-block  text-center">
-                                <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
-
-                                    <iframe class="embed-responsive-item" width="150" height="200"
-                                            src="{{ video.url }}?controls=0" frameborder="0"
-                                            allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
-                                            allowfullscreen></iframe>
-                                </div>
-
                                 <div class="card-picto">
                                     <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
                                                 class='fas fa-pen'></i></a>
                                     <a href="{{ path('delete_video',{'id':video.id}) }}"> <i
                                                 class='fas fa-trash-alt'></i></a>
                                 </div>
-
-                                <h5>Video figure {{ video.title }}</h5>
                             </div>
                         {% endif %}
                     {% endfor %}
                 </div>
             {% endif %}
             <div class=" row mt-4">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <button type="button" id="loadMoreVidBtn" title="Plus de vidéos"
                             onclick="loadMore(4,'grid-item-video')">Plus de
                         vidéos
@@ -138,12 +113,10 @@
                 aria-expanded="false" aria-controls="showVideosCards">
             Montrer les vidéos
         </button>
-
         {{ form_start(form) }}
         <div class="row">
             <div class="col">
                 <div>{{ form_row(form.title,{"label":"Nom de la figure","attr":{ "placeholder":"Nom de la figure"}}) }}</div>
-
                 <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
                 <div>{{ form_row(form.figGroup,{"label":"Groupe de la figure","attr":{ "placeholder":"Groupe de la figure"}}) }}</div>
 
@@ -151,13 +124,12 @@
         </div>
         {# {{ form_widget(form) }} #}<!-- si présent active l'affichage des sous-formulaires -->
         <div class="row">
-
-            <button type="submit" class="btn btn-primary mx-2">Soumettre</button>
-
+            <button type="submit" class="btn btn-primary mx-2 mt-3">Soumettre</button>
 
         </div>
         {#  {{ form_end(form) }} #}
     </div>
+
 {% endblock %}
 {% block javascripts %}
 <script src={{ asset('/js/load_more.js') }}></script>

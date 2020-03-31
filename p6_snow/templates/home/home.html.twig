@@ -3,18 +3,14 @@
 {% block title %}Snow tricks{% endblock %}
 
 {% block tag_body %}
-<body onload="initGridItem(5)">
+<body onload="initGridItem(8)">
 {% endblock %}
 
 {% block body %}
 
-
     <div class="container-fluid ">
-
         <div class=" row jumbotron">
-
             <h1 class="display-3 text-center">Snow tricks</h1>
-
         </div>
 
         <div class="row justify-content-center">
@@ -29,16 +25,14 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="row">
-            <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
-        </div>
 
-        <div class="row justify-content-start m-4">
+        <div class="row text-center m-1">
+            <div class="">
+                <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
+            </div>
             {% for fig in figs %}
-
-
-                <div class="col-sm-6 col-md-2 grid-item"
-                     style="min-height: 200px; min-width: 250px; height: 100%; width: auto">
+                <div class="col-sm-6 col-md-3 grid-item"
+                     style="">
 
                     <div class="card border-primary mx-2 mb-3 flex-fill">
 

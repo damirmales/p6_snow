@@ -6,7 +6,7 @@
 {% endblock %}
 {% block body %}
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col featureImageFigure"
                  style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
@@ -70,25 +70,18 @@
 
         <!-- Portfolio Gallery pictures -->
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showPhotosCards">
-
-            <div class="row mt-4">
-                <div class="col">
-                    <h3> Images</h3>
-                </div>
-            </div>
             <div class="row">
                 {% for photo in photos %}
                     {% if photo.filename %}
                         <div class="  col-lg-3 col-sm-6 col-md-6 grid-item-photo align-items-center">
 
-                            <div class="card border-primary mb-3 mt-3" style="width: 300px; height: 250px">
+                            <div class="card border-primary mb-3 mt-3  align-items-center" style="">
                                 <div class="card-header">
                                     <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
                                          alt="image de figure snowboard"
                                          style="width:150px; height:130px"></div>
                                 <div class="card-body">
                                     <h4 class="card-title"> {{ photo.title }}</h4>
-
 
                                 </div>
                             </div>
@@ -119,19 +112,11 @@
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showVideosCards">
             <!-- Afficher les vidéos si existantes -->
             {% if videos %}
-
-
-                <div class="row mt-4">
-                    <div class="col">
-                        <h3> Vidéos</h3>
-                    </div>
-                </div>
-
                 <div class="row mt-4">
                     {% for video in videos %}
                         <div class="col-12 col-lg-3 col-md-3 grid-item-video text-center">
 
-                            <div class="card border-primary mb-3 mt-3" style="width: 300px; height: 250px">
+                            <div class="card border-primary mb-3 mt-3 justify-content-center" style="">
                                 <div class="card-header">
                                     <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
 
@@ -140,17 +125,11 @@
                                                 allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
                                                 allowfullscreen></iframe>
                                     </div>
-
                                 </div>
-
                                 <div class="card-body">
                                     <h4 class="card-title"> {{ video.title }}</h4>
-
-
                                 </div>
                             </div>
-
-
                         </div>
                     {% endfor %}
                 </div>
