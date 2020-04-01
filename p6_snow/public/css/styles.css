@@ -51,6 +51,17 @@ div label {
     border-radius: 0;
 }
 
+.figEditTitle {
+    background-color: rgba(94, 181, 224, 0.5);
+    width: fit-content;
+    padding: 1px 4px 1px;
+    border-radius: 4px;
+}
+
+.figEditTitle h1 {
+    color: whitesmoke;
+}
+
 #forgetPassword {
     font-weight: bold;
     font-style: italic;
