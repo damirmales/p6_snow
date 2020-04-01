@@ -110,14 +110,16 @@
                                     <div class="card-body">
                                         <h4 class="card-title"> {{ video.title }}</h4>
                                     </div>
+
+                                    <div class="card-picto">
+                                        <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
+                                                    class='fas fa-pen'></i></a>
+                                        <a href="{{ path('delete_video',{'id':video.id}) }}"> <i
+                                                    class='fas fa-trash-alt'></i></a>
+                                    </div>
                                 </div>
 
-                                <div class="card-picto">
-                                    <a href="{{ path('edit_video',{'slug':video.figure.slug,'id':video.id}) }}"><i
-                                                class='fas fa-pen'></i></a>
-                                    <a href="{{ path('delete_video',{'id':video.id}) }}"> <i
-                                                class='fas fa-trash-alt'></i></a>
-                                </div>
+
                             </div>
                         {% endif %}
                     {% endfor %}

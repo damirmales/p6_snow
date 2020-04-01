@@ -4,14 +4,28 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Modifier la vidéo {{ title }}</h1>
-        {{ form_start(form) }}
-        <img src="{{ video.url }}" alt="" class="src">
-        {{ form_widget(form) }}
-        <div class="row">
-            <button type="submit" class="btn btn-primary">Soumettre</button>
+        <div class="row justify-content-center">
+            <div class=" p-2 updateVideo">
+
+                <div class="figEditTitle m-2"><h1>Modifier la vidéo {{ title }}</h1></div>
+                <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+
+                    <iframe class="embed-responsive-item" width="250" height="300"
+                            src="{{ video.url }}?controls=0" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+                {{ form_start(form) }}
+                {{ form_label(form.title, 'Titre de la vidéo') }}
+                {{ form_widget(form.title) }}
+                <br/>
+                {{ form_widget(form) }}
+                <div class="row">
+                    <button type="submit" class="btn btn-primary m-3">Soumettre</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
         </div>
-        {{ form_end(form) }}
     </div>
 
 {% endblock %}

@@ -10,10 +10,6 @@
     background-color: #4f71ae !important;
 }
 
-#submitComment {
-    background-color: sandybrown;
-    border-radius: 8px;
-}
 
 .card {
     width: 250px;
@@ -82,7 +78,8 @@ h1 {
 }
 
 img {
-    max-width: 100%;
+    width: 100%;
+    height: auto;
 }
 
 
@@ -97,6 +94,27 @@ img {
     font-size: 100px;
     font-weight: bolder;
     color: whitesmoke;
+}
+
+#loadMoreFigBtn, #loadMoreVidBtn {
+    padding: 10px;
+    text-align: center;
+    background-color: dodgerblue;
+    color: #fff;
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #fff;
+    border-radius: 14px;
+    box-shadow: 0 1px 1px #ccc;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+}
+
+#loadMoreFigBtn:hover {
+    background-color: #abc;
+    color: #33739E;
 }
 
 .loginForm {
@@ -140,27 +158,25 @@ img {
     border-radius: 4px;
 }
 
-
-#loadMoreFigBtn, #loadMoreVidBtn {
-    padding: 10px;
-    text-align: center;
-    background-color: dodgerblue;
-    color: #fff;
-    border-width: 0 1px 1px 0;
-    border-style: solid;
-    border-color: #fff;
-    border-radius: 14px;
-    box-shadow: 0 1px 1px #ccc;
-    transition: all 600ms ease-in-out;
-    -webkit-transition: all 600ms ease-in-out;
-    -moz-transition: all 600ms ease-in-out;
-    -o-transition: all 600ms ease-in-out;
+#submitComment {
+    background-color: sandybrown;
+    border-radius: 8px;
 }
 
-#loadMoreFigBtn:hover {
-    background-color: #abc;
-    color: #33739E;
+
+.updatePhoto, .updateVideo {
+    max-width: 800px;
+    height: 500px;
+    background-color: cornflowerblue;
 }
+
+.imgUpdatePhoto {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+
+}
+
 
 .videoFigure {
     max-width: 200px;

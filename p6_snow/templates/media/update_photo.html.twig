@@ -4,14 +4,17 @@
 
 {% block body %}
     <div class="container mt-4">
-        <div class="row">
-            <div class="col">
+        <div class="row justify-content-center">
+            <div class=" p-2 updatePhoto">
 
-                <div class="figEditTitle mt-2"><h1>Modifier la photo {{ title }}</h1></div>
-                <img src="{{ asset('/uploads/figures/') }}{{ filename }}" alt="{{ filename }}"/>
+                <div class="figEditTitle m-2"><h1>Modifier la photo {{ title }}</h1></div>
+                <img class="imgUpdatePhoto m-2" src="{{ asset('/uploads/figures/') }}{{ filename }}"
+                     alt="{{ filename }}"/>
 
                 {{ form_start(form) }}
-                {{ form_row(form.title) }}
+                {{ form_label(form.title, 'Titre de la photo') }}
+                {{ form_widget(form.title) }}
+                <br/>
                 {{ form_row(form.file) }}
                 <div class="row">
                     <button type="submit" class="btn btn-primary m-3">Soumettre</button>
