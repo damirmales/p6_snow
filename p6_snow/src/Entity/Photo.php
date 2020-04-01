@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -25,6 +24,7 @@ class Photo
     /**
      * @ORM\Column(type="string", length=55, unique=true)
      * @Assert\Length(min="4",minMessage="Le titre doit contenir au moins 4 caractères")
+     * @Assert\Regex(pattern="/^[^0-9]/", message="Le nom ne doit pas être un nombre ou débuter par un nombre")
      */
     private $title;
 

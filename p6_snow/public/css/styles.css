@@ -1,7 +1,7 @@
 .avatar {
     vertical-align: middle;
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     border-radius: 20%;
 }
 
@@ -10,6 +10,10 @@
     background-color: #4f71ae !important;
 }
 
+.btnAddMedia, .btnDropdown {
+
+    background-color: cornflowerblue;
+}
 
 .card {
     width: 250px;
@@ -48,7 +52,7 @@ div label {
 }
 
 .figEditTitle {
-    background-color: rgba(94, 181, 224, 0.5);
+    background-color: rgba(25, 51, 76, 0.5);
     width: fit-content;
     padding: 1px 4px 1px;
     border-radius: 4px;
@@ -86,6 +90,13 @@ img {
     height: auto;
 }
 
+
+.imgUpdatePhoto {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+
+}
 
 .jumbotron {
     height: 400px;
@@ -172,17 +183,10 @@ img {
 }
 
 
-.updatePhoto, .updateVideo {
+.updatePhoto, .updateVideo, .addVideo {
     max-width: 800px;
-    height: 500px;
-    background-color: cornflowerblue;
-}
-
-.imgUpdatePhoto {
-    width: 100%;
-    max-width: 480px;
     height: auto;
-
+    background-color: cornflowerblue;
 }
 
 

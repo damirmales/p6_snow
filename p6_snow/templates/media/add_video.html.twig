@@ -3,14 +3,27 @@
 {% block title %}Ajout de vidéo{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
+
     <div class="container mt-4">
-        <p>Ajout de vidéo pour la figure {{ figTitle }}</p>
-        {{ form_widget(form) }}
-        <div class="row">
-            <button type="submit" class="btn btn-primary">Soumettre</button>
+        <div class="row justify-content-center">
+            <div class=" p-2 addVideo">
+
+                <div class="figEditTitle m-2"><h1>Ajout d'une vidéo pour la figure {{ figTitle }}</h1></div>
+                {{ form_start(form) }}
+                {{ form_label(form.title, 'Titre de la vidéo') }}
+                {{ form_widget(form.title, {'attr':{'placeholder':'Titre de la vidéo'}}) }}
+                <br/>
+                {{ form_label(form.url, 'Url de la vidéo') }}
+                {{ form_widget(form.url, {'attr':{'placeholder':'Url de la vidéo'}}) }}
+                <div class="row">
+                    <button type="submit" class="btn btn-primary m-3">Soumettre</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
         </div>
+
+
     </div>
-    {{ form_end(form) }}
+
 
 {% endblock %}
