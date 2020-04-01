@@ -3,7 +3,7 @@
 {% block title %}Snow tricks{% endblock %}
 
 {% block tag_body %}
-<body onload="initGridItem(8)">
+<body onload="initGridItem(10)">
 {% endblock %}
 
 {% block body %}
@@ -26,13 +26,10 @@
             {% endfor %}
         </div>
 
-        <div class="row text-center mx-5">
-            <div class="">
-                <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
-            </div>
+        <div class="row  mx-4 align-content-center">
+
             {% for fig in figs %}
-                <div class="col-sm-6 col-md-3 grid-item"
-                     style="">
+                <div class=" grid-item " style="">
 
                     <div class="card border-primary mx-2 mb-3 flex-fill">
 
@@ -59,22 +56,27 @@
                 {{ include('includes/modal.html.twig') }}
 
             {% endfor %}
+            <div class="row">
 
+                <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
+
+            </div>
         </div>
+
         <div class="row justify-content-between mx-4">
+            <div class="m-1">
+                <div>
+                    <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures"
+                            onclick="loadMore(4,'grid-item')">Plus de
+                        figures
+                    </button>
+                </div>
 
-            <div class="">
-                <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures"
-                        onclick="loadMore(4,'grid-item')">Plus de
-                    figures
-                </button>
-            </div>
-
-            <div class="">
-                <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
+                <div>
+                    <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
+                </div>
             </div>
         </div>
-
     </div>
 
 {% endblock %}

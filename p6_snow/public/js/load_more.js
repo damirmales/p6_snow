@@ -12,6 +12,5 @@ function initGridItem(limitSlidePerRow) {
 function loadMore(maxSlice, item) {
 
     $("div." + item + ":hidden").slice(0, maxSlice).slideDown();
-    console.log("div." + item + ":hidden");
 
 }
