@@ -61,10 +61,13 @@
         <div class="row">
             <div class="col">
                 {{ form_label(form.title, 'Titre de la photo') }}
-                {{ form_widget(form.title) }}
-                {{ form_widget(form) }} {# allow to add the photo_load filetype#}
+                {{ form_widget(form.title, {'attr':{'placeholder':'Le titre de la photo'}}) }}
+
+                {{ form_label(form.file, 'Téléchargez une photo') }}
+                {{ form_widget(form.file,{'attr':{'required':'required','placeholder':'Le titre de la photo'}}) }}
+
                 <button type="button" data-action="delete" data-target="#photo_{{ id }}"
-                        class=" mt-3 btn btn-warning">
+                        class=" m-2 btn btn-warning">
                     Supprimer le formulaire
                 </button>
             </div>
@@ -94,12 +97,12 @@
         <div class="row">
             <div class="col">
                 {{ form_label(form.title, 'Titre de la vidéo') }}
-                {{ form_widget(form.title) }}
-                {{ form_label(form.title, 'Url de la vidéo') }}
-                {{ form_widget(form.url) }}
+                {{ form_widget(form.title, {'attr':{'placeholder':'Le titre de la vidéo'}}) }}
+                {{ form_label(form.url, 'Url de la vidéo') }}
+                {{ form_widget(form.url, {'attr':{'placeholder':'L\'url de la vidéo'}}) }}
                 {{ form_widget(form) }} {# allow to add the video_figure filetype#}
                 <button type="button" data-action="delete" data-target="#video_{{ id }}"
-                        class=" mt-3 btn btn-warning">
+                        class=" m-2 btn btn-warning">
                     Supprimer le formulaire
                 </button>
             </div>

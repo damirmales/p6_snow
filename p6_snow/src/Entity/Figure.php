@@ -99,7 +99,7 @@ class Figure
     public function defineSlug() // linked to HasLifecycleCallbacks
     {
         if (empty($this->slug)) {
-            $this->setSlug('snowtrick' . '_' . $this->getTitle());
+            $this->setSlug('snowboard' . '_' . 'figure' . '_' . $this->getTitle());
         }
     }
 
@@ -204,7 +204,7 @@ class Figure
         return $this;
     }
 
-   
+
     /**
      * @return Collection|Comment[]
      */

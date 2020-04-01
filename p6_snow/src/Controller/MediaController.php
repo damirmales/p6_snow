@@ -11,6 +11,7 @@ use App\Form\PhotoType;
 use App\Form\VideoType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Client\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;

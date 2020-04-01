@@ -181,8 +181,7 @@ class FigureController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager)
     {
         $fig = new Figure();
-        $photo = new  Photo();
-        $video = new Video();
+
 
         $formCreateFig = $this->createForm(CreateFigureType::class, $fig);
         $formCreateFig->handleRequest($request);
