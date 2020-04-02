@@ -16,8 +16,6 @@ class CreateFigureType extends AbstractType
     {
         $builder
             ->add('title')
-            // ->add('slug')
-            //  ->add('featureImage')
             ->add('description')
             ->add('figGroup', ChoiceType::class, [
                 'choices' => [

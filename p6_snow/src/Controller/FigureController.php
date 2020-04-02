@@ -27,7 +27,7 @@ class FigureController extends AbstractController
 {
 
     /**
-     * @Route("/figure/{slug}/featureImage", name="image_presentation")
+     * @Route("/figure/{slug}/image-presentation", name="image_presentation")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editFeatureimage(Figure $figure, Request $request, EntityManagerInterface $entityManager)
@@ -61,7 +61,7 @@ class FigureController extends AbstractController
             }
             $entityManager->persist($figure);
             $entityManager->flush();
-            $this->addFlash("success", "Photo d'entête de figure modifiée");
+            $this->addFlash("success", "Image de présentation modifiée");
             return $this->redirectToRoute('page_figure', [
                 'slug' => $figure->getSlug(),
             ]);
@@ -78,11 +78,12 @@ class FigureController extends AbstractController
 
 
     /**
-     * @Route("/figure/{slug}/featureImage/remove", name="delete_feature_image")
+     * @Route("/figure/{slug}/image-presentation/suppression", name="delete_feature_image")
      */
     public function deleteFeatureImage(Figure $figure, EntityManagerInterface $entityManager)
     {
-        $figure->setFeatureImage('');
+
+        $figure->setFeatureImage('figure_default.jpeg');
         $entityManager->persist($figure);
         $entityManager->flush();
 
@@ -104,7 +105,6 @@ class FigureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $figure->setUpdateDate(new DateTime('now'));
             //-------------------------------------------------------
-
             $figure->setEditor($this->getUser()); // available because user is connected
 
             // let added photo to persist before insert it to the database
@@ -133,7 +133,6 @@ class FigureController extends AbstractController
 
                 $entityManager->persist($photo);
             }
-
             foreach ($figure->getPhotos() as $photo) {
                 $photo->setCreatedDate(new DateTime('now'));
 
@@ -147,10 +146,8 @@ class FigureController extends AbstractController
                 $video->setFigure($figure);
                 $entityManager->persist($video);
             }
-
             $entityManager->persist($figure);
             $entityManager->flush();
-
 
             $this->addFlash("success", "Modification réussie");
 
@@ -158,18 +155,14 @@ class FigureController extends AbstractController
                 'slug' => $figure->getSlug(),
                 'photos' => $figure->getPhotos(),
                 'videos' => $figure->getVideos()
-
             ]);
         }
-
 
         return $this->render('figure/edit.html.twig', [
             'form' => $form->createView(),
             'fig' => $figure,
             'photos' => $photoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC')),
             'videos' => $videoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC')),
-
-
         ]);
     }
 
@@ -181,8 +174,6 @@ class FigureController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager)
     {
         $fig = new Figure();
-
-
         $formCreateFig = $this->createForm(CreateFigureType::class, $fig);
         $formCreateFig->handleRequest($request);
 
@@ -251,7 +242,6 @@ class FigureController extends AbstractController
             $entityManager->persist($fig);
             $entityManager->flush();
 
-
             $this->addFlash("success", "Création de figure réussie");
 
             return $this->redirectToRoute('page_figure', [
@@ -269,7 +259,6 @@ class FigureController extends AbstractController
      */
     public function delete($slug, Figure $figure, EntityManagerInterface $entityManager)
     {
-
         $entityManager->remove($figure);
         $entityManager->flush();
 

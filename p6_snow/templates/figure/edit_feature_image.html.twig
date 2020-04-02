@@ -6,16 +6,26 @@
 
 {% block body %}
 
-    {{ form_start(form) }}
+
     <div class="container mt-4">
-        <h2>Modifier image de présentation de {{ title }}</h2>
-        {{ form_row(form.image_base) }}
-        {{ form_errors(form) }}
-        <div class="row">
-            <button type="submit" class="btn btn-primary">Soumettre</button>
+        <div class="row justify-content-center">
+            <div class="p-2 updatePhoto">
+                <div class="figEditTitle m-2"><h1>Modifier l'image de présentation<br> de {{ title }}</h1>
+                </div>
+
+                <div class=" p-2 updatePhoto">
+
+                    {{ form_start(form) }}
+                    {{ form_row(form.image_base) }}
+                    {{ form_errors(form) }}
+
+                    <button type="submit" class="btn btn-primary">Soumettre</button>
+                    {{ form_end(form) }}
+                </div>
+
+            </div>
         </div>
     </div>
-    {{ form_end(form) }}
 
 {% endblock %}
 

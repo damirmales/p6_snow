@@ -33,10 +33,13 @@
                 </div>
                 <div class="card-picto">
                     <a href="{{ path('image_presentation', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
-                    <a href="{{ path('delete_feature_image', {'slug': fig.slug}) }}"> <i
-                                class='fas fa-trash-alt'></i></a>
+                    <a href="#" data-toggle="modal"
+                       data-target="#deleteFeatureImage{{ fig.getSlug }}"><i class='fas fa-trash-alt'></i></a>
                 </div>
             {% endif %}
+
+            <!--*********** Trigger modal  when button delete imageFeature is clicked ****************-->
+            {{ include('includes/modal_image_feature.html.twig') }}
 
         </div>
         <!-- Portfolio Gallery pictures -->
@@ -51,7 +54,7 @@
                                     <div class="">
                                         <div class="card-header align-items-center">
                                             <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
-                                                 alt="image de figure snowboard"
+                                                 alt="image de figure de snowboard"
                                                  style="width:220px; height:160px">
                                         </div>
                                         <div class="card-body  text-center">
@@ -72,6 +75,8 @@
                 </div>
 
             {% endif %}
+
+
             {% if photos|length > 4 %}
                 <div class=" row mt-4">
                     <div class="col-md-6">

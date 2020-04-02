@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col featureImageFigure"
                  style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
-                <h1 class="display-3 text-center"> {{ fig.title }}</h1>
+                <div class="figEditTitle m-2"><h1 class="display-3 text-center "> {{ fig.title }}</h1></div>
 
             </div>
         </div>
@@ -188,7 +188,7 @@
                         {% for comment in comments %}
 
                             <tr>
-                                <td>{{ comment.author.username }}</td>
+                                <td>{{ comment.author.firstname }} {{ comment.author.lastname }}</td>
                                 <td class="avatar"><img
                                             src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
                                             alt="{{ comment.figure.title }}">
