@@ -27,8 +27,7 @@ class Figure
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="4",minMessage="Le titre doit contenir au moins 4 caractères")
-     * @Assert\Regex(pattern="/^[aA-zZ0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]+/")
-     *
+     * @Assert\Regex(pattern="/^[^0-9].[^'\x22<>&%$]+/",
      *      message="Le nom ne doit pas être un nombre ou débuter par un nombre")
      */
     private $title;

@@ -30,6 +30,14 @@
     padding: 5px;
 }
 
+.card-picto-feature-img {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 60px;
+    padding: 5px;
+}
+
 .card-img-top {
     max-height: 150px;
 }
@@ -52,13 +60,13 @@ div label {
 }
 
 .figEditTitle {
-    background-color: rgba(25, 51, 76, 0.5);
+    background-color: rgba(5, 49, 76, 0.9);
     width: fit-content;
     padding: 1px 8px 1px;
     border-radius: 4px;
 }
 
-.figEditTitle h1 {
+.figEditTitle h1, h2 {
     color: whitesmoke;
 }
 
@@ -69,7 +77,6 @@ div label {
 
 .grid-item {
     padding: 0px;
-
 }
 
 .grid-item-photo {
@@ -90,25 +97,35 @@ img {
     height: auto;
 }
 
-
 .imgUpdatePhoto {
     width: 100%;
     max-width: 480px;
     height: auto;
-
 }
 
 .jumbotron {
     height: 400px;
-    background-image: url("/img/home_snowboard.jpg");
+    background-image: url(/img/home_snowboard.jpg);;
     background-repeat: no-repeat;
+    /* Makes the image fixed in the viewport so that it doesn't move when
+   the content height is greater than the image height */
+    /* background-attachment: fixed;
+     /* This is what makes the background image rescale based on its container's size */
+    background-size: cover;
     border-radius: 0;
 }
 
-.jumbotron h1 {
+.jumbotron > h1 {
     font-size: 100px;
     font-weight: bolder;
     color: whitesmoke;
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 640px) {
+    .jumbotron > h1 {
+        font-size: 50px;
+    }
 }
 
 #loadMoreFigBtn, #loadMoreVidBtn {

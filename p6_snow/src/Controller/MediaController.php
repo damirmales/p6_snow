@@ -9,6 +9,7 @@ use App\Entity\Video;
 use App\Form\MediaType;
 use App\Form\PhotoType;
 use App\Form\VideoType;
+use App\Services\UnlinkFile;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use http\Client\Response;
@@ -167,7 +168,11 @@ class MediaController extends AbstractController
     public function deletePhoto(Photo $photo, EntityManagerInterface $entityManager)
     {
         $slug = $photo->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
-        $photo->getFigure()->setFeatureImage('figure_default.jpeg');
+        $imageName = $photo->getFilename();
+
+        $delPhoto = new UnlinkFile($imageName);
+        $delPhoto->delFile();
+
         $entityManager->remove($photo);
         $entityManager->flush();
 

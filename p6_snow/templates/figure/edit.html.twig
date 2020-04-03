@@ -12,23 +12,25 @@
 
 {% block body %}
     <div class="container mt-4">
-        <div class="row figEditTitle mt-2"><h1>Modifier la figure {{ fig.title }}</h1></div>
+        <div class="row  mt-2 align-items-center">
+            <div class="figEditTitle">
+                <h2>Modifier la figure {{ fig.title }}</h2>
+            </div>
+        </div>
         <div class="row">
             <div class="col featureImageFigure"
                  style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
 
-                <div class="card-picto">
+                <div class="card-picto-feature-img">
                     <a href="{{ path('image_presentation', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
                     <a href="#" data-toggle="modal"
                        data-target="#deleteFeatureImage{{ fig.getSlug }}"><i class='fas fa-trash-alt'></i></a>
                 </div>
             </div>
-
         </div>
 
         <!-- Link add medias-->
         <div class="row justify-content-between">
-
             {% if app.user %}
                 <div>
                     <a href="{{ path('add_photo', {'slug': fig.slug}) }}" class="btn btn-primary m-2">
@@ -66,17 +68,17 @@
                     {% for photo in photos %}
                         {% if photo.filename %}
                             <div class="col-12 col-lg-3 col-md-3 grid-item-photo">
-                                <div class="card border-primary mb-3 mt-3">
-                                    <div class="">
-                                        <div class="card-header align-items-center">
-                                            <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
-                                                 alt="image de figure de snowboard"
-                                                 style="width:220px; height:160px">
-                                        </div>
-                                        <div class="card-body  text-center">
-                                            <h4 class="card-title"> {{ photo.title }}</h4>
-                                        </div>
+                                <div class="card border-primary mb-3 mt-3 align-items-center">
+
+                                    <div class="card-header align-items-center">
+                                        <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
+                                             alt="image de figure de snowboard"
+                                             style="width:220px; height:160px">
                                     </div>
+                                    <div class="card-body  text-center">
+                                        <h4 class="card-title"> {{ photo.title }}</h4>
+                                    </div>
+
                                     <div class="card-picto">
                                         <a href="{{ path('edit_photo',{'slug':photo.figure.slug,'id':photo.id}) }}"><i
                                                     class='fas fa-pen'></i></a>

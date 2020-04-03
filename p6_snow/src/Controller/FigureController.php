@@ -14,6 +14,7 @@ use App\Repository\CommentRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\VideoRepository;
 use App\Services\PaginationParam;
+use App\Services\UnlinkFile;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -83,11 +84,15 @@ class FigureController extends AbstractController
      */
     public function deleteFeatureImage(Figure $figure, EntityManagerInterface $entityManager)
     {
+        $imageName = $figure->getFeatureImage();
+        $delFeature = new UnlinkFile($imageName);
+        $delFeature->delFile();
+
 
         $figure->setFeatureImage('figure_default.jpeg');
         $entityManager->persist($figure);
         $entityManager->flush();
-        $this->addFlash("success", "Image de présentation supprimée");
+        $this->addFlash("success", "Image personnalisée supprimée, ");
         return $this->redirectToRoute('edit_figure', [
             'slug' => $figure->getSlug(),
         ]);
@@ -223,8 +228,12 @@ class FigureController extends AbstractController
     /**
      * @Route("/figure/{slug}/delete", name="delete_figure")
      */
-    public function delete($slug, Figure $figure, EntityManagerInterface $entityManager)
+    public function delete(Figure $figure, EntityManagerInterface $entityManager)
     {
+        $imageName = $figure->getFeatureImage();
+        $delFeature = new UnlinkFile($imageName);
+        $delFeature->delFile();
+
         $entityManager->remove($figure);
         $entityManager->flush();
 
