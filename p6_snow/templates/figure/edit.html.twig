@@ -12,35 +12,51 @@
 
 {% block body %}
     <div class="container mt-4">
-
+        <div class="row figEditTitle mt-2"><h1>Modifier la figure {{ fig.title }}</h1></div>
         <div class="row">
             <div class="col featureImageFigure"
                  style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
-                <div class="figEditTitle mt-2"><h1>Modifier la figure {{ fig.title }}</h1></div>
+
+                <div class="card-picto">
+                    <a href="{{ path('image_presentation', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
+                    <a href="#" data-toggle="modal"
+                       data-target="#deleteFeatureImage{{ fig.getSlug }}"><i class='fas fa-trash-alt'></i></a>
+                </div>
             </div>
+
         </div>
+
         <!-- Link add medias-->
         <div class="row justify-content-between">
 
             {% if app.user %}
                 <div>
                     <a href="{{ path('add_photo', {'slug': fig.slug}) }}" class="btn btn-primary m-2">
-                        ajout de photo
+                        Ajout de photo
                     </a>
                     <a href="{{ path('add_video', {'slug': fig.slug}) }}" class="btn btn-primary m-2">
-                        ajout de vidéo
+                        Ajout de vidéo
                     </a>
                 </div>
-                <div class="card-picto">
-                    <a href="{{ path('image_presentation', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
-                    <a href="#" data-toggle="modal"
-                       data-target="#deleteFeatureImage{{ fig.getSlug }}"><i class='fas fa-trash-alt'></i></a>
-                </div>
+
             {% endif %}
 
             <!--*********** Trigger modal  when button delete imageFeature is clicked ****************-->
             {{ include('includes/modal_image_feature.html.twig') }}
 
+        </div>
+
+        <div class="row justify-content-center">
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
         </div>
         <!-- Portfolio Gallery pictures -->
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showPhotosCards">
@@ -164,7 +180,7 @@
             <button type="submit" class="btn btn-primary mx-2 mt-3">Soumettre</button>
 
         </div>
-        {#  {{ form_end(form) }} #}
+        {{ form_end(form) }}
     </div>
 
 {% endblock %}

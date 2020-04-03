@@ -8,6 +8,7 @@ use App\Entity\Photo;
 use App\Entity\Video;
 use App\Form\CommentType;
 use App\Form\CreateFigureType;
+use App\Form\EditFigureType;
 use App\Form\FeatureImgType;
 use App\Repository\CommentRepository;
 use App\Repository\PhotoRepository;
@@ -62,7 +63,7 @@ class FigureController extends AbstractController
             $entityManager->persist($figure);
             $entityManager->flush();
             $this->addFlash("success", "Image de présentation modifiée");
-            return $this->redirectToRoute('page_figure', [
+            return $this->redirectToRoute('edit_figure', [
                 'slug' => $figure->getSlug(),
             ]);
         }
@@ -86,8 +87,10 @@ class FigureController extends AbstractController
         $figure->setFeatureImage('figure_default.jpeg');
         $entityManager->persist($figure);
         $entityManager->flush();
-
-        return $this->redirectToRoute('home');
+        $this->addFlash("success", "Image de présentation supprimée");
+        return $this->redirectToRoute('edit_figure', [
+            'slug' => $figure->getSlug(),
+        ]);
     }
 
 
@@ -99,7 +102,7 @@ class FigureController extends AbstractController
     public function editFigure(Figure $figure, Request $request, EntityManagerInterface $entityManager,
                                PhotoRepository $photoRepository, VideoRepository $videoRepository)
     {
-        $form = $this->createForm(CreateFigureType::class, $figure);
+        $form = $this->createForm(EditFigureType::class, $figure);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -107,45 +110,8 @@ class FigureController extends AbstractController
             //-------------------------------------------------------
             $figure->setEditor($this->getUser()); // available because user is connected
 
-            // let added photo to persist before insert it to the database
 
-            //-------- Manage the field devoted to upload extra figure pictures ----------------
-            $photoFile = $form->getData()->getPhotos(); //from PhotoType Filetype
-
-            // let added photo to persist before insert it to the database
-            foreach ($photoFile as $photo) {
-                $photo->setCreatedDate(new DateTime('now'));
-                $photo->setFigure($figure); // combine photo to the figure
-                $photoFilename = pathinfo($photo->getFile()->getClientOriginalName(), PATHINFO_FILENAME);
-                $newPhotoFilename = $photoFilename . '-' . uniqid() . '.' . $photo->getFile()->guessExtension();
-
-                // Move the file to the directory where pictures of figures are stored
-                try {
-                    $photo->getFile()->move(
-                        $this->getParameter('figures_directory'),
-                        $newPhotoFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                    return new Response("Une erreur a été détectée");
-                }
-                $photo->setFilename($newPhotoFilename);
-
-                $entityManager->persist($photo);
-            }
-            foreach ($figure->getPhotos() as $photo) {
-                $photo->setCreatedDate(new DateTime('now'));
-
-                $photo->setFigure($figure);
-                $entityManager->persist($photo);
-            }
-
-            // Persist video before insert it to the database
-            foreach ($figure->getVideos() as $video) {
-                $video->setCreatedDate(new DateTime('now'));
-                $video->setFigure($figure);
-                $entityManager->persist($video);
-            }
+            $figure->defineSlug();
             $entityManager->persist($figure);
             $entityManager->flush();
 
