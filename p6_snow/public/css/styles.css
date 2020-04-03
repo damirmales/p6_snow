@@ -59,8 +59,8 @@ div label {
     border-radius: 0;
 }
 
-.figEditTitle {
-    background-color: rgba(5, 49, 76, 0.9);
+.figEditTitle, .title {
+    background-color: rgba(6, 31, 76, 0.9);
     width: fit-content;
     padding: 1px 8px 1px;
     border-radius: 4px;
@@ -199,6 +199,12 @@ img {
     border-radius: 4px;
 }
 
+.title {
+    background-color: rgba(0, 191, 255, 0.4);
+    width: fit-content;
+    padding: 1px 8px 1px;
+    border-radius: 4px;
+}
 
 .updatePhoto, .updateVideo, .addVideo {
     max-width: 800px;

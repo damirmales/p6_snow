@@ -3,16 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Figure;
-use App\Entity\Media;
 use App\Entity\Photo;
 use App\Entity\Video;
-use App\Form\MediaType;
 use App\Form\PhotoType;
 use App\Form\VideoType;
 use App\Services\UnlinkFile;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Client\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -138,7 +136,12 @@ class MediaController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
+                    return new Response("Une erreur a été détectée");
                 }
+
+                $photoName = $photo->getFilename();
+                $delPhoto = new UnlinkFile($photoName);
+                $delPhoto->delFile();
 
                 // updates the 'picture' field property to store the jpeg file name
                 // instead of its contents
@@ -146,6 +149,7 @@ class MediaController extends AbstractController
             }
             $entityManager->persist($photo);
             $entityManager->flush();
+
             $this->addFlash("success", "Mise àjour de la photo effectuée");
 
             return $this->redirectToRoute('page_figure', ['slug' => $slug]);
@@ -168,9 +172,9 @@ class MediaController extends AbstractController
     public function deletePhoto(Photo $photo, EntityManagerInterface $entityManager)
     {
         $slug = $photo->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
-        $imageName = $photo->getFilename();
 
-        $delPhoto = new UnlinkFile($imageName);
+        $photoName = $photo->getFilename();
+        $delPhoto = new UnlinkFile($photoName);
         $delPhoto->delFile();
 
         $entityManager->remove($photo);

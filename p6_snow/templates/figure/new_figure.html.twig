@@ -6,8 +6,8 @@
 {% block body %}
 
     <div class="container mt-4 mb-4">
-        <h1>Ajout d'une nouvelle figure</h1>
-        <div class="row ">
+
+        <div class="row justify-content-center">
             {% for message in app.flashes('warning') %}
                 <div class="alert alert-warning">
                     {{ message }}
@@ -18,24 +18,28 @@
                     {{ message }}
                 </div>
             {% endfor %}
-        </div>
-
-        {{ form_start(form) }}
-        <div class="row">
-            <div class="col">
-                <div>{{ form_row(form.title,{"label":"Nom de la figure","attr":{ "placeholder":"Nom de la figure"}}) }}</div>
-
-                <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
-                <div>{{ form_row(form.figGroup,{"label":"Groupe de la figure","attr":{ "placeholder":"Groupe de la figure"}}) }}</div>
-
+            <div class="title">
+                <h1>Ajout d'une nouvelle figure</h1>
             </div>
-        </div>
-        {{ form_widget(form) }}
 
-        <div class="row">
-            <button type="submit" class="btn btn-primary">Soumettre</button>
         </div>
-        {{ form_end(form) }}
+        <div class="row justify-content-center">
+
+            {{ form_start(form) }}
+
+            <div>{{ form_row(form.title,{"label":"Nom de la figure","attr":{ "placeholder":"Nom de la figure"}}) }}</div>
+
+            <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
+            <div>{{ form_row(form.figGroup,{"label":"Groupe de la figure","attr":{ "placeholder":"Groupe de la figure"}}) }}</div>
+
+
+            {{ form_widget(form) }}
+
+            <div class="row">
+                <button type="submit" class="btn btn-primary">Soumettre</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
 
     </div>
 {% endblock %}
