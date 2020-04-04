@@ -237,6 +237,8 @@ class FigureController extends AbstractController
         $entityManager->remove($figure);
         $entityManager->flush();
 
+        $this->addFlash("success", "Figure effacée");
+
         return $this->redirectToRoute('home');
     }
 
@@ -267,6 +269,15 @@ class FigureController extends AbstractController
 
             $entityManager->persist($comment);
             $entityManager->flush();
+
+            //clean comment's content field after submission
+            unset($comment);
+            unset($form);
+            $comment = new Comment();
+            $form = $this->createForm(CommentType::class, $comment);
+
+            $this->addFlash("comment", "Commentaire soumis");
+
         }
         //------------------------- Pagination Pictures gallery -----------------------------
         $picturePageLimit = $picturePagination->getPageItemLimit();

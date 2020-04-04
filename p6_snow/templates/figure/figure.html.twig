@@ -152,16 +152,24 @@
                 </div>
 
                 <!--**** Comments zone *****-->
+                <div class="row mt-4 justify-content-center">
+                    <div class="col-md-3">
+                        {% for message in app.flashes('comment') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
                 <!-- Add a Comment -->
                 <div class="row mt-4">
                     <div class="col">
 
-                        <div class="">
+                        <div>
                             {% if app.user %}
                                 {{ form_start(form) }}
-
                                 <h3>{{ form_row(form.content,{'label':'Votre commentaire'}) }}</h3>
-                                {{ form_errors(form.content) }}
+
                                 <button type="submit" class="btn" id="submitComment" name="submit">Envoyer votre
                                     commentaire
                                 </button>

@@ -20,6 +20,7 @@ class Comment
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank
+     * @Assert\Length(min="50",minMessage="Le commentaire doit contenir au moins 50 caractères")
      */
     private $content;
 
