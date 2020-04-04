@@ -12,15 +12,15 @@
 
 {% block body %}
     <div class="container mt-4">
-        <div class="row  mt-2 align-items-center">
-            <div class="figEditTitle">
-                <h2>Modifier la figure {{ fig.title }}</h2>
-            </div>
-        </div>
+
         <div class="row">
             <div class="col featureImageFigure"
                  style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
-
+                <div class="row align-items-center">
+                    <div class="figEditTitle">
+                        <h2>Modifier la figure {{ fig.title }}</h2>
+                    </div>
+                </div>
                 <div class="card-picto-feature-img">
                     <a href="{{ path('image_presentation', {'slug': fig.slug}) }}"><i class='fas fa-pen'></i></a>
                     <a href="#" data-toggle="modal"
@@ -29,8 +29,8 @@
             </div>
         </div>
 
-        <!-- Link add medias-->
-        <div class="row justify-content-between">
+        <!-- add medias-->
+        <div class="row">
             {% if app.user %}
                 <div>
                     <a href="{{ path('add_photo', {'slug': fig.slug}) }}" class="btn btn-primary m-2">
@@ -107,12 +107,15 @@
                 </div>
             {% endif %}
         </div>
-        <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
-                data-toggle="collapse"
-                data-target="#showPhotosCards"
-                aria-expanded="false" aria-controls="showPhotosCards">
-            Montrer les photos
-        </button>
+
+        {% if photos|length != 0 %}
+            <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
+                    data-toggle="collapse"
+                    data-target="#showPhotosCards"
+                    aria-expanded="false" aria-controls="showPhotosCards">
+                Montrer les photos
+            </button>
+        {% endif %}
         <!-- Portfolio videos -->
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showVideosCards">
             <!-- Afficher les vidéos si existantes -->
@@ -162,27 +165,30 @@
                 </div>
             {% endif %}
         </div>
-        <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
-                data-toggle="collapse"
-                data-target="#showVideosCards"
-                aria-expanded="false" aria-controls="showVideosCards">
-            Montrer les vidéos
-        </button>
-        {{ form_start(form) }}
-        <div class="row">
-            <div class="col">
+        {% if videos|length != 0 %}
+            <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
+                    data-toggle="collapse"
+                    data-target="#showVideosCards"
+                    aria-expanded="false" aria-controls="showVideosCards">
+                Montrer les vidéos
+            </button>
+        {% endif %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {{ form_start(form) }}
                 <div>{{ form_row(form.title,{"label":"Nom de la figure","attr":{ "placeholder":"Nom de la figure"}}) }}</div>
                 <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
                 <div>{{ form_row(form.figGroup,{"label":"Groupe de la figure","attr":{ "placeholder":"Groupe de la figure"}}) }}</div>
 
+
+                {# {{ form_widget(form) }} #}<!-- si présent active l'affichage des sous-formulaires -->
+                <div class="row">
+                    <button type="submit" class="btn btn-primary mx-2 mt-3">Soumettre</button>
+
+                </div>
+                {{ form_end(form) }}
             </div>
         </div>
-        {# {{ form_widget(form) }} #}<!-- si présent active l'affichage des sous-formulaires -->
-        <div class="row">
-            <button type="submit" class="btn btn-primary mx-2 mt-3">Soumettre</button>
-
-        </div>
-        {{ form_end(form) }}
     </div>
 
 {% endblock %}

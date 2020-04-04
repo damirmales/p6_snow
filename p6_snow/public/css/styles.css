@@ -50,6 +50,10 @@ div label {
     font-weight: bold;
 }
 
+.description {
+    word-wrap: break-word; /*empêche le texte de dépasser hors de la div*/
+}
+
 .fa-pen, .fa-trash-alt {
     color: dodgerblue;
 }
