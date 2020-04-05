@@ -59,14 +59,16 @@
         </div>
 
         <div class="row justify-content-between mx-4">
-            <div class="m-1">
-                <div>
-                    <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures"
-                            onclick="loadMore(4,'grid-item')">Plus de
-                        figures
-                    </button>
-                </div>
 
+            <div class="m-1">
+                {% if figs|length >10 %}
+                    <div>
+                        <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures"
+                                onclick="loadMore(4,'grid-item')">Plus de
+                            figures
+                        </button>
+                    </div>
+                {% endif %}
                 <div>
                     <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
                 </div>

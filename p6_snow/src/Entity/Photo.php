@@ -25,7 +25,7 @@ class Photo
      * @ORM\Column(type="string", length=55, unique=true)
      * @Assert\Length(min="4",max="20",minMessage="Le titre doit contenir au moins 4 caractères,
      * maxMessage=""Le titre doit contenir au max 20 caractères")
-     * @Assert\Regex(pattern="/^[^0-9]/", message="Le nom ne doit pas être un nombre ou débuter par un nombre")
+     * @Assert\Regex(pattern="/[^0-9].[^'\x22<>&%$]+/", message="Le titre avec uniquement des lettres de l'alphabet")
      */
     private $title;
 

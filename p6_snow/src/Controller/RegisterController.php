@@ -7,7 +7,6 @@ use App\Form\RegisterType;
 
 use App\Repository\UserRepository;
 use App\Services\SendEmail;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Validator\Constraints\IsFalse;
+
 
 class RegisterController extends AbstractController
 {
@@ -74,9 +73,7 @@ class RegisterController extends AbstractController
 
                 $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage, $pathToEmailPage);
 
-
                 $manager->persist($newUser);
-
                 $manager->flush();
                 $this->addFlash('success', 'Un email vous a été envoyé');
                 //return $this->redirectToRoute('home');

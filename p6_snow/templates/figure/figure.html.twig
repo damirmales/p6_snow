@@ -43,32 +43,30 @@
             <div class="row justify-content-center">
                 {% for photo in photos %}
                     {% if photo.filename %}
-                        <div class="  col-lg-3 col-sm-6 col-md-6 grid-item-photo align-items-center">
 
-                            <div class="card border-primary mb-3 mt-3  align-items-center" style="">
-                                <div class="card-header">
-                                    <img src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
-                                         alt="figure snowboard"
-                                         style="width:220px; height:160px"></div>
+                        <div class="grid-item-photo">
+                            <div class="card border-primary mx-2 mb-3 flex-fill">
+
+                                <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
+                                     alt="Figure image cap">
                                 <div class="card-body">
-                                    <h4 class="card-title"> {{ photo.title }}</h4>
-
+                                    <h4 class="card-title">{{ photo.title }}</h4>
                                 </div>
+
                             </div>
-                        </div><!-- col-->
+                        </div>
 
                     {% endif %}
                 {% endfor %}
             </div>
             {% if photos|length > 4 %}
 
-                <div class=" row mt-4">
+                <div class=" row mt-4 justify-content-center">
                     <div class="col-md-6 ">
-                        <button type="button" id="loadMoreFigBtn" title="Plus de figures"
+                        <button type="button" id="loadMoreFigBtn" title="Plus de photos"
                                 onclick="loadMore(4,'grid-item-photo')">Plus de
-                            figures
+                            photos
                         </button>
-
                     </div>
                 </div>
             {% endif %}
@@ -87,21 +85,20 @@
             {% if videos %}
                 <div class="row mt-4 justify-content-center">
                     {% for video in videos %}
-                        <div class="col-12 col-lg-3 col-md-3 grid-item-video text-center">
+                        <div class="grid-item-video">
+                            <div class="card border-primary align-items-center">
 
-                            <div class="card border-primary mb-3 mt-3 justify-content-center" style="">
-                                <div class="card-header">
-                                    <div class="embed-responsive embed-responsive-16by9 mb-4 mr-4 videoFigure">
+                                <div class="embed-responsive embed-responsive-16by9 videoFigure">
 
-                                        <iframe class="embed-responsive-item" width="150" height="200"
-                                                src="{{ video.url }}?controls=0" frameborder="0"
-                                                allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
-                                                allowfullscreen></iframe>
-                                    </div>
+                                    <iframe class="embed-responsive-item" width="200" height="200"
+                                            src="{{ video.url }}?controls=0" frameborder="0"
+                                            allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
+                                            allowfullscreen></iframe>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title"> {{ video.title }}</h4>
+                                    <h4 class="card-title">{{ video.title }}</h4>
                                 </div>
+
                             </div>
                         </div>
                     {% endfor %}

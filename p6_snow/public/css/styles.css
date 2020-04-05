@@ -17,7 +17,7 @@
 
 .card {
     width: 250px;
-    height: 300px;
+    height: 250px;
 }
 
 .card-header {
@@ -45,6 +45,7 @@
 .col {
     border-radius: 2px;
 }
+
 
 div label {
 
@@ -78,6 +79,11 @@ div label {
     font-weight: bold;
     font-style: italic;
 }
+
+.form-group > label {
+    font-weight: bold;
+}
+
 
 .grid-item {
     padding: 0px;

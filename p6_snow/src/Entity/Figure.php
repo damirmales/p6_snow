@@ -28,7 +28,7 @@ class Figure
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="4",minMessage="Le titre doit contenir au moins 4 caractères")
      * @Assert\Regex(pattern="/^[^0-9].[^'\x22<>&%$]+/",
-     *      message="Le nom ne doit pas être un nombre ou débuter par un nombre")
+     *      message="Le titre avec uniquement des lettres de l'alphabet")
      */
     private $title;
 
@@ -71,6 +71,7 @@ class Figure
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="figure", orphanRemoval=true)
+     * @Assert\Length(min="50", minMessage="Doit contenir une description de 50 caractères minimum")
      */
     private $comments;
 
