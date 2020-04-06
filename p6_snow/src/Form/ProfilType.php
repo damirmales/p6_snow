@@ -18,7 +18,7 @@ class ProfilType extends AbstractType
             ->add('lastname')
             ->add('email')
             ->add('avatar', FileType::class, [
-                'label' => 'Avatar (jpeg file)',
+                'label' => 'Avatar (format jpeg, max.1Mo)',
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
                 'required' => false,

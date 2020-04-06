@@ -2,7 +2,7 @@
 
 {% block title %}Figure {{ fig.title }}{% endblock %}
 {% block tag_body %}
-<body onload="initGridItem(4)">
+<body onload="initGridItem(5)">
 {% endblock %}
 {% block body %}
 
@@ -131,9 +131,7 @@
                     <div class="col">
                         <h3> Informations </h3>
                         <p>Groupe : {{ fig.figGroup }}, Date de création : {{ fig.createDate|date('d-m-Y') }}, date de
-                            mise
-                            à
-                            jour: {{ fig.updateDate|date('d-m-Y') }}</p>
+                            mise à jour: {{ fig.updateDate|date('d-m-Y') }}</p>
 
                     </div>
                 </div>
@@ -181,8 +179,8 @@
 
                 <div class="row mt-4">
                     <div class="col">
-
-                        <table class="table table-striped">
+                        <h3>Les commentaires reçus</h3>
+                        <table class="">
                             <thead>
                             <tr>
                                 <th>Auteur</th>
@@ -193,17 +191,15 @@
                             </thead>
                             <tbody>
                             {% if fig.comments|length > 0 %}
-                                <h3>Les commentaires reçus</h3>
                                 {% for comment in comments %}
-
                                     <tr>
-                                        <td>{{ comment.author.firstname }} {{ comment.author.lastname }}</td>
-                                        <td class="avatar"><img
+                                        <td data-label="Auteur">{{ comment.author.firstname }} {{ comment.author.lastname }}</td>
+                                        <td class="avatar" data-label="Avatar"><img
                                                     src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
                                                     alt="{{ comment.figure.title }}">
                                         </td>
-                                        <td>{{ comment.content }}</td>
-                                        <td>{{ comment.createDate|date('d-m-Y H:i:s') }}</td>
+                                        <td data-label="Message">{{ comment.content }}</td>
+                                        <td data-label="Date">{{ comment.createDate|date('d-m-Y H:i:s') }}</td>
                                     </tr>
                                 {% endfor %}
                             {% endif %}

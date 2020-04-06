@@ -136,6 +136,41 @@ img {
     .jumbotron > h1 {
         font-size: 50px;
     }
+
+    /* design the table to fit small screens */
+    table, thead, tbody, th, tr, td {
+        display: block;
+    }
+
+    thead {
+        display: none;
+        background-color: #5eb5e0;
+    }
+
+    td {
+        padding-left: 140px;
+        position: relative;
+        margin-top: 0px;
+    }
+
+    td::before {
+        padding: 10px;
+        content: attr(data-label);
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 130px;
+        display: flex;
+        align-items: center;
+
+    }
+
+    td:nth-child(odd) {
+        background-color: #5eb5e0;
+    }
+
+
 }
 
 #loadMoreFigBtn, #loadMoreVidBtn {
@@ -207,6 +242,11 @@ img {
 #submitComment {
     background-color: cornflowerblue;
     border-radius: 4px;
+}
+
+thead {
+
+    background-color: #80bdff;
 }
 
 .title {
