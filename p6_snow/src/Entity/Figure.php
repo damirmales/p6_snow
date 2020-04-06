@@ -27,7 +27,7 @@ class Figure
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="4",minMessage="Le titre doit contenir au moins 4 caractères")
-     * @Assert\Regex(pattern="/^[^0-9].[^'\x22<>&%$]+/",
+     * @Assert\Regex(pattern="/[a-zA-Z]+/",
      *      message="Le titre avec uniquement des lettres de l'alphabet")
      */
     private $title;
