@@ -115,8 +115,6 @@ class FigureController extends AbstractController
             //-------------------------------------------------------
             $figure->setEditor($this->getUser()); // available because user is connected
 
-
-            $figure->defineSlug();
             $entityManager->persist($figure);
             $entityManager->flush();
 
@@ -152,7 +150,6 @@ class FigureController extends AbstractController
             $fig->setFeatureImage('figure_default.jpeg');
             $fig->setCreateDate(new DateTime('now'));
             $fig->setEditor($this->getUser()); // available because user is connected
-
 
             //-------- Manage the field devoted to upload default picture ----------------
             $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype

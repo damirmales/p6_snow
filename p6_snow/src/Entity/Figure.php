@@ -100,7 +100,7 @@ class Figure
      */
     public function defineSlug() // linked to HasLifecycleCallbacks
     {
-        $this->setSlug('snowboard' . '_' . 'figure' . '_' . $this->getTitle());
+        $this->setSlug('snowboard' . '-' . 'figure' . '-' . $this->getTitle());
 
     }
 

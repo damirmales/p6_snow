@@ -25,7 +25,7 @@ class CreateFigureType extends AbstractType
                     'Rotation' => 'Rotation',
                 ]])
             ->add('image_base', FileType::class, [
-                'label' => 'Image de présentation (jpeg file)',
+                'label' => 'Image de présentation (jpeg, poids inférieur à 1Mo)',
                 'attr' => ['placeholder' => 'Télécharger une image locale'],
                 'mapped' => false,
                 'required' => false])

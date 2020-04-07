@@ -24,9 +24,10 @@
                 </div>
             {% endfor %}
         </div>
-
+        <div class="row">
+            <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
+        </div>
         <div class="row  mx-4 justify-content-center">
-
             {% for fig in figs %}
                 <div class=" grid-item ">
                     <div class="card border-primary mx-2 mb-3 flex-fill">
@@ -53,9 +54,7 @@
                 {{ include('includes/modal.html.twig') }}
 
             {% endfor %}
-            <div class="row">
-                <button onclick="downFunction()" id="myBtnDown" title="En bas">Bas</button>
-            </div>
+
         </div>
 
         <div class="row justify-content-between mx-4">

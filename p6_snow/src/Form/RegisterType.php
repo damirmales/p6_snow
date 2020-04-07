@@ -24,7 +24,7 @@ class RegisterType extends AbstractType
 
             // add a user's image as avatar
             ->add('avatar', FileType::class, [
-                'label' => 'Avatar (jpeg file)',
+                'label' => 'Avatar (jpeg, 80x80mm, poids inférieur à 200Ko)',
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
