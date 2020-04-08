@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Figure;
-use App\Entity\Photo;
-use App\Entity\Video;
 use App\Form\CommentType;
 use App\Form\CreateFigureType;
 use App\Form\EditFigureType;
@@ -13,6 +11,7 @@ use App\Form\FeatureImgType;
 use App\Repository\CommentRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\VideoRepository;
+use App\Services\ImageUploadHelper;
 use App\Services\PaginationParam;
 use App\Services\UnlinkFile;
 use DateTime;
@@ -34,32 +33,31 @@ class FigureController extends AbstractController
      */
     public function editFeatureimage(Figure $figure, Request $request, EntityManagerInterface $entityManager)
     {
-        $form = $this->createForm(FeatureImgType::class, $figure);
+
+        $form = $this->createForm(FeatureImgType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $figure->setUpdateDate(new DateTime('now'));
             $figure->setEditor($this->getUser()); // available because user is connected
-            $imageFile = $form->get('image_base')->getData();
-
+            $imageFile = $form->get('image_presentation')->getData();
+            //TODO: factorisez l'upload des photos
             if ($imageFile) {
-                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
-
+                $uploadHelper = new ImageUploadHelper();
+                $newImageName = $uploadHelper->imageUploadTest($imageFile, $figure, 'setFeatureImage');
                 // Move the file to the directory where pictures of figures are stored
                 try {
                     $imageFile->move(
                         $this->getParameter('figures_directory'),
-                        $newFilename
+                        $newImageName
                     );
-                } catch (FileException $e) {
+                } catch
+                (FileException $e) {
                     // ... handle exception if something happens during file upload
                     return new Response("une erreur a été détectée");
                 }
 
-                // updates the 'picture' field property to store the jpeg file name
-                // instead of its contents
-                $figure->setFeatureImage($newFilename);
             }
             $entityManager->persist($figure);
             $entityManager->flush();
@@ -154,25 +152,22 @@ class FigureController extends AbstractController
             //-------- Manage the field devoted to upload default picture ----------------
             $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype
 
-            if ($imageFile) {
-                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
 
-                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+            if ($imageFile) {
+                $uploadHelper = new ImageUploadHelper();
+                $newImageName = $uploadHelper->imageUploadTest($imageFile, $fig, 'setFeatureImage');
 
                 // Move the file to the directory where pictures of figures are stored
                 try {
                     $imageFile->move(
                         $this->getParameter('figures_directory'),
-                        $newFilename
+                        $newImageName
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                     return new Response("une erreur a été détectée");
                 }
 
-                // updates the 'FeatureImage' field property to store the jpeg file name
-                // instead of its contents
-                $fig->setFeatureImage($newFilename);
             }
 
             //-------- Manage the field devoted to upload extra figure pictures ----------------

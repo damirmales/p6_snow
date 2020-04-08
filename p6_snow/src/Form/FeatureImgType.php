@@ -14,7 +14,7 @@ class FeatureImgType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('image_base', FileType::class, [
+            ->add('image_presentation', FileType::class, [
                 'label' => 'Image de présentation (jpeg file)',
                 'attr' => ['placeholder' => 'Télécharger une image locale'],
                 'mapped' => false,
@@ -25,7 +25,7 @@ class FeatureImgType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            
+
         ]);
     }
 }

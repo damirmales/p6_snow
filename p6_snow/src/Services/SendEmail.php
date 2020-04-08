@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +13,6 @@ class SendEmail extends AbstractController
     private $emailFrom;
     private $emailTo;
     //private $message;
-
 
     private $mailer;
 

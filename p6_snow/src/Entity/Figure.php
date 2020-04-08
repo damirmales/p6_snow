@@ -101,7 +101,6 @@ class Figure
     public function defineSlug() // linked to HasLifecycleCallbacks
     {
         $this->setSlug('snowboard' . '-' . 'figure' . '-' . $this->getTitle());
-
     }
 
     public function getId()
@@ -117,7 +116,6 @@ class Figure
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -129,7 +127,6 @@ class Figure
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
-
         return $this;
     }
 
@@ -141,7 +138,6 @@ class Figure
     public function setFeatureImage(?string $featureImage): self
     {
         $this->featureImage = $featureImage;
-
         return $this;
     }
 
@@ -153,7 +149,6 @@ class Figure
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -177,7 +172,6 @@ class Figure
     public function setCreateDate(\DateTimeInterface $CreateDate): self
     {
         $this->CreateDate = $CreateDate;
-
         return $this;
     }
 
@@ -189,7 +183,6 @@ class Figure
     public function setUpdateDate(?\DateTimeInterface $updateDate): self
     {
         $this->updateDate = $updateDate;
-
         return $this;
     }
 
@@ -201,7 +194,6 @@ class Figure
     public function setEditor($editor)
     {
         $this->editor = $editor;
-
         return $this;
     }
 
@@ -220,7 +212,6 @@ class Figure
             $this->comments[] = $comment;
             $comment->setFigure($this);
         }
-
         return $this;
     }
 
@@ -233,7 +224,6 @@ class Figure
                 $comment->setFigure(null);
             }
         }
-
         return $this;
     }
 
@@ -251,7 +241,6 @@ class Figure
             $this->photos[] = $photo;
             $photo->setFigure($this);
         }
-
         return $this;
     }
 
@@ -264,7 +253,6 @@ class Figure
                 $photo->setFigure(null);
             }
         }
-
         return $this;
     }
 
@@ -282,7 +270,6 @@ class Figure
             $this->videos[] = $video;
             $video->setFigure($this);
         }
-
         return $this;
     }
 
@@ -295,7 +282,6 @@ class Figure
                 $video->setFigure(null);
             }
         }
-
         return $this;
     }
 

@@ -7,6 +7,7 @@ use App\Entity\Photo;
 use App\Entity\Video;
 use App\Form\PhotoType;
 use App\Form\VideoType;
+use App\Services\ImageUploadHelper;
 use App\Services\UnlinkFile;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,23 +43,19 @@ class MediaController extends AbstractController
             $imageFile = $photoForm->get('file')->getData(); //from PhotoType Filetype
 
             if ($imageFile) {
-                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-
-                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $uploadHelper = new ImageUploadHelper();
+                $newImageName = $uploadHelper->imageUploadTest($imageFile, $photo, 'setFilename');
 
                 // Move the file to the directory where pictures of figures are stored
                 try {
                     $imageFile->move(
                         $this->getParameter('figures_directory'),
-                        $newFilename
+                        $newImageName
                     );
                 } catch (FileException $e) {
                     return new Response("Une erreur a été détectée");
                 }
 
-                // updates the 'picture' field property to store the jpeg file name
-                // instead of its contents
-                $photo->setFilename($newFilename);
             }
             $entityManager->persist($photo);
             $entityManager->flush();
@@ -124,28 +121,25 @@ class MediaController extends AbstractController
             $imageFile = $form->get('file')->getData(); //from PhotoType Filetype
 
             if ($imageFile) {
-                $imageFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $photoName = $photo->getFilename();
+                $delPhoto = new UnlinkFile($photoName);
+                $delPhoto->delFile();
 
-                $newFilename = $imageFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $uploadHelper = new ImageUploadHelper();
+                $newImageName = $uploadHelper->imageUploadTest($imageFile, $photo, 'setFilename');
 
                 // Move the file to the directory where pictures of figures are stored
                 try {
                     $imageFile->move(
                         $this->getParameter('figures_directory'),
-                        $newFilename
+                        $newImageName
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                     return new Response("Une erreur a été détectée");
                 }
 
-                $photoName = $photo->getFilename();
-                $delPhoto = new UnlinkFile($photoName);
-                $delPhoto->delFile();
 
-                // updates the 'picture' field property to store the jpeg file name
-                // instead of its contents
-                $photo->setFilename($newFilename);
             }
             $entityManager->persist($photo);
             $entityManager->flush();

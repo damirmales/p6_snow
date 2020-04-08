@@ -43,10 +43,8 @@
             <div class="row justify-content-center">
                 {% for photo in photos %}
                     {% if photo.filename %}
-
                         <div class="grid-item-photo">
                             <div class="card border-primary mx-2 mb-3 flex-fill">
-
                                 <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
                                      alt="Figure image cap">
                                 <div class="card-body">
@@ -132,7 +130,6 @@
                         <h3> Informations </h3>
                         <p>Groupe : {{ fig.figGroup }}, Date de création : {{ fig.createDate|date('d-m-Y') }}, date de
                             mise à jour: {{ fig.updateDate|date('d-m-Y') }}</p>
-
                     </div>
                 </div>
                 <!-- description zone -->
@@ -143,7 +140,6 @@
                             <p>{{ fig.description }}</p>
                         </div>
                     </div>
-
                 </div>
 
                 <!--**** Comments zone *****-->
@@ -159,7 +155,6 @@
                 <!-- Add a Comment -->
                 <div class="row mt-4">
                     <div class="col">
-
                         <div>
                             {% if app.user %}
                                 {{ form_start(form) }}
@@ -180,7 +175,7 @@
                 <div class="row mt-4">
                     <div class="col">
                         <h3>Les commentaires reçus</h3>
-                        <table class="table">
+                        <table class="table-striped">
                             <thead>
                             <tr>
                                 <th>Auteur</th>
@@ -198,7 +193,8 @@
                                                     src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
                                                     alt="{{ comment.figure.title }}">
                                         </td>
-                                        <td data-label="Message">{{ comment.content }}</td>
+                                        <td class="commentContent" data-label="Message"
+                                            style="width: 350px">{{ comment.content }}</td>
                                         <td data-label="Date">{{ comment.createDate|date('d-m-Y H:i:s') }}</td>
                                     </tr>
                                 {% endfor %}

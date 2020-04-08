@@ -14,8 +14,6 @@ class PhotoType extends AbstractType
     {
         $builder
             ->add('title')
-            //  ->add('url')
-
             ->add('file', FileType::class, [
                 'label' => 'Photo en rapport avec la figure',
                 'attr' => ['placeholder' => 'Télécharger une photo'],
