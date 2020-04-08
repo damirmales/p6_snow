@@ -139,7 +139,6 @@ class MediaController extends AbstractController
                     return new Response("Une erreur a été détectée");
                 }
 
-
             }
             $entityManager->persist($photo);
             $entityManager->flush();
