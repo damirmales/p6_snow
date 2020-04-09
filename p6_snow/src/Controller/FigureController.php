@@ -45,7 +45,7 @@ class FigureController extends AbstractController
             //TODO: factorisez l'upload des photos
             if ($imageFile) {
                 $uploadHelper = new ImageUploadHelper();
-                $newImageName = $uploadHelper->imageUploadTest($imageFile, $figure, 'setFeatureImagesta');
+                $newImageName = $uploadHelper->imageUploadTest($imageFile, $figure, 'setFeatureImage');
                 // Move the file to the directory where pictures of figures are stored
                 try {
                     $imageFile->move(

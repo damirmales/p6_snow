@@ -172,7 +172,6 @@ img {
         margin-bottom: 1rem;
     }
 
-
 }
 
 #loadMoreFigBtn, #loadMoreVidBtn {
@@ -266,5 +265,5 @@ thead {
 
 
 .videoFigure {
-    max-width: 200px;
+    /*max-width: 200px;*/
 }
