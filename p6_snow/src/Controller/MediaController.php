@@ -218,8 +218,9 @@ class MediaController extends AbstractController
         $slug = $video->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
         $entityManager->remove($video);
         $entityManager->flush();
+
         $this->addFlash("success", "Suppression de la vidéo effectuée");
-        
+
         return $this->redirectToRoute('page_figure', ['slug' => $slug]);
     }
 

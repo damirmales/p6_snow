@@ -27,7 +27,7 @@ class Figure
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="4",minMessage="Le titre doit contenir au moins 4 caractères")
-     * @Assert\Regex(pattern="/[a-zA-Z]+/",
+     * @Assert\Regex(pattern="/^[^0-9].[a-zA-Z^'\x22].[^'\x22]+$/",
      *      message="Le titre avec uniquement des lettres de l'alphabet")
      */
     private $title;
@@ -100,7 +100,9 @@ class Figure
      */
     public function defineSlug() // linked to HasLifecycleCallbacks
     {
-        $this->setSlug('snowboard' . '-' . 'figure' . '-' . $this->getTitle());
+        $trimStr = $this->trimSpecialChars($this->getTitle());
+        $replaceSpace = (str_replace(' ', '-', $trimStr));
+        $this->setSlug('snowboard' . '-' . 'figure' . '-' . $replaceSpace);
     }
 
     public function getId()
@@ -285,5 +287,26 @@ class Figure
         return $this;
     }
 
+    public function trimSpecialChars($text)
+    {
+        $char = array(
+            '/[áàâãªä]/u' => 'a',
+            '/[ÁÀÂÃÄ]/u' => 'A',
+            '/[ÍÌÎÏ]/u' => 'I',
+            '/[íìîï]/u' => 'i',
+            '/[éèêë]/u' => 'e',
+            '/[ÉÈÊË]/u' => 'E',
+            '/[óòôõºö]/u' => 'o',
+            '/[ÓÒÔÕÖ]/u' => 'O',
+            '/[úùûü]/u' => 'u',
+            '/[ÚÙÛÜ]/u' => 'U',
+            '/ç/' => 'c',
+            '/Ç/' => 'C',
+            '/ñ/' => 'n',
+            '/Ñ/' => 'N',
+
+        );
+        return preg_replace(array_keys($char), array_values($char), $text);
+    }
 
 }

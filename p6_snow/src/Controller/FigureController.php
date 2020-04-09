@@ -145,9 +145,12 @@ class FigureController extends AbstractController
         $formCreateFig->handleRequest($request);
 
         if ($formCreateFig->isSubmitted() && $formCreateFig->isValid()) {
+            
             $fig->setFeatureImage('figure_default.jpeg');
             $fig->setCreateDate(new DateTime('now'));
             $fig->setEditor($this->getUser()); // available because user is connected
+            $fig->setTitle(mb_strtolower($formCreateFig->getData()->getTitle()));
+
 
             //-------- Manage the field devoted to upload default picture ----------------
             $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype
