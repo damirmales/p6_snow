@@ -80,7 +80,7 @@ div label {
     font-style: italic;
 }
 
-.form-group > label {
+.form-group > label, form > label {
     font-weight: bold;
 }
 

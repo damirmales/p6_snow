@@ -5,10 +5,12 @@
 {% block body %}
 
     <div class="container mt-4">
-        <div class="row justify-content-center">
+        <div class="row m-1 justify-content-center">
             <div class=" p-2 updatePhoto">
 
-                <div class="figEditTitle m-2"><h1>Ajout de photo pour la figure {{ figTitle }}</h1></div>
+                <div class="figEditTitle m-3">
+                    <h1>Ajout de photo pour la figure {{ figTitle }}</h1>
+                </div>
                 {{ form_start(form) }}
                 {{ form_label(form.title, 'Titre de la photo') }}
                 {{ form_widget(form.title, {'attr':{'placeholder':'Titre de la photo'}}) }}
