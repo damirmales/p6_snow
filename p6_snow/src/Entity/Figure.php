@@ -27,8 +27,9 @@ class Figure
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="4",minMessage="Le titre doit contenir au moins 4 caractères")
-     * @Assert\Regex(pattern="/^[^0-9].[a-zA-Z^'\x22].[^'\x22]+$/",
-     *      message="Le titre avec uniquement des lettres de l'alphabet")
+     * @Assert\Regex(pattern="/^[^0-9][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ^'\x22][^'\x22&)(]+$/",
+     *      message="Le titre avec uniquement des lettres de l'alphabet",
+     *     )
      */
     private $title;
 
@@ -96,7 +97,7 @@ class Figure
 
     /**
      * @ORM\PrePersist()
-     * @ORM\PreUpdate()     *
+     * @ORM\PreUpdate()
      */
     public function defineSlug() // linked to HasLifecycleCallbacks
     {
@@ -304,7 +305,7 @@ class Figure
             '/Ç/' => 'C',
             '/ñ/' => 'n',
             '/Ñ/' => 'N',
-
+            '/&/' => '',
         );
         return preg_replace(array_keys($char), array_values($char), $text);
     }

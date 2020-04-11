@@ -26,14 +26,14 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min = 3,max = 55,minMessage = "Prénom doit avoir un minimum de caractères 3 ", maxMessage = "Prénom doit avoir un maximum de caractères 55")
-     * @Assert\Regex(pattern="/^[^0-9].[a-zA-Z^'\x22].[^'\x22]+$/", message="Le prénom avec uniquement des lettres de l'alphabet")
+     * @Assert\Regex(pattern="/^[^0-9][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ^'\x22][^'\x22&)(]+$/", message="Le prénom avec uniquement des lettres de l'alphabet")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min = 3,max = 55,minMessage = "Nom doit avoir un minimum de caractères 3 ", maxMessage = "Nom doit avoir un maximum de caractères 55")
-     * @Assert\Regex(pattern="/^[^0-9].[a-zA-Z^'\x22].[^'\x22]+$/", message="Le nom avec uniquement des lettres de l'alphabet")
+     * @Assert\Regex(pattern="/^[^0-9][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ^'\x22][^'\x22&)(]+$/", message="Le nom avec uniquement des lettres de l'alphabet")
      */
     private $lastname;
 
@@ -66,7 +66,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min = 3,max = 40,minMessage = "Pseudo doit avoir un minimum de caractères 3 ", maxMessage = "Pseudo doit avoir un mximum de caractères 40")
-     * @Assert\Regex(pattern="/^[^0-9].[a-zA-Z^'\x22].[^'\x22]+$/", message="Le pseudo ne doit pas être un nombre ou débuter par un nombre")
+     * @Assert\Regex(pattern="/^[^0-9][a-zA-Zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ^'\x22][^'\x22&)(]+$/", message="Le nom avec uniquement des lettres de l'alphabet")
      */
     private $username;
 

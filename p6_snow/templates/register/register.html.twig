@@ -9,7 +9,7 @@
                 <h1>Inscription</h1>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row mt-4 mb-3 justify-content-center">
             {% for message in app.flashes('warning') %}
                 <div class="alert alert-warning">
                     {{ message }}
@@ -20,7 +20,8 @@
                     {{ message }}
                 </div>
             {% endfor %}
-
+        </div>
+        <div class="row mx-4 mb-3 justify-content-center">
             {{ form_start(form) }}
 
             {{ form_widget(form) }}

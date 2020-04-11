@@ -24,14 +24,13 @@
             </div>
         {% endif %}
 
-
         <!--*********** Trigger modal  when button delete figure  is clicked ****************-->
         {{ include('includes/modal.html.twig') }}
 
         <div class="row mt-4 justify-content-center">
             <div class="col-md-3 justify-content-center">
                 {% for message in app.flashes('success') %}
-                    <div class="alert alert-success">
+                    <div class="alert alert-success text-center">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -41,24 +40,33 @@
         <!-- Portfolio Gallery pictures -->
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showPhotosCards">
             <div class="row justify-content-center">
-                {% for photo in photos %}
-                    {% if photo.filename %}
-                        <div class="grid-item-photo">
-                            <div class="card border-primary mx-2 mb-3 flex-fill">
-                                <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
-                                     alt="Figure image cap">
-                                <div class="card-body">
-                                    <h4 class="card-title">{{ photo.title }}</h4>
-                                </div>
+                <div class="col-12">
+                    {% if photos %}
+                        <h3 class="text-center">Photos</h3>
+                        <div class="row justify-content-center">
+                            {% for photo in photos %}
+                                {% if photo.filename %}
+                                    <div class="row mx-1 justify-content-center">
+                                        <div class="grid-item-photo">
+                                            <div class="card border-primary mx-2 mb-3 flex-fill">
+                                                <img class="card-img-top"
+                                                     src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
+                                                     alt="Figure image cap">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">{{ photo.title }}</h4>
+                                                </div>
 
-                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
                         </div>
-
                     {% endif %}
-                {% endfor %}
+                </div>
             </div>
             {% if photos|length > 4 %}
-
                 <div class=" row mt-4 justify-content-center">
                     <div class="col-md-3 align-items-center">
                         <button type="button" id="loadMoreFigBtn" title="Plus de photos"
@@ -80,29 +88,37 @@
         <!-- Portfolio videos -->
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showVideosCards">
             <!-- Afficher les vidéos si existantes -->
-            {% if videos %}
-                <div class="row mt-4 justify-content-center">
-                    {% for video in videos %}
-                        <div class="grid-item-video">
-                            <div class="card border-primary align-items-center">
+            <div class="row justify-content-center">
+                <div class="col">
+                    {% if videos %}
+                        <h3 class="text-center">Vidéos</h3>
 
-                                <div class="embed-responsive embed-responsive-16by9 videoFigure">
+                        <div class="row mt-4 justify-content-center">
+                            {% for video in videos %}
+                                <div class="mx-2 grid-item-video">
+                                    <div class="card border-primary align-items-center">
 
-                                    <iframe class="embed-responsive-item" width="200" height="200"
-                                            src="{{ video.url }}?controls=0" frameborder="0"
-                                            allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
-                                            allowfullscreen></iframe>
+                                        <div class="embed-responsive embed-responsive-16by9 videoFigure">
+
+                                            <iframe class="embed-responsive-item" width="200" height="200"
+                                                    src="{{ video.url }}?controls=0" frameborder="0"
+                                                    allow="accelerometer; autoplay; encrypted-photo; gyroscope; picture-in-picture"
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ video.title }}</h4>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">{{ video.title }}</h4>
-                                </div>
-
-                            </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
-                </div>
 
-            {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+
             {% if videos|length > 4 %}
                 <div class=" row mt-4">
                     <div class="col-md-6">
@@ -126,17 +142,21 @@
             <div class="col-md-6">
                 <!-- dates and group-->
                 <div class="row mt-4">
-                    <div class="col">
-                        <h3> Informations </h3>
-                        <p>Groupe : {{ fig.figGroup }}, Date de création : {{ fig.createDate|date('d-m-Y') }}, date de
-                            mise à jour: {{ fig.updateDate|date('d-m-Y') }}</p>
+                    <div class="col-12">
+                        <h3 class="text-center"> Informations </h3>
+                        <div class="row justify-content-center">
+                            <p>Groupe : {{ fig.figGroup }},</p>
+                            <p>Date de création : {{ fig.createDate|date('d-m-Y') }},</p>
+                            <p>date de
+                                mise à jour: {{ fig.updateDate|date('d-m-Y') }}</p>
+                        </div>
                     </div>
                 </div>
                 <!-- description zone -->
                 <div class="row mt-4">
                     <div class="col">
-                        <h3> Description </h3>
-                        <div class="description">
+                        <h3 class="text-center"> Description </h3>
+                        <div class=" row description justify-content-center">
                             <p>{{ fig.description }}</p>
                         </div>
                     </div>
@@ -153,9 +173,9 @@
                     </div>
                 </div>
                 <!-- Add a Comment -->
-                <div class="row mt-4">
+                <div class="row mt-4 justify-content-center">
                     <div class="col">
-                        <div>
+                        <div class="row justify-content-center">
                             {% if app.user %}
                                 {{ form_start(form) }}
                                 <h3>{{ form_row(form.content,{'label':'Votre commentaire'}) }}</h3>
@@ -171,21 +191,21 @@
                 </div>
 
                 <!-- Comment already available-->
+                {% if fig.comments|length > 0 %}
+                    <div class="row mt-4 justify-content-center">
+                        <div class="col">
+                            <h3>Les commentaires reçus</h3>
+                            <table class="table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Auteur</th>
+                                    <th>Avatar</th>
+                                    <th>Message</th>
+                                    <th>Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                <div class="row mt-4">
-                    <div class="col">
-                        <h3>Les commentaires reçus</h3>
-                        <table class="table-striped">
-                            <thead>
-                            <tr>
-                                <th>Auteur</th>
-                                <th>Avatar</th>
-                                <th>Message</th>
-                                <th>Date</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% if fig.comments|length > 0 %}
                                 {% for comment in comments %}
                                     <tr>
                                         <td data-label="Auteur">{{ comment.author.firstname }} {{ comment.author.lastname }}</td>
@@ -198,41 +218,42 @@
                                         <td data-label="Date">{{ comment.createDate|date('d-m-Y H:i:s') }}</td>
                                     </tr>
                                 {% endfor %}
-                            {% endif %}
-                            </tbody>
-                        </table>
-                        <div class="d-flex justify-content-center">
-                            <nav aria-label="Comments navigation block">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" {% if numPage > 1 %}
 
-                                           href="{{ path('page_figure',{'slug':fig.slug,'page':numPage-1}) }}"
-                                           {% endif %}aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span class="sr-only">Previous </span>
-                                        </a>
-                                    </li>
-                                    {% if pagesOfComments > 0 %}
-                                        {% for i in 1..pagesOfComments %}
-                                            <li class="page-item  {% if numPage == i %} active{% endif %} "><a
-                                                        class="page-link"
-                                                        href="{{ path('page_figure',{'slug':fig.slug,'page':i}) }}">{{ i }}</a>
-                                            </li>
-                                        {% endfor %}
-                                    {% endif %}
-                                    <li class="page-item ">
-                                        <a class="page-link"{% if numPage < pagesOfComments %} href="{{ path('page_figure',{'slug':fig.slug,'page':numPage+1}) }}"
-                                                {% endif %} aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div> <!-- block pagination comments -->
-                    </div>
-                </div><!-- row -->
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-center">
+                                <nav aria-label="Comments navigation block">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" {% if numPage > 1 %}
+
+                                               href="{{ path('page_figure',{'slug':fig.slug,'page':numPage-1}) }}"
+                                               {% endif %}aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous </span>
+                                            </a>
+                                        </li>
+                                        {% if pagesOfComments > 0 %}
+                                            {% for i in 1..pagesOfComments %}
+                                                <li class="page-item  {% if numPage == i %} active{% endif %} "><a
+                                                            class="page-link"
+                                                            href="{{ path('page_figure',{'slug':fig.slug,'page':i}) }}">{{ i }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+                                        <li class="page-item ">
+                                            <a class="page-link"{% if numPage < pagesOfComments %} href="{{ path('page_figure',{'slug':fig.slug,'page':numPage+1}) }}"
+                                                    {% endif %} aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div> <!-- block pagination comments -->
+                        </div>
+                    </div><!-- row -->
+                {% endif %}
             </div>
         </div>
     </div>

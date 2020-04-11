@@ -5,9 +5,9 @@
 {% form_theme form _self %} {#  permet de faire reference aux formulaires du CollectionType#}
 {% block body %}
 
-    <div class="container mt-4 mb-4">
+    <div class="container mt-4 mb-4 px-4">
 
-        <div class="row justify-content-center">
+        <div class="row mx-4 px-4 justify-content-center">
             {% for message in app.flashes('warning') %}
                 <div class="alert alert-warning">
                     {{ message }}
@@ -18,11 +18,11 @@
                     {{ message }}
                 </div>
             {% endfor %}
-            <div class="title">
+            <div class="title text-center">
                 <h1>Ajout d'une nouvelle figure</h1>
             </div>
         </div>
-        <div class="row mt-5 justify-content-center">
+        <div class="row mt-5 mx-4 justify-content-center">
             {{ form_start(form) }}
             <div>{{ form_row(form.title,{"label":"Nom de la figure (caractères alphabétiques)","attr":{ "placeholder":"Nom de la figure"}}) }}</div>
             <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
@@ -41,7 +41,7 @@
 {% block _create_figure_photos_widget %}
     <p>Ajoutez des photos</p>
     {{ form_widget(form) }}
-    <div class="form-group">
+    <div class="form-group mx-4">
         <div class="row">
             <button type="button" id="add-photo" class="btn btnAddMedia">Ajouter une photo</button>
         </div>
@@ -77,7 +77,7 @@
 {% block _create_figure_videos_widget %}
     <p>Ajoutez des vidéos</p>
     {{ form_widget(form) }}
-    <div class="form-group">
+    <div class="form-group mx-4">
         <div class="row">
             <button type="button" id="add-video" class="btn btnAddMedia">Ajouter une vidéo</button>
         </div>

@@ -8,7 +8,7 @@
 <body onload="initGridItem(4)">
 {% endblock %}
 
-{% form_theme form _self %} {#  #}
+{# {% form_theme form _self %}   #}
 
 {% block body %}
     <div class="container mt-4">
@@ -65,10 +65,11 @@
              id="showPhotosCards">
             <!-- Afficher les photos si existantes -->
             {% if photos %}
+                <h3 class="text-center">Photos</h3>
                 <div class="row justify-content-center">
                     {% for photo in photos %}
                         {% if photo.filename %}
-                            <div class="col-12 col-lg-3 col-md-3 grid-item-photo">
+                            <div class="mx-2 grid-item-photo">
                                 <div class="card border-primary mb-3 mt-3 align-items-center">
                                     <img class="card-img-top" src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
                                          alt="Figure image cap">
@@ -117,10 +118,11 @@
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showVideosCards">
             <!-- Afficher les vidéos si existantes -->
             {% if videos %}
+                <h3 class="text-center">Vidéos</h3>
                 <div class="row mt-4 justify-content-center">
                     {% for video in videos %}
                         {% if video.url %}
-                            <div class="grid-item-video">
+                            <div class=" mx-2 grid-item-video">
                                 <div class="card border-primary align-items-center">
 
                                     <div class="embed-responsive embed-responsive-16by9 videoFigure">
@@ -141,7 +143,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                         {% endif %}
                     {% endfor %}
@@ -173,6 +174,7 @@
                 <div>{{ form_row(form.title,{"label":"Nom de la figure","attr":{ "placeholder":"Nom de la figure"}}) }}</div>
                 <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
                 <div>{{ form_row(form.figGroup,{"label":"Groupe de la figure","attr":{ "placeholder":"Groupe de la figure"}}) }}</div>
+                {{ form_errors(form.figGroup) }}
 
                 {# {{ form_widget(form) }} #}<!-- si présent active l'affichage des sous-formulaires -->
                 <div class="row">

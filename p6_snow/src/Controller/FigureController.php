@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Figure;
+use App\Entity\Photo;
 use App\Form\CommentType;
 use App\Form\CreateFigureType;
 use App\Form\EditFigureType;
@@ -26,114 +27,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FigureController extends AbstractController
 {
-
-    /**
-     * @Route("/figure/{slug}/image-presentation", name="image_presentation")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function editFeatureimage(Figure $figure, Request $request, EntityManagerInterface $entityManager)
-    {
-
-        $form = $this->createForm(FeatureImgType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $figure->setUpdateDate(new DateTime('now'));
-            $figure->setEditor($this->getUser()); // available because user is connected
-            $imageFile = $form->get('image_presentation')->getData();
-            //TODO: factorisez l'upload des photos
-            if ($imageFile) {
-                $uploadHelper = new ImageUploadHelper();
-                $newImageName = $uploadHelper->imageUploadTest($imageFile, $figure, 'setFeatureImage');
-                // Move the file to the directory where pictures of figures are stored
-                try {
-                    $imageFile->move(
-                        $this->getParameter('figures_directory'),
-                        $newImageName
-                    );
-                } catch
-                (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                    return new Response("une erreur a été détectée");
-                }
-
-            }
-            $entityManager->persist($figure);
-            $entityManager->flush();
-            $this->addFlash("success", "Image de présentation modifiée");
-            return $this->redirectToRoute('edit_figure', [
-                'slug' => $figure->getSlug(),
-            ]);
-        }
-
-        return $this->render('figure/edit_feature_image.html.twig', [
-
-                'form' => $form->createView(),
-                'title' => $figure->getTitle(),
-            ]
-        );
-
-    }
-
-
-    /**
-     * @Route("/figure/{slug}/image-presentation/suppression", name="delete_feature_image")
-     */
-    public function deleteFeatureImage(Figure $figure, EntityManagerInterface $entityManager)
-    {
-        $imageName = $figure->getFeatureImage();
-        $delFeature = new UnlinkFile($imageName);
-        $delFeature->delFile();
-
-
-        $figure->setFeatureImage('figure_default.jpeg');
-        $entityManager->persist($figure);
-        $entityManager->flush();
-        $this->addFlash("success", "Image personnalisée supprimée, ");
-        return $this->redirectToRoute('edit_figure', [
-            'slug' => $figure->getSlug(),
-        ]);
-    }
-
-
-    /**
-     * @Route("/figure/{slug}/edit", name="edit_figure")
-     * @IsGranted({"ROLE_USER", "ROLE_ADMIN"})
-     *
-     */
-    public function editFigure(Figure $figure, Request $request, EntityManagerInterface $entityManager,
-                               PhotoRepository $photoRepository, VideoRepository $videoRepository)
-    {
-        $form = $this->createForm(EditFigureType::class, $figure);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $figure->setUpdateDate(new DateTime('now'));
-            //-------------------------------------------------------
-            $figure->setEditor($this->getUser()); // available because user is connected
-
-            $entityManager->persist($figure);
-            $entityManager->flush();
-
-            $this->addFlash("success", "Modification réussie");
-
-            return $this->redirectToRoute('page_figure', [
-                'slug' => $figure->getSlug(),
-                'photos' => $figure->getPhotos(),
-                'videos' => $figure->getVideos()
-            ]);
-        }
-
-        return $this->render('figure/edit.html.twig', [
-            'form' => $form->createView(),
-            'fig' => $figure,
-            'photos' => $photoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC')),
-            'videos' => $videoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC')),
-        ]);
-    }
-
-
     /**
      * Add a new figure
      * @Route("/figure/new", name="new_figure")
@@ -145,11 +38,12 @@ class FigureController extends AbstractController
         $formCreateFig->handleRequest($request);
 
         if ($formCreateFig->isSubmitted() && $formCreateFig->isValid()) {
-            
+
             $fig->setFeatureImage('figure_default.jpeg');
             $fig->setCreateDate(new DateTime('now'));
             $fig->setEditor($this->getUser()); // available because user is connected
-            $fig->setTitle(mb_strtolower($formCreateFig->getData()->getTitle()));
+            $fig->setTitle($fig->trimSpecialChars($formCreateFig->getData()->getTitle()));
+            $fig->setTitle(mb_strtolower($fig->getTitle()));
 
 
             //-------- Manage the field devoted to upload default picture ----------------
@@ -194,7 +88,6 @@ class FigureController extends AbstractController
                     return new Response("Une erreur a été détectée");
                 }
                 $photo->setFilename($newPhotoFilename);
-
                 $entityManager->persist($photo);
             }
 
@@ -219,6 +112,111 @@ class FigureController extends AbstractController
             'form' => $formCreateFig->createView(),
         ]);
     }
+
+
+    /**
+     * @Route("/figure/{slug}/image-presentation", name="image_presentation")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editFeatureimage(Figure $figure, Request $request, EntityManagerInterface $entityManager)
+    {
+
+        $form = $this->createForm(FeatureImgType::class, $figure);
+        $form->handleRequest($request);
+ 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $figure->setUpdateDate(new DateTime('now'));
+            $figure->setEditor($this->getUser()); // available because user is connected
+            $imageFile = $form->get('image_presentation')->getData();
+            //TODO: factorisez l'upload des photos
+            if ($imageFile) {
+                $uploadHelper = new ImageUploadHelper();
+                $newImageName = $uploadHelper->imageUploadTest($imageFile, $figure, 'setFeatureImage');
+                // Move the file to the directory where pictures of figures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('figures_directory'),
+                        $newImageName
+                    );
+                } catch
+                (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    return new Response("une erreur a été détectée");
+                }
+            }
+            $entityManager->persist($figure);
+            $entityManager->flush();
+            $this->addFlash("success", "Image de présentation modifiée");
+            return $this->redirectToRoute('edit_figure', [
+                'slug' => $figure->getSlug(),
+            ]);
+        }
+        return $this->render('figure/edit_feature_image.html.twig', [
+                'form' => $form->createView(),
+                'title' => $figure->getTitle(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/figure/{slug}/image-presentation/suppression", name="delete_feature_image")
+     */
+    public function deleteFeatureImage(Figure $figure, EntityManagerInterface $entityManager)
+    {
+        $imageName = $figure->getFeatureImage();
+        $delFeature = new UnlinkFile($imageName);
+        $delFeature->delFile();
+
+        $figure->setFeatureImage('figure_default.jpeg');
+        $entityManager->persist($figure);
+        $entityManager->flush();
+        $this->addFlash("success", "Image personnalisée supprimée, ");
+        return $this->redirectToRoute('edit_figure', [
+            'slug' => $figure->getSlug(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/figure/{slug}/edit", name="edit_figure")
+     * @IsGranted({"ROLE_USER", "ROLE_ADMIN"})
+     *
+     */
+    public function editFigure(Figure $figure, Request $request, EntityManagerInterface $entityManager,
+                               PhotoRepository $photoRepository, VideoRepository $videoRepository)
+    {
+        $form = $this->createForm(EditFigureType::class, $figure);
+        $form->handleRequest($request);
+        // dd($figure);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $figure->setUpdateDate(new DateTime('now'));
+            $figure->setDescription($form->getData()->getDescription());
+
+            $figure->setEditor($this->getUser()); // available because user is connected
+            $figure->setTitle($figure->trimSpecialChars($form->getData()->getTitle()));
+            $figure->setTitle(mb_strtolower($figure->getTitle()));
+
+            $entityManager->persist($figure);
+            $entityManager->flush();
+
+            $this->addFlash("success", "Modification réussie");
+
+            return $this->redirectToRoute('page_figure', [
+                'slug' => $figure->getSlug(),
+                'photos' => $figure->getPhotos(),
+                'videos' => $figure->getVideos()
+            ]);
+        }
+
+        return $this->render('figure/edit.html.twig', [
+            'form' => $form->createView(),
+            'fig' => $figure,
+            'photos' => $photoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC')),
+            'videos' => $videoRepository->findByFigure(['figure' => $figure], array('createdDate' => 'DESC')),
+        ]);
+    }
+
 
     /**
      * @Route("/figure/{slug}/delete", name="delete_figure")

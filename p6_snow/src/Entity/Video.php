@@ -24,7 +24,7 @@ class Video
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="4",minMessage="Le titre doit contenir au moins 4 caractères")
-     * @Assert\Regex(pattern="/^[^0-9].[a-zA-Z^'\x22].[^'\x22]+$/", message="Le nom ne doit pas être un nombre ou débuter par un nombre")
+     * @Assert\Regex(pattern="/^[^0-9][a-zA-Z0-9^'\x22][^'\x22]+$/", message="Le titre doit être à base de caractères alphabétiques")
      */
     private $title;
 
@@ -41,7 +41,7 @@ class Video
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Url(message = "Le contenu doit être une Url")
+     * @Assert\Url(message = "Le contenu doit être une Url",)
      */
     private $url;
 
