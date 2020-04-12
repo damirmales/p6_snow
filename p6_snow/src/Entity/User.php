@@ -72,13 +72,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min = 3,minMessage = "Mot de passe minimum de caractères 3 ")
+     * @Assert\Length(min = 4,minMessage = "Mot de passe minimum de caractères 4 ")
      */
     private $password;
 
     /**
      * @Assert\EqualTo(propertyPath="password", message="Confirmation de mot de passe non correcte")
-     * @Assert\Length(min = 3,minMessage = "Mot de passe minimum de caractères 3 ")
+     * @Assert\Length(min = 4,minMessage = "Mot de passe minimum de caractères 4 ")
      */
     private $repeatPassword;
 

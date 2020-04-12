@@ -28,8 +28,6 @@ class PasswordLostController extends AbstractController
 
         $form->handleRequest($request);
 
-        //get user's data with user's username
-
         $userData = $form->get('email');
         $userProvidedEmail = $userData->getViewData();
         $bodyEmailMessage = "Cliquez sur le lien pour accèder au formulaire de changement de mot de passe:";
