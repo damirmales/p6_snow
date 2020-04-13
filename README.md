@@ -15,19 +15,25 @@ Installation
 Clone or download the GitHub repository in the desired folder: :
    https://github.com/damirmales/p6_snow.git
 
+
 Configure your environment variables such as connection to the database in the .env file
+
  
 Download and install the back-end dependencies of the project with
 Composer :composer install
+
  
 To create the database, type the command below:  
  php bin/console doctrine:database:create
  
+ 
 Create the different tables of the database by applying migrations:
  php bin/console doctrine:migrations:migrate
  
+ 
 Add the ten figures’ (tricks) pictures to the directory: 
 public/uploads/figures 
+
  
 Fill the Figure table with  FigureFixtures.php : 
 php bin/console doctrine:fixtures:load --group=FigureFixtures
