@@ -49,7 +49,6 @@ class FigureController extends AbstractController
             //-------- Manage the field devoted to upload default picture ----------------
             $imageFile = $formCreateFig->get('image_base')->getData(); //from CreateFigureType Filetype
 
-
             if ($imageFile) {
                 $uploadHelper = new ImageUploadHelper();
                 $newImageName = $uploadHelper->imageUploadTest($imageFile, $fig, 'setFeatureImage');
@@ -74,8 +73,9 @@ class FigureController extends AbstractController
             foreach ($photoFile as $photo) {
                 $photo->setCreatedDate(new DateTime('now'));
                 $photo->setFigure($fig); // combine photo to the figure
-                $photoFilename = pathinfo($photo->getFile()->getClientOriginalName(), PATHINFO_FILENAME);
-                $newPhotoFilename = $photoFilename . '-' . uniqid() . '.' . $photo->getFile()->guessExtension();
+
+                $uploadHelper = new ImageUploadHelper();
+                $newPhotoFilename = $uploadHelper->imageUploadTest($photo->getFile(), $photo, 'setFilename');
 
                 // Move the file to the directory where pictures of figures are stored
                 try {
@@ -87,6 +87,7 @@ class FigureController extends AbstractController
                     // ... handle exception if something happens during file upload
                     return new Response("Une erreur a été détectée");
                 }
+
                 $photo->setFilename($newPhotoFilename);
                 $entityManager->persist($photo);
             }
@@ -123,13 +124,13 @@ class FigureController extends AbstractController
 
         $form = $this->createForm(FeatureImgType::class, $figure);
         $form->handleRequest($request);
- 
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $figure->setUpdateDate(new DateTime('now'));
             $figure->setEditor($this->getUser()); // available because user is connected
             $imageFile = $form->get('image_presentation')->getData();
-            //TODO: factorisez l'upload des photos
+
             if ($imageFile) {
                 $uploadHelper = new ImageUploadHelper();
                 $newImageName = $uploadHelper->imageUploadTest($imageFile, $figure, 'setFeatureImage');
