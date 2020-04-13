@@ -168,13 +168,14 @@
                 Montrer les vidéos
             </button>
         {% endif %}
+
         <div class="row mt-4 justify-content-center">
             <div class="col-md-6">
                 {{ form_start(form) }}
                 <div>{{ form_row(form.title,{"label":"Nom de la figure","attr":{ "placeholder":"Nom de la figure"}}) }}</div>
                 <div>{{ form_row(form.description,{"label":"Description","attr":{ "placeholder":"Description"}}) }}</div>
                 <div>{{ form_row(form.figGroup,{"label":"Groupe de la figure","attr":{ "placeholder":"Groupe de la figure"}}) }}</div>
-                {{ form_errors(form.figGroup) }}
+                {{ form_errors(form) }}
 
                 {# {{ form_widget(form) }} #}<!-- si présent active l'affichage des sous-formulaires -->
                 <div class="row">

@@ -24,7 +24,7 @@ class FigureFixtures extends Fixture //implements DependentFixtureInterface
 
         $groupFig = ['slide', 'grab', 'rotation', 'flip'];
 
-        for ($i = 0; $i < 2; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $titre = $faker->word;
             $description = $faker->sentence(10);
 

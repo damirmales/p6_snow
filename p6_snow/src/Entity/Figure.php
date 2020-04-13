@@ -72,7 +72,7 @@ class Figure
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="figure", orphanRemoval=true)
-     * @Assert\Length(min="50", minMessage="Doit contenir une description de 50 caractères minimum")
+     * @Assert\Valid()
      */
     private $comments;
 
@@ -89,7 +89,6 @@ class Figure
 
     public function __construct()
     {
-
         $this->comments = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->videos = new ArrayCollection();

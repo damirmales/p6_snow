@@ -53,13 +53,12 @@ class PasswordLostController extends AbstractController
                     $entityManager->persist($user);
                     $entityManager->flush();
 
-                    $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
                 } else {
                     return new Response('Token non valide.');
                 }
-            } else {
-                $this->addFlash('warning', 'Cet email ne correspond pas à un utilisateur inscrit');
             }
+            $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
+
 
             // return $this->redirectToRoute('reset_password');
 

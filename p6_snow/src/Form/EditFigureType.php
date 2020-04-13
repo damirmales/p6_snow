@@ -30,7 +30,7 @@ class EditFigureType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Figure::class,
-            'validation_groups' => false,
+            //'validation_groups' => false,
         ]);
     }
 }

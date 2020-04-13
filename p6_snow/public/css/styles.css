@@ -164,9 +164,6 @@ img {
         background-color: rgba(0, 191, 255, 0.4);
     }
 
-    td:nth-child(odd) {
-
-    }
 
     tr {
         margin-bottom: 1rem;
@@ -195,9 +192,6 @@ img {
     color: #33739E;
 }
 
-.loginForm {
-
-}
 
 /* ******** scroll top button *********** */
 #myBtn {
@@ -266,4 +260,8 @@ thead {
 
 .videoFigure {
     /*max-width: 200px;*/
+}
+
+.foo {
+    font-weight: bold;
 }
