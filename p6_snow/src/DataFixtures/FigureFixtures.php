@@ -6,10 +6,11 @@ use App\Entity\Figure;
 use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
-class FigureFixtures extends Fixture //implements DependentFixtureInterface
+class FigureFixtures extends Fixture implements DependentFixtureInterface
 {
 
     public function load(ObjectManager $entityManager)
@@ -24,7 +25,7 @@ class FigureFixtures extends Fixture //implements DependentFixtureInterface
 
         $groupFig = ['slide', 'grab', 'rotation', 'flip'];
 
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $titre = $faker->word;
             $description = $faker->sentence(10);
 
@@ -44,10 +45,10 @@ class FigureFixtures extends Fixture //implements DependentFixtureInterface
     /**
      * @inheritDoc
      */
-    /* public function getDependencies()
-     {
-         return array(
-             UserFixtures::class,
-         );
-     }*/
+    public function getDependencies()
+    {
+        return array(
+            UserFixtures::class,
+        );
+    }
 }

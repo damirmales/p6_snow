@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -24,7 +25,7 @@ class UserFixtures extends Fixture
 
         $userID = [];
 
-        for ($i = 1; $i < 5; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $prenom = $faker->firstName();
             $nom = $faker->lastName;
             $email = $faker->email;
@@ -47,4 +48,5 @@ class UserFixtures extends Fixture
 
         $manager->flush();
     }
+
 }

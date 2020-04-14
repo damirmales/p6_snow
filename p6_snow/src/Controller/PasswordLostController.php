@@ -25,7 +25,6 @@ class PasswordLostController extends AbstractController
         $newPasswordEntity = new PasswordLost(); //create an entity which is not registered in the database
 
         $form = $this->createForm(PasswordLostType::class, $newPasswordEntity);
-
         $form->handleRequest($request);
 
         $userData = $form->get('email');
@@ -57,6 +56,7 @@ class PasswordLostController extends AbstractController
                     return new Response('Token non valide.');
                 }
             }
+
             $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
 
             return $this->redirectToRoute('reset_password');

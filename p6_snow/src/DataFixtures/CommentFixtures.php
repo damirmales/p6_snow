@@ -27,10 +27,9 @@ class CommentFixtures extends Fixture
             array_push($fig, $figure);
         }
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 2; $i++) {
 
             $content = $faker->sentence(10);
-
             $comment = new Comment();
             $comment->setContent($content)
                 ->setFigure($fig[array_rand($fig)])
@@ -42,5 +41,14 @@ class CommentFixtures extends Fixture
         $manager->flush();
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getDependencies()
+    {
+        return array(
+            FigureFixtures::class, UserFixtures::class
+        );
+    }
 
 }

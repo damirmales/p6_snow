@@ -61,7 +61,7 @@ class MediaController extends AbstractController
             $entityManager->persist($photo);
             $entityManager->flush();
 
-            $this->addFlash("success", "Ajout de média réussi");
+            $this->addFlash("success", "Ajout de photo réussi");
             return $this->redirectToRoute('page_figure', ['slug' => $figure->getSlug()]);
         }
         return $this->render('media/add_photo.html.twig', [
