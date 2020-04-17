@@ -10,21 +10,31 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
     private $encoder;
 
+    /**
+     * UserFixtures constructor.
+     * @param UserPasswordEncoderInterface $encoder
+     */
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }
 
 
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('fr-FR');
 
         $userID = [];
 
-        for ($i = 1; $i < 5; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $prenom = $faker->firstName();
             $nom = $faker->lastName;
             $email = $faker->email;
@@ -41,10 +51,12 @@ class UserFixtures extends Fixture
                 ->setPicture("default-avatar.png")
                 ->setToken(0)
                 ->setUsername($pseudo)
-                ->setPassword($this->encoder->encodePassword($user, "toto"));
+                ->setPassword($this->encoder->encodePassword($user, "trick"));
             $manager->persist($user);
+           
         }
 
         $manager->flush();
     }
+
 }

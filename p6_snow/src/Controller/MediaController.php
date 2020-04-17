@@ -38,6 +38,7 @@ class MediaController extends AbstractController
             $photo->setCreatedDate(new DateTime('now'));
             $photo->setFigure($figure);
 
+
 //TODO: factorisez l'upload des photos
             //-------- Manage the field devoted to upload default picture ----------------
             $imageFile = $photoForm->get('file')->getData(); //from PhotoType Filetype
@@ -60,7 +61,7 @@ class MediaController extends AbstractController
             $entityManager->persist($photo);
             $entityManager->flush();
 
-            $this->addFlash("success", "Ajout de média réussi");
+            $this->addFlash("success", "Ajout de photo réussi");
             return $this->redirectToRoute('page_figure', ['slug' => $figure->getSlug()]);
         }
         return $this->render('media/add_photo.html.twig', [
@@ -101,7 +102,7 @@ class MediaController extends AbstractController
 
 
     /**
-     * @Route("/figure/{slug}/photo/{id}", name="edit_photo")
+     * @Route("/figure/{slug}/photo/{title}", name="edit_photo")
      * @IsGranted("ROLE_USER")
      *
      */
@@ -159,7 +160,7 @@ class MediaController extends AbstractController
     }
 
     /**
-     * @Route("/photo/{id}/delete", name="delete_photo")
+     * @Route("/photo/{title}/delete", name="delete_photo")
      * @IsGranted("ROLE_USER")
      */
     public function deletePhoto(Photo $photo, EntityManagerInterface $entityManager)
@@ -172,12 +173,13 @@ class MediaController extends AbstractController
 
         $entityManager->remove($photo);
         $entityManager->flush();
+        $this->addFlash("success", "Suppression de la photo effectuée");
 
         return $this->redirectToRoute('page_figure', ['slug' => $slug]);
     }
 
     /**
-     * @Route("/figure/{slug}/video/{id}", name="edit_video")
+     * @Route("/figure/{slug}/video/{title}", name="edit_video")
      * @IsGranted("ROLE_USER")
      *
      */
@@ -193,6 +195,8 @@ class MediaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($video);
             $entityManager->flush();
+
+            $this->addFlash("success", "Mise à jour de la vidéo effectuée");
             return $this->redirectToRoute('page_figure', ['slug' => $slug]);
         }
 
@@ -206,7 +210,7 @@ class MediaController extends AbstractController
 
 
     /**
-     * @Route("/video/{id}/delete", name="delete_video")
+     * @Route("/video/{title}/delete", name="delete_video")
      * @IsGranted("ROLE_USER")
      */
     public function deleteVideo(Video $video, EntityManagerInterface $entityManager)
@@ -214,6 +218,8 @@ class MediaController extends AbstractController
         $slug = $video->getFigure()->getSlug(); //Get figure's slug to send it to redirectToRoute()
         $entityManager->remove($video);
         $entityManager->flush();
+
+        $this->addFlash("success", "Suppression de la vidéo effectuée");
 
         return $this->redirectToRoute('page_figure', ['slug' => $slug]);
     }

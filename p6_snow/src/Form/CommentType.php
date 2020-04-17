@@ -12,10 +12,7 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content')/*  ->add('createDate')
-            ->add('author', TextType::class)
-            ->add('figure') */
-        ;
+            ->add('content');
     }
 
     public function configureOptions(OptionsResolver $resolver)

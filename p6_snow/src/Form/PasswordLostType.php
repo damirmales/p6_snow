@@ -20,6 +20,7 @@ class PasswordLostType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => PasswordLost::class,
+            // 'validation_groups' => false,
         ]);
     }
 }

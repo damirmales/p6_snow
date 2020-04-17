@@ -6,8 +6,14 @@ namespace App\Services;
 
 class RandomGeneratedValues
 {
+    /**
+     * @var
+     */
     private $randomValue;
 
+    /**
+     * @throws \Exception
+     */
     public function generateRandomString()
     {
 

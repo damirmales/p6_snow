@@ -43,7 +43,7 @@ class SendEmail extends AbstractController
                     ]),
                 'text/html'
             );
-        //return $this->getMessage();
+
         $this->mailer->send($message);
 
     }

@@ -25,6 +25,10 @@
     border-bottom: 0;
 }
 
+.card-img-top {
+    max-height: 150px;
+}
+
 .card-picto {
     width: 60px;
     padding: 5px;
@@ -38,18 +42,15 @@
     padding: 5px;
 }
 
-.card-img-top {
-    max-height: 150px;
+h4.card-title {
+    word-wrap: break-word;
+    padding: 0 4px;
 }
 
 .col {
     border-radius: 2px;
 }
 
-
-div label {
-
-}
 
 .description, .commentContent {
     word-wrap: break-word; /*empêche le texte de dépasser hors de la div*/
@@ -80,7 +81,7 @@ div label {
     font-style: italic;
 }
 
-.form-group > label {
+.form-group > label, form > label, .col-form-label {
     font-weight: bold;
 }
 
@@ -130,7 +131,7 @@ img {
     color: whitesmoke;
 }
 
-/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+/* If the screen size is 640px wide or less */
 @media screen and (max-width: 640px) {
     .jumbotron > h1 {
         font-size: 50px;
@@ -164,14 +165,10 @@ img {
         background-color: rgba(0, 191, 255, 0.4);
     }
 
-    td:nth-child(odd) {
-
-    }
 
     tr {
         margin-bottom: 1rem;
     }
-
 
 }
 
@@ -196,9 +193,6 @@ img {
     color: #33739E;
 }
 
-.loginForm {
-
-}
 
 /* ******** scroll top button *********** */
 #myBtn {
@@ -266,5 +260,9 @@ thead {
 
 
 .videoFigure {
-    max-width: 200px;
+    /*max-width: 200px;*/
+}
+
+.foo {
+    font-weight: bold;
 }
