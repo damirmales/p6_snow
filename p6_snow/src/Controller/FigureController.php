@@ -65,7 +65,6 @@ class FigureController extends AbstractController
                 }
 
             }
-
             //-------- Manage the field devoted to upload extra figure pictures ----------------
             $photoFile = $formCreateFig->getData()->getPhotos(); //from PhotoType Filetype
 

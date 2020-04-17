@@ -76,7 +76,7 @@ class RegisterController extends AbstractController
                 $manager->persist($newUser);
                 $manager->flush();
                 $this->addFlash('success', 'Un email vous a été envoyé');
-                //return $this->redirectToRoute('home');
+                return $this->redirectToRoute('home');
             }
         }
         return $this->render('register/register.html.twig', [

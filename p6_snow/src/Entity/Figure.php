@@ -87,6 +87,9 @@ class Figure
      */
     private $videos;
 
+    /**
+     * Figure constructor.
+     */
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -105,60 +108,98 @@ class Figure
         $this->setSlug('snowboard' . '-' . 'figure' . '-' . $replaceSpace);
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * @param string $slug
+     * @return $this
+     */
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFeatureImage(): ?string
     {
         return $this->featureImage;
     }
 
+    /**
+     * @param string|null $featureImage
+     * @return $this
+     */
     public function setFeatureImage(?string $featureImage): self
     {
         $this->featureImage = $featureImage;
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     * @return $this
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFigGroup(): ?string
     {
         return $this->figGroup;
     }
 
+    /**
+     * @param string $figGroup
+     * @return $this
+     */
     public function setFigGroup(string $figGroup): self
     {
         $this->figGroup = $figGroup;
@@ -166,33 +207,54 @@ class Figure
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getCreateDate(): ?\DateTimeInterface
     {
         return $this->CreateDate;
     }
 
+    /**
+     * @param \DateTimeInterface $CreateDate
+     * @return $this
+     */
     public function setCreateDate(\DateTimeInterface $CreateDate): self
     {
         $this->CreateDate = $CreateDate;
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getUpdateDate(): ?\DateTimeInterface
     {
         return $this->updateDate;
     }
 
+    /**
+     * @param \DateTimeInterface|null $updateDate
+     * @return $this
+     */
     public function setUpdateDate(?\DateTimeInterface $updateDate): self
     {
         $this->updateDate = $updateDate;
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getEditor()
     {
         return $this->editor;
     }
 
+    /**
+     * @param $editor
+     * @return $this
+     */
     public function setEditor($editor)
     {
         $this->editor = $editor;
@@ -208,6 +270,10 @@ class Figure
         return $this->comments;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -217,6 +283,10 @@ class Figure
         return $this;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->contains($comment)) {
@@ -237,6 +307,10 @@ class Figure
         return $this->photos;
     }
 
+    /**
+     * @param Photo $photo
+     * @return $this
+     */
     public function addPhoto(Photo $photo): self
     {
         if (!$this->photos->contains($photo)) {
@@ -246,6 +320,10 @@ class Figure
         return $this;
     }
 
+    /**
+     * @param Photo $photo
+     * @return $this
+     */
     public function removePhoto(Photo $photo): self
     {
         if ($this->photos->contains($photo)) {
@@ -266,6 +344,10 @@ class Figure
         return $this->videos;
     }
 
+    /**
+     * @param Video $video
+     * @return $this
+     */
     public function addVideo(Video $video): self
     {
         if (!$this->videos->contains($video)) {
@@ -275,6 +357,10 @@ class Figure
         return $this;
     }
 
+    /**
+     * @param Video $video
+     * @return $this
+     */
     public function removeVideo(Video $video): self
     {
         if ($this->videos->contains($video)) {
@@ -287,6 +373,10 @@ class Figure
         return $this;
     }
 
+    /**
+     * @param $text
+     * @return string|string[]|null
+     */
     public function trimSpecialChars($text)
     {
         $char = array(

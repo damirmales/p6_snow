@@ -99,65 +99,106 @@ class User implements UserInterface
         $this->comments = new ArrayCollection();
     }
 
+    /**
+     * @return bool
+     */
     public function isEnabled()
     {
         return 0 !== $this->status;
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
+    /**
+     * @param string $firstname
+     * @return $this
+     */
     public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
         return $this; // permet l'enchaînement d'autres méthodes setXyz
     }
 
+    /**
+     * @return string|null
+     */
     public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
+    /**
+     * @param string $lastname
+     * @return $this
+     */
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return $this
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPicture(): ?string
     {
         return $this->picture;
     }
 
+    /**
+     * @param string|null $picture
+     * @return $this
+     */
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getRole(): array
     {
         return [$this->role];
     }
 
+    /**
+     * @param string $role
+     * @return $this
+     */
     public function setRole(string $role): self
     {
         if ($role === null) {
@@ -167,11 +208,18 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getStatus(): ?bool
     {
         return $this->status;
     }
 
+    /**
+     * @param bool $status
+     * @return $this
+     */
     public function setStatus(bool $status): self
     {
         $this->status = $status;
@@ -186,28 +234,46 @@ class User implements UserInterface
         return $this->token;
     }
 
+    /**
+     * @param string $token
+     * @return $this
+     */
     public function setToken(string $token): self
     {
         $this->token = $token;
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
 
+    /**
+     * @param string $username
+     * @return $this
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -215,11 +281,18 @@ class User implements UserInterface
     }
 
 
+    /**
+     * @return string|null
+     */
     public function getRepeatPassword(): ?string
     {
         return $this->repeatPassword;
     }
 
+    /**
+     * @param string $repeatPassword
+     * @return $this
+     */
     public function setRepeatPassword(string $repeatPassword): self
     {
         $this->repeatPassword = $repeatPassword;
@@ -289,6 +362,10 @@ class User implements UserInterface
         return $this->comments;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -299,6 +376,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->contains($comment)) {

@@ -25,6 +25,10 @@
     border-bottom: 0;
 }
 
+.card-img-top {
+    max-height: 150px;
+}
+
 .card-picto {
     width: 60px;
     padding: 5px;
@@ -38,18 +42,15 @@
     padding: 5px;
 }
 
-.card-img-top {
-    max-height: 150px;
+h4.card-title {
+    word-wrap: break-word;
+    padding: 0 4px;
 }
 
 .col {
     border-radius: 2px;
 }
 
-
-div label {
-
-}
 
 .description, .commentContent {
     word-wrap: break-word; /*empêche le texte de dépasser hors de la div*/
@@ -130,7 +131,7 @@ img {
     color: whitesmoke;
 }
 
-/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+/* If the screen size is 640px wide or less */
 @media screen and (max-width: 640px) {
     .jumbotron > h1 {
         font-size: 50px;

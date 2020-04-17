@@ -4,11 +4,14 @@
 namespace App\Services;
 
 
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\Response;
-
 class ImageUploadHelper
 {
+    /**
+     * @param $imageFile
+     * @param $entity
+     * @param $urlImageField
+     * @return string
+     */
     public function imageUploadTest($imageFile, $entity, $urlImageField)
     {
 

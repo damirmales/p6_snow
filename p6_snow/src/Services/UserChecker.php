@@ -8,10 +8,21 @@ use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class UserChecker
+ * @package App\Services
+ */
 class UserChecker implements UserCheckerInterface
 {
+    /**
+     * @var FlashBagInterface
+     */
     private $flashMessage;
 
+    /**
+     * UserChecker constructor.
+     * @param FlashBagInterface $flashBag
+     */
     public function __construct(FlashBagInterface $flashBag)
     {
         $this->flashMessage = $flashBag;

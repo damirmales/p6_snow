@@ -23,8 +23,8 @@ class Photo
 
     /**
      * @ORM\Column(type="string", length=55, unique=true)
-     * @Assert\Length(min="4",max="20",minMessage="Le titre doit contenir au moins 4 caractères,
-     * maxMessage=""Le titre doit contenir au max 20 caractères")
+     * @Assert\Length(min="4",max="15",minMessage="Le titre doit contenir au moins 4 caractères,
+     * maxMessage=""Le titre doit contenir au max 15 caractères")
      * @Assert\Regex(pattern="/^[^0-9].[a-zA-Z^'\x22].[^'\x22]+$/", message="Le titre avec uniquement des lettres de l'alphabet")
      */
     private $title;
@@ -50,16 +50,26 @@ class Photo
      */
     protected $file;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -67,11 +77,18 @@ class Photo
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getCreatedDate(): ?\DateTimeInterface
     {
         return $this->createdDate;
     }
 
+    /**
+     * @param \DateTimeInterface $createdDate
+     * @return $this
+     */
     public function setCreatedDate(\DateTimeInterface $createdDate): self
     {
         $this->createdDate = $createdDate;
@@ -79,11 +96,18 @@ class Photo
         return $this;
     }
 
+    /**
+     * @return Figure|null
+     */
     public function getFigure(): ?Figure
     {
         return $this->figure;
     }
 
+    /**
+     * @param Figure|null $figure
+     * @return $this
+     */
     public function setFigure(?Figure $figure): self
     {
         $this->figure = $figure;
@@ -91,11 +115,18 @@ class Photo
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFilename(): ?string
     {
         return $this->filename;
     }
 
+    /**
+     * @param string $filename
+     * @return $this
+     */
     public function setFilename(string $filename): self
     {
         $this->filename = $filename;

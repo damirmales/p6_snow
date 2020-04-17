@@ -113,7 +113,6 @@
                                 </div>
                             {% endfor %}
                         </div>
-
                     {% endif %}
 
                 </div>
@@ -141,116 +140,115 @@
         <div class="row justify-content-center">
             <div class="col-md-6 text-center">
                 <!-- dates and group-->
-
                 <h3 class="text-center"> Informations </h3>
-
                 <p><strong>Groupe :</strong> {{ fig.figGroup }},</p>
                 <p><strong>Date de création :</strong> {{ fig.createDate|date('d-m-Y') }},</p>
                 <p><strong>date de
                         mise à jour:</strong> {{ fig.updateDate|date('d-m-Y') }}</p>
+            </div>
+        </div>
 
-                <!-- description zone -->
+        <!-- description zone -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+                <h3 class="text-center"> Description </h3>
+                <p class="description">  {{ fig.description }}</p>
 
-                <div class="col-12">
-                    <h3 class="text-center"> Description </h3>
-
-                    <p class="description">   {{ fig.description }}</p>
-
-                </div>
-
-                <!--**** Comments zone *****-->
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-md-3">
-                        {% for message in app.flashes('comment') %}
-                            <div class="alert alert-success">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
+            </div>
+        </div>
+        <!--**** Comments zone *****-->
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-6">
+                {% for message in app.flashes('comment') %}
+                    <div class="alert alert-success text-center">
+                        {{ message }}
                     </div>
-                </div>
-                <!-- Add a Comment -->
+                {% endfor %}
+            </div>
+        </div>
 
-                {% if app.user %}
+        <!-- Add a Comment -->
+        {% if app.user %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
                     {{ form_start(form) }}
                     <h3 class="text-center">{{ form_row(form.content,{'label':'Votre commentaire'}) }}</h3>
-
                     {{ form_widget(form) }}
-                    <div class="row justify-content-center">
-                        <button type="submit" class="mb-3 btn " id="submitComment" name="submit">Envoyer votre
+                    <div class="row">
+                        <button type="submit" class="mb-3 mx-3 btn " id="submitComment" name="submit">Envoyer votre
                             commentaire
                         </button>
                     </div>
                     {{ form_end(form) }}
-                {% endif %}
-
-
-                <!-- Comment already available-->
-                {% if fig.comments|length > 0 %}
-                    <div class="row mt-4 justify-content-center">
-                        <div class="col">
-                            <h3>Les commentaires reçus</h3>
-                            <table class="table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Auteur</th>
-                                    <th>Avatar</th>
-                                    <th>Message</th>
-                                    <th>Date</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                {% for comment in comments %}
-                                    <tr>
-                                        <td data-label="Auteur">{{ comment.author.firstname }} {{ comment.author.lastname }}</td>
-                                        <td class="avatar" data-label="Avatar"><img
-                                                    src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
-                                                    alt="{{ comment.figure.title }}">
-                                        </td>
-                                        <td class="commentContent" data-label="Message"
-                                            style="width: 350px">{{ comment.content }}</td>
-                                        <td data-label="Date">{{ comment.createDate|date('d-m-Y H:i:s') }}</td>
-                                    </tr>
-                                {% endfor %}
-
-                                </tbody>
-                            </table>
-                            <div class="d-flex justify-content-center">
-                                <nav aria-label="Comments navigation block">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" {% if numPage > 1 %}
-
-                                               href="{{ path('page_figure',{'slug':fig.slug,'page':numPage-1}) }}"
-                                               {% endif %}aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                                <span class="sr-only">Previous </span>
-                                            </a>
-                                        </li>
-                                        {% if pagesOfComments > 0 %}
-                                            {% for i in 1..pagesOfComments %}
-                                                <li class="page-item  {% if numPage == i %} active{% endif %} "><a
-                                                            class="page-link"
-                                                            href="{{ path('page_figure',{'slug':fig.slug,'page':i}) }}">{{ i }}</a>
-                                                </li>
-                                            {% endfor %}
-                                        {% endif %}
-                                        <li class="page-item ">
-                                            <a class="page-link"{% if numPage < pagesOfComments %} href="{{ path('page_figure',{'slug':fig.slug,'page':numPage+1}) }}"
-                                                    {% endif %} aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div> <!-- block pagination comments -->
-                        </div>
-                    </div><!-- row -->
-                {% endif %}
+                </div>
             </div>
-        </div>
+        {% endif %}
+
+        <!-- Comment already available-->
+        {% if fig.comments|length > 0 %}
+            <div class="row mt-4 justify-content-center">
+                <div class="col-12 col-md-6 text-center">
+                    <h3>Les commentaires reçus</h3>
+                    <table class="table-striped mb-3 ">
+                        <thead>
+                        <tr>
+                            <th>Auteur</th>
+                            <th>Avatar</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for comment in comments %}
+                            <tr>
+                                <td data-label="Auteur">{{ comment.author.firstname }} {{ comment.author.lastname }}</td>
+                                <td class="avatar" data-label="Avatar"><img
+                                            src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
+                                            alt="{{ comment.figure.title }}">
+                                </td>
+                                <td class="commentContent" data-label="Message"
+                                    style="width: 350px">{{ comment.content }}</td>
+                                <td data-label="Date">{{ comment.createDate|date('d-m-Y H:i:s') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- row -->
+            <div class="d-flex justify-content-center">
+                <nav aria-label="Comments navigation block">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" {% if numPage > 1 %}
+
+                               href="{{ path('page_figure',{'slug':fig.slug,'page':numPage-1}) }}"
+                               {% endif %}aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous </span>
+                            </a>
+                        </li>
+                        {% if pagesOfComments > 0 %}
+                            {% for i in 1..pagesOfComments %}
+                                <li class="page-item  {% if numPage == i %} active{% endif %} "><a
+                                            class="page-link"
+                                            href="{{ path('page_figure',{'slug':fig.slug,'page':i}) }}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                        <li class="page-item ">
+                            <a class="page-link"{% if numPage < pagesOfComments %} href="{{ path('page_figure',{'slug':fig.slug,'page':numPage+1}) }}"
+                                    {% endif %} aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div> <!-- block pagination comments -->
+        {% endif %}
     </div>
+
 {% endblock %}
 {% block javascripts %}
 <script src={{ asset('/js/load_more.js') }}></script>
