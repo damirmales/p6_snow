@@ -30,9 +30,14 @@ To create the database, type the command below:
 Create the different tables of the database by applying migrations:
  php bin/console doctrine:migrations:migrate
  
- 
-Add the ten figures’ (tricks) pictures to the directory: 
+Add ten figures’ (tricks)  numbered from 0 to 9.jpg pictures into the directory: 
 public/uploads/figures 
+ 
+Fill the Figure table with UserFixtures.php : 
+php bin/console doctrine:fixtures:load --group=UserFixtures
+ 
+Fill the Figure table with  FigureFixtures.php : 
+php bin/console doctrine:fixtures:load --group=FigureFixtures
 
  
 Fill the Figure table with  FigureFixtures.php : 
