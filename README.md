@@ -40,6 +40,4 @@ Fill the Figure table with  FigureFixtures.php :
 php bin/console doctrine:fixtures:load --group=FigureFixtures
 
  
-Fill the Figure table with  FigureFixtures.php : 
-php bin/console doctrine:fixtures:load --group=FigureFixtures
 
