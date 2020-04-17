@@ -8,8 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ResetPassword
 {
 
-    // private $email;
-
     /**
      * @Assert\Length(min=4, minMessage = "Il faut au minimum 4 caractères")
      *
@@ -22,23 +20,18 @@ class ResetPassword
     private $repeatPassword;
 
 
-    /*  public function getEmail(): ?string
-      {
-          return $this->email;
-      }
-
-      public function setEmail(string $email): self
-      {
-          $this->email = $email;
-
-          return $this;
-      }
-  */
+    /**
+     * @return string|null
+     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password)
     {
         $this->password = $password;
@@ -46,12 +39,19 @@ class ResetPassword
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getRepeatPassword(): ?string
     {
         return $this->repeatPassword;
     }
 
 
+    /**
+     * @param string $repeatPassword
+     * @return $this
+     */
     public function setRepeatPassword(string $repeatPassword)
     {
         $this->repeatPassword = $repeatPassword;

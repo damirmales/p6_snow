@@ -76,7 +76,7 @@ class RegisterController extends AbstractController
                 $manager->persist($newUser);
                 $manager->flush();
                 $this->addFlash('success', 'Un email vous a été envoyé');
-                //return $this->redirectToRoute('home');
+                return $this->redirectToRoute('home');
             }
         }
         return $this->render('register/register.html.twig', [
@@ -90,7 +90,7 @@ class RegisterController extends AbstractController
      * @Route("/home", name="check_token")
      */
     public
-    function checkToken(Request $request, UserRepository $userRepo, EntityManagerInterface $manager) // check token from user's email
+    function checkToken(Request $request, EntityManagerInterface $manager) // check token from user's email
     {
         $token_from_email = $request->query->get('user_token');
 

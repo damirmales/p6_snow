@@ -7,11 +7,26 @@ namespace App\Services;
 class PaginationParam
 {
 
+    /**
+     * @var
+     */
     private $startPageNumber;
+    /**
+     * @var
+     */
     private $pageItemLimit;
+    /**
+     * @var
+     */
     private $numberOfItemPerPage;
 
 
+    /**
+     * PaginationParam constructor.
+     * @param $start
+     * @param $limit
+     * @param $itemPerPage
+     */
     public function __construct($start, $limit, $itemPerPage)
     {
         $this->startPageNumber = $start;
@@ -19,6 +34,9 @@ class PaginationParam
         $this->numberOfItemPerPage = $itemPerPage;
     }
 
+    /**
+     * @return float|int|mixed
+     */
     public function paginationOffset()
     {
         $paginationOffset = $this->getStartPageNumber() * $this->getPageItemLimit() - $this->getPageItemLimit();

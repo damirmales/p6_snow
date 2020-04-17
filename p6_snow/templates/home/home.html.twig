@@ -29,7 +29,7 @@
         </div>
         <div class="row  mx-4 justify-content-center">
             {% for fig in figs %}
-                <div class=" grid-item ">
+                <div class="  grid-item ">
                     <div class="card border-primary mx-2 mb-3 flex-fill">
 
                         <a href="{{ path('page_figure',{'slug':fig.getSlug,'page':1}) }}" class="card-link"><img
@@ -37,40 +37,29 @@
                                     alt="Figure image cap"></a>
                         <div class="card-body">
                             <h4 class="card-title">{{ fig.title }}</h4>
-
-                            {% if app.user %}
-                                <div class="card-picto">
-                                    <a href="{{ path('edit_figure', {'slug': fig.getSlug}) }}"><i
-                                                class='fas fa-pen'></i></a>
-                                    <a href="#" data-toggle="modal" data-target="#deleteFigure{{ fig.getSlug }}">
-                                        <i class='fas fa-trash-alt'></i></a>
-                                </div>
-                            {% endif %}
                         </div>
-
+                        {% if app.user %}
+                            <div class="card-picto">
+                                <a href="{{ path('edit_figure', {'slug': fig.getSlug}) }}"><i
+                                            class='fas fa-pen'></i></a>
+                                <a href="#" data-toggle="modal" data-target="#deleteFigure{{ fig.getSlug }}">
+                                    <i class='fas fa-trash-alt'></i></a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 <!--*********** Trigger modal  when button delete figure  is clicked ****************-->
                 {{ include('includes/modal.html.twig') }}
-
             {% endfor %}
-
         </div>
-
-        <div class="row justify-content-between mx-4">
-
-            <div class="m-1">
-                {% if figs|length >10 %}
-                    <div>
-                        <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures"
-                                onclick="loadMore(5,'grid-item')">Plus de
-                            figures
-                        </button>
-                    </div>
-                {% endif %}
-                <div>
-                    <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
-                </div>
+        <div class="row justify-content-center mx-4">
+            {% if figs|length >10 %}
+                <button class="btn" type="button" id="loadMoreFigBtn" title="Plus de figures"
+                        onclick="loadMore(5,'grid-item')">Plus de figures
+                </button>
+            {% endif %}
+            <div>
+                <button onclick="topFunction()" id="myBtn" title="En haut">Haut</button>
             </div>
         </div>
     </div>

@@ -9,7 +9,7 @@ class PasswordLost
 {
     /**
      * @return mixed
-     * @Assert\Email(message = "Le format '{{ value }}' n'est pas un email valide")
+     * @Assert\Email(message = "L'email '{{ value }}' n'est pas valide")
      */
     private $email;
 

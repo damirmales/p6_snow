@@ -48,11 +48,18 @@ class Comment
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return $this
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -60,11 +67,18 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getCreateDate(): ?\DateTimeInterface
     {
         return $this->createDate;
     }
 
+    /**
+     * @param \DateTimeInterface $createDate
+     * @return $this
+     */
     public function setCreateDate(\DateTimeInterface $createDate): self
     {
         $this->createDate = $createDate;
@@ -72,11 +86,18 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getAuthor(): ?User
     {
         return $this->author;
     }
 
+    /**
+     * @param User|null $author
+     * @return $this
+     */
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
@@ -84,11 +105,18 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return Figure|null
+     */
     public function getFigure(): ?Figure
     {
         return $this->figure;
     }
 
+    /**
+     * @param Figure|null $figure
+     * @return $this
+     */
     public function setFigure(?Figure $figure): self
     {
         $this->figure = $figure;

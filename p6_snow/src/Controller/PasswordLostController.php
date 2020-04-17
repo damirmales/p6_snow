@@ -25,10 +25,7 @@ class PasswordLostController extends AbstractController
         $newPasswordEntity = new PasswordLost(); //create an entity which is not registered in the database
 
         $form = $this->createForm(PasswordLostType::class, $newPasswordEntity);
-
         $form->handleRequest($request);
-
-        //get user's data with user's username
 
         $userData = $form->get('email');
         $userProvidedEmail = $userData->getViewData();
@@ -55,15 +52,14 @@ class PasswordLostController extends AbstractController
                     $entityManager->persist($user);
                     $entityManager->flush();
 
-                    $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
                 } else {
                     return new Response('Token non valide.');
                 }
-            } else {
-                $this->addFlash('warning', 'Cet email ne correspond pas à un utilisateur inscrit');
             }
 
-            // return $this->redirectToRoute('reset_password');
+            $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
+
+            return $this->redirectToRoute('reset_password');
 
         }
         return $this->render('password/lost_password.html.twig', [
