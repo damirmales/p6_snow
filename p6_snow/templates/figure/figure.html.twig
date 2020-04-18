@@ -81,13 +81,13 @@
 
             {% if photos|length > 4 %}
                 <div class=" row mt-4 justify-content-center">
-                    <div class="col-md-3 align-content-center">
-                        <button type="button" id="loadMoreFigBtn" title="Plus de figures"
-                                onclick="loadMore(4,'grid-item-photo')">Plus de
-                            photos
-                        </button>
 
-                    </div>
+                    <button type="button" id="loadMoreFigBtn" title="Plus de figures"
+                            onclick="loadMore(4,'grid-item-photo')">Plus de
+                        photos
+                    </button>
+
+
                 </div>
             {% endif %}
         </div>
@@ -137,13 +137,13 @@
             {% endif %}
 
             {% if videos|length > 4 %}
-                <div class=" row mt-4">
-                    <div class="col-md-6 mb-3">
-                        <button type="button" id="loadMoreVidBtn" title="Plus de vidéos"
-                                onclick="loadMore(4,'grid-item-video')">Plus de
-                            vidéos
-                        </button>
-                    </div>
+                <div class=" row mt-4 justify-content-center">
+
+                    <button type="button" id="loadMoreVidBtn" title="Plus de vidéos"
+                            onclick="loadMore(4,'grid-item-video')">Plus de
+                        vidéos
+                    </button>
+
                 </div>
             {% endif %}
         </div>
