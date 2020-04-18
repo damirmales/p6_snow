@@ -10,7 +10,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 
-class FigureFixtures extends Fixture //implements DependentFixtureInterface
+class FigureFixtures extends Fixture implements DependentFixtureInterface
 {
 
 
@@ -30,19 +30,20 @@ class FigureFixtures extends Fixture //implements DependentFixtureInterface
             "Le Ollie est une impulsion  avec déformation de la planche qui permet de faire un saut",
             "Les press sont les appuis sur les spatules, on peut les faire dans l’axe ou en travers, ce sont de bons tricks pour apprendre à bien maitriser sa board"];
 
+        $users = $manager->getRepository(User::class)->findAll();
 
+        foreach ($users as $user) {
+            array_push($editor, $user);
+        }
         for ($i = 0; $i < 10; $i++) {
             $trick = new Figure();
             $trick->setTitle($titres[$i])
                 ->setSlug('slug')
                 ->setFeatureImage($i . ".jpg")
                 ->setDescription($descriptions[$i])
-                ->setCreateDate(new \DateTime())
-                ->setUpdateDate(new \DateTime());
-            $users = $manager->getRepository(User::class)->findAll();
-            foreach ($users as $user) {
-                array_push($editor, $user);
-            }
+                ->setCreateDate(new DateTime())
+                ->setUpdateDate(new DateTime());
+
 
             $manager->persist($trick);
 
@@ -54,11 +55,11 @@ class FigureFixtures extends Fixture //implements DependentFixtureInterface
 
     }
 
-    /* public function getDependencies()
-     {
-         // TODO: Implement getDependencies() method.
-         return array(
-             UserFixtures::class,
-         );
-     }*/
+    public function getDependencies()
+    {
+        // TODO: Implement getDependencies() method.
+        return array(
+            UserFixtures::class,
+        );
+    }
 }
