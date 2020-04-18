@@ -10,6 +10,11 @@
     background-color: #4f71ae !important;
 }
 
+.btn-add-photo, .btn-add-video {
+    width: 80px;
+    font-size: .8rem;
+}
+
 .btnAddMedia, .btnDropdown {
 
     background-color: cornflowerblue;

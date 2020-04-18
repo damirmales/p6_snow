@@ -33,10 +33,12 @@
         <div class="row">
             {% if app.user %}
                 <div>
-                    <a href="{{ path('add_photo', {'slug': fig.slug}) }}" class="btn btn-primary m-2">
+                    <a href="{{ path('add_photo', {'slug': fig.slug}) }}"
+                       class="btn btn-outline-primary m-2 btn-add-photo">
                         Ajout de photo
                     </a>
-                    <a href="{{ path('add_video', {'slug': fig.slug}) }}" class="btn btn-primary m-2">
+                    <a href="{{ path('add_video', {'slug': fig.slug}) }}"
+                       class="btn btn-outline-primary m-2 btn-add-video">
                         Ajout de vidéo
                     </a>
                 </div>
