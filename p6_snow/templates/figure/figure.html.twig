@@ -10,7 +10,9 @@
         <div class="row">
             <div class="col featureImageFigure"
                  style="background-image:url( {{ asset('/uploads/figures/') }}{{ fig.featureImage }});background-size: cover;">
-                <div class="figEditTitle m-2"><h2> {{ fig.title }}</h2></div>
+                <div class="figEditTitle m-2">
+                    <h2> {{ fig.title }}</h2>
+                </div>
 
             </div>
         </div>
@@ -48,12 +50,12 @@
                                 {% if photo.filename %}
                                     <div class="row mx-1 justify-content-center">
                                         <div class="grid-item-photo">
-                                            <div class="card border-primary mx-2 mb-3 flex-fill">
+                                            <div class="card border-primary mx-2 mb-1 flex-fill">
                                                 <img class="card-img-top"
                                                      src="{{ asset('/uploads/figures/') }}{{ photo.filename }}"
                                                      alt="Figure image cap">
                                                 <div class="card-body">
-                                                    <h4 class="card-title">{{ photo.title }}</h4>
+                                                    <h4 class="card-title text-center">{{ photo.title }}</h4>
                                                 </div>
 
                                             </div>
@@ -78,12 +80,14 @@
             {% endif %}
         </div>
         {% if photos|length != 0 %}
-            <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
-                    data-toggle="collapse"
-                    data-target="#showPhotosCards"
-                    aria-expanded="false" aria-controls="showPhotosCards">
-                Montrer les photos
-            </button>
+            <div class="row mb-3 justify-content-center">
+                <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
+                        data-toggle="collapse"
+                        data-target="#showPhotosCards"
+                        aria-expanded="false" aria-controls="showPhotosCards">
+                    Montrer les photos
+                </button>
+            </div>
         {% endif %}
         <!-- Portfolio videos -->
         <div class="d-xs-none d-sm-block d-md-block d-lg-block collapse" id="showVideosCards">
@@ -106,7 +110,7 @@
                                                     allowfullscreen></iframe>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">{{ video.title }}</h4>
+                                            <h4 class="card-title text-center">{{ video.title }}</h4>
                                         </div>
 
                                     </div>
@@ -130,12 +134,14 @@
             {% endif %}
         </div>
         {% if videos|length != 0 %}
-            <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
-                    data-toggle="collapse"
-                    data-target="#showVideosCards"
-                    aria-expanded="false" aria-controls="showVideosCards">
-                Montrer les vidéos
-            </button>
+            <div class="row mb-3 justify-content-center">
+                <button class="btn btn-primary d-xs-block d-sm-none d-md-none d-lg-none mt-3" type="button"
+                        data-toggle="collapse"
+                        data-target="#showVideosCards"
+                        aria-expanded="false" aria-controls="showVideosCards">
+                    Montrer les vidéos
+                </button>
+            </div>
         {% endif %}
         <div class="row justify-content-center">
             <div class="col-md-6 text-center">
@@ -152,8 +158,9 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-6">
                 <h3 class="text-center"> Description </h3>
-                <p class="description">  {{ fig.description }}</p>
-
+                <div class="row px-3 justify-content-center">
+                    <p class="description">  {{ fig.description }}</p>
+                </div>
             </div>
         </div>
         <!--**** Comments zone *****-->
@@ -174,7 +181,7 @@
                     {{ form_start(form) }}
                     <h3 class="text-center">{{ form_row(form.content,{'label':'Votre commentaire'}) }}</h3>
                     {{ form_widget(form) }}
-                    <div class="row">
+                    <div class="row justify-content-center">
                         <button type="submit" class="mb-3 mx-3 btn " id="submitComment" name="submit">Envoyer votre
                             commentaire
                         </button>

@@ -133,8 +133,9 @@ img {
 
 /* If the screen size is 640px wide or less */
 @media screen and (max-width: 640px) {
-    .jumbotron > h1 {
-        font-size: 50px;
+    .jumbotron, .featureImageFigure {
+
+        display: none;
     }
 
     /* design the table to fit small screens */
