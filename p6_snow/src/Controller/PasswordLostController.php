@@ -59,8 +59,7 @@ class PasswordLostController extends AbstractController
 
             $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
 
-            return $this->redirectToRoute('reset_password');
-
+          
         }
         return $this->render('password/lost_password.html.twig', [
             'form' => $form->createView(),
