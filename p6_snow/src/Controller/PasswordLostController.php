@@ -30,7 +30,7 @@ class PasswordLostController extends AbstractController
         $userData = $form->get('email');
         $userProvidedEmail = $userData->getViewData();
         $bodyEmailMessage = "Cliquez sur le lien pour accèder au formulaire de changement de mot de passe:";
-
+        $subject = "Mot de passe perdu";
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $this->findUserEmail($userProvidedEmail);
@@ -47,7 +47,7 @@ class PasswordLostController extends AbstractController
 
                     $pathToEmailPage = 'emails/password_email.html.twig';
 
-                    $sendEmail->sendEmail($user->getEmail(), $token, $userLastname, $bodyEmailMessage, $pathToEmailPage);
+                    $sendEmail->sendEmail($user->getEmail(), $token, $userLastname, $bodyEmailMessage, $pathToEmailPage, $subject);
 
                     $entityManager->persist($user);
                     $entityManager->flush();
@@ -59,7 +59,7 @@ class PasswordLostController extends AbstractController
 
             $this->addFlash('success', 'Un email de renouvellement de mot de passe vous a été envoyé');
 
-          
+
         }
         return $this->render('password/lost_password.html.twig', [
             'form' => $form->createView(),

@@ -42,6 +42,7 @@ class RegisterController extends AbstractController
 
                 $bodyEmailMessage = "cliquez sur le lien pour valider votre inscription";
                 $pathToEmailPage = 'emails/register_email.html.twig';
+                $subject = "Inscription sur Snowtricks";
                 $avatarFile = $form->get('avatar')->getData();
 
                 if ($avatarFile) {
@@ -71,7 +72,7 @@ class RegisterController extends AbstractController
                 $pswd = $encoder->encodePassword($newUser, $newUser->getPassword());
                 $newUser->setPassword($pswd);
 
-                $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage, $pathToEmailPage);
+                $sendEmail->sendEmail($newUser->getEmail(), $token_for_email, $newUser->getLastname(), $bodyEmailMessage, $pathToEmailPage, $subject);
 
                 $manager->persist($newUser);
                 $manager->flush();

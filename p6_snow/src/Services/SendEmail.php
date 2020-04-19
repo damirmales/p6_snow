@@ -29,9 +29,9 @@ class SendEmail extends AbstractController
      * @param $bodyMessage
      * @param $pathToEmailPage
      */
-    public function sendEmail($userEmail, $token, $userLastname, $bodyMessage, $pathToEmailPage)
+    public function sendEmail($userEmail, $token, $userLastname, $bodyMessage, $pathToEmailPage, $subject)
     {
-        $message = (new Swift_Message('Mot de passe perdu'))//TODO: put a var from fc param instead raw text
+        $message = (new Swift_Message($subject))//TODO: put a var from fc param instead raw text
         ->setFrom('send@example.com')
             ->setTo($userEmail)
             ->setBody(
