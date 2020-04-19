@@ -205,31 +205,33 @@
             <div class="row mt-4 justify-content-center">
                 <div class="col-12 col-md-6 text-center">
                     <h3>Les commentaires reçus</h3>
-                    <table class="table-striped mb-3 ">
-                        <thead>
-                        <tr>
-                            <th>Auteur</th>
-                            <th>Avatar</th>
-                            <th>Message</th>
-                            <th>Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {% for comment in comments %}
+                    <div class="row justify-content-center">
+                        <table class="table-striped mb-3 ">
+                            <thead>
                             <tr>
-                                <td data-label="Auteur">{{ comment.author.firstname }} {{ comment.author.lastname }}</td>
-                                <td class="avatar" data-label="Avatar"><img
-                                            src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
-                                            alt="{{ comment.figure.title }}">
-                                </td>
-                                <td class="commentContent" data-label="Message"
-                                    style="width: 350px">{{ comment.content }}</td>
-                                <td data-label="Date">{{ comment.createDate|date('d-m-Y H:i:s') }}</td>
+                                <th>Auteur</th>
+                                <th>Avatar</th>
+                                <th>Message</th>
+                                <th>Date</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+
+                            {% for comment in comments %}
+                                <tr>
+                                    <td data-label="Auteur">{{ comment.author.firstname }} {{ comment.author.lastname }}</td>
+                                    <td class="avatar" data-label="Avatar"><img
+                                                src="{{ asset('/uploads/avatars/') }}{{ comment.author.picture }}"
+                                                alt="{{ comment.figure.title }}">
+                                    </td>
+                                    <td class="commentContent" data-label="Message"
+                                        style="width: 350px">{{ comment.content }}</td>
+                                    <td data-label="Date">{{ comment.createDate|date('d-m-Y H:i:s') }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div><!-- row -->
             <div class="d-flex justify-content-center">
