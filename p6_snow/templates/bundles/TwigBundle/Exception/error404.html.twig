@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page introuvable {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row mt-4 ">
+            <div class="col text-center">
+
+                <p> Cette page semble ne pas être présente sur le site.</p>
+
+                <p>Vous pouvez retrourner à l'accueil</p>
+                <a href="{{ path('home') }}" class="btn btn-primary"> Accueil</a>
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

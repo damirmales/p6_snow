@@ -138,6 +138,7 @@ img {
 
 /* If the screen size is 640px wide or less */
 @media screen and (max-width: 640px) {
+
     .jumbotron, .featureImageFigure {
 
         display: none;

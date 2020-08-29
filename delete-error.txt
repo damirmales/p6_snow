@@ -1,0 +1,12 @@
+http://localhost:8000/home?user_token=gwmaH1UxjB2PufGrVbtGPyCs5nAOGs3KdeucL6U4bBQ">gwmaH1UxjB2PufGrVbtGPyCs5nAOGs3KdeucL6U4bBQ
+
+An exception occurred while executing 'DELETE FROM figure WHERE id = ?' with params [63]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`p6_snow`.`photo`, CONSTRAINT `FK_14B784185C011B5` FOREIGN KEY (`figure_id`) REFERENCES `figure` (`id`))
+
+Un autre truc magique
+selon le cdc le mode édition et le mode créa sont des quasi jumeaux
+à ceci près qu'en édition les champs sont pré-remplis
+pour ce faire pas de déclaration new figure en édition
+jusque là ok
+Sauf que je ne comprends pas comment se génèrent les champs des médias existant en base pour la figure concernée

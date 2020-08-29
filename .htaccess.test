@@ -1,0 +1,23 @@
+# RewriteEngine On
+# RewriteBase /
+# RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
+# RewriteRule ^ %1 [L,NE,R=302]
+# RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
+
+RewriteEngine On 
+RewriteCond %{SERVER_PORT} 80 
+RewriteRule ^(.*)$ https://p6snow.damirweb.com/$1 [R,L]
+
+RewriteCond %{HTTP_HOST} ^(p6snow.)?damirweb.com$
+
+RewriteCond %{REQUEST_URI} !^/public/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ /public/$1
+
+RewriteCond %{HTTP_HOST} ^(p6snow.)?damirweb.com$
+
+RewriteRule ^(/)?$ public/ [L]

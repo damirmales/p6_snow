@@ -1,0 +1,2 @@
+composer require jms/serializer-bundle
+composer require friendsofsymfony/rest-bundle
