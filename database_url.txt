@@ -1,1 +1,0 @@
-DATABASE_URL=mysql://damir983633:sbjnhgvzqu@185.98.131.94:3306/damir983633_3wyoet?serverVersion=10.2.0
