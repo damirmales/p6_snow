@@ -120,7 +120,7 @@ img {
 
 .jumbotron {
     height: 400px;
-    background-image: url(/img/home_snowboard.jpg);;
+    background-image: url(/img/home_snowboard.jpg);
     background-repeat: no-repeat;
     /* Makes the image fixed in the viewport so that it doesn't move when
    the content height is greater than the image height */
@@ -138,6 +138,10 @@ img {
 
 /* If the screen size is 640px wide or less */
 @media screen and (max-width: 640px) {
+
+    body {
+        font-size: 1em;
+    }
 
     .jumbotron, .featureImageFigure {
 
